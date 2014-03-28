@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>BUG in SWT Browser Widget</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>BUG in SWT Browser Widget</h2>
+<p class="meta">28 Jan 2008</p>
+
+<div class="post">
+I have just discovered a bug in SWT Browser Widget which is used by Eclipse for its internal browser. Just type in http://www.friendster.com/ anyway inside eclipse (some editor inside eclipse). Hold CTRL and click on that link to open Eclipse internal browser. As the page is about to finish loading, Eclipse closes!!<br />The version I am using is SWT 3.3, the latest, so called stable release.<br />No idea as of now why this is happening. I guess there is some component inside friendster.com homepage that SWT Browser widget does not like much, and infact it is a VM error!<br />By the way I am running Fedora Core 7.
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Detect Prime numbers in one line – Python Code</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Detect Prime numbers in one line – Python Code</h2>
+<p class="meta">23 Apr 2009</p>
+
+<div class="post">
+The following code can be used to print all the prime numbers in a given range. With my recent obsession with Python, I learnt to admire the compactness of the code and all it takes to list the primes is just one line of code!   <div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4">   <div style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none">     <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: white; border-bottom-style: none"><span style="color: #606060">   1:</span> inp = int(raw_input(<span style="color: #006080">'Enter the outer bound : '</span>))</pre><br /><br />    <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><span style="color: #606060">   2:</span> l = range(1,inp)</pre><br /><br />    <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: white; border-bottom-style: none"><span style="color: #606060">   3:</span> <span style="color: #008000">#factors = [i for i in range(2,item/2+1) if item % i == 0]</span></pre><br /><br />    <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><span style="color: #606060">   4:</span> primes = [item <span style="color: #0000ff">for</span> item <span style="color: #0000ff">in</span> l <span style="color: #0000ff">if</span> item&gt;1 and len([i <span style="color: #0000ff">for</span> i <span style="color: #0000ff">in</span> range(2,item/2+1) <span style="color: #0000ff">if</span> item % i == 0])==0]</pre><br /><br />    <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: white; border-bottom-style: none"><span style="color: #606060">   5:</span> print primes</pre><br />  </div><br /></div><br /><br /><p>The code could further be optimized to improve the performance drastically.</p><br /><br /><div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4"><br />  <div style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><br />    <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: white; border-bottom-style: none"><span style="color: #606060">   1:</span> primes=[item <span style="color: #0000ff">for</span> item <span style="color: #0000ff">in</span> l <span style="color: #0000ff">if</span> item&gt;1 and len([i <span style="color: #0000ff">for</span> i <span style="color: #0000ff">in</span> range(2,8) <span style="color: #0000ff">if</span> item%i==0])==0]</pre><br />  </div><br /></div><br /><br /><p></p><br /><br /><p>Notice that I am using list comprehensions and in the inner list comprehension inside the len() I am limiting the range of divisors to 8. Obviously any number greater than 8 would be divisible by one of the numbers between 2 and 8 (if it is a composite number).</p><br /><br /><p>The above optimized version is fast – so fast that to compute the list of primes between 1 and 50000, it just takes at most a second (did not time it actually) whereas the first one takes forever (i completed typing the whole paragraph and it is still running!). So I verified it with a range from 1 to 5000 and the first one is almost instantaneous.</p><br /><br /><p><strong><u>But! there is a bug in the second algorithm that i listed. It does not verify those numbers that are divisible by other prime numbers which are not between 2 and 8. So any ideas to optimize this?</u></strong>&#160;</p><br /><br /><p><strong>Basic algorithm: return all items in a list whose length of the factors list is 0. </strong></p><br /><br /><p><strong>Where is the place for optimization?</strong></p><br /><br /><p>Computing the factors! is the key here. The faster you compute your factors, the better your algorithm would perform.</p><br /><br /><p>More on this later.</p>  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

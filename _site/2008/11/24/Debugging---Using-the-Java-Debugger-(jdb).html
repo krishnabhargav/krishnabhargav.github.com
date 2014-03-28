@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Debugging - Using the Java Debugger (jdb)</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Debugging - Using the Java Debugger (jdb)</h2>
+<p class="meta">24 Nov 2008</p>
+
+<div class="post">
+<h4>&#160;</h4>  <h6>Goals</h6>  <ol>   <li>Getting started with Java Debugger using command line tool JDB </li>    <li>Doing simple debug operations using JDB</li> </ol>  <h6>Let us get started</h6>  <ul>   <li>Write a simple java program and save it as Sample.java.</li> </ul>  <pre class="code"><font size="2"><font face="Consolas">import java.lang.*;<br /> <br /><span style="color: blue">public class </span></font></font><font size="2"><font face="Consolas"><span style="color: #2b91af">Sample<br /></span>{<br />        <span style="color: blue">public static void </span>main(String[] args)<br />        {<br />                System.<span style="color: blue">out</span>.println(<span style="color: #a31515">&quot;Brought to you by &quot;</span>+getName(10));<br /> <br />        }<br /> <br />        <span style="color: blue">public static </span>String getName(<span style="color: blue">int </span>i)<br />        {<br />                <span style="color: blue">int </span>j = 20;<br />                <span style="color: blue">while</span>(i&gt;0)<br />                        i--;<br />                System.<span style="color: blue">out</span>.println(<span style="color: #a31515">&quot;Value of J is : &quot;</span>+j);<br />                <span style="color: blue">return </span><span style="color: #a31515"><a href="http://krishnabhargav.blogspot.com">http://krishnabhargav.blogspot.com</a></span>;<br />        }<br />}</font></font></pre><br /><a href="http://11011.net/software/vspaste"></a><br /><br /><ul><br />  <li>Compile the java program such that the symbols are also generated, which is useful for debugging purposes. This is done as shown</li><br /></ul><br /><br /><pre><code><strong>javac -g Sample.java</strong></code></pre><br /><br /><ul><br />  <li>Load the debugger with the Sample class. You do that with the command shown below</li><br /></ul><br /><br /><pre><code><strong>jdb Sample</strong></code></pre><br /><br /><ul><br />  <li>Before we start any further, let us look at the list of commands that are useful for us. To get a help, type &quot;help&quot; in the jdb console menu. <br />    <ul><br />      <li>list - display ten lines of source code, around the line at which the execution stopped </li><br /><br />      <li>stop in &lt;class&gt;.&lt;methodName&gt; - breakpoint at the specified methodName in the Class &lt;class&gt; </li><br /><br />      <li>stop at &lt;class&gt;:&lt;lineNumber&gt; - breakpoint at the specified line number in the class </li><br /><br />      <li>locals - list the local variables in the current scope </li><br /><br />      <li>dump &lt;obj reference&gt; - dumps the object whose reference is specified </li><br /><br />      <li>print &lt;obj reference&gt; - prints the object whose reference is specified </li><br /><br />      <li>set x = 10 - set's the value of the variable x to 10 </li><br /><br />      <li>eval 100+500 - evaluates the expression passed and displays the result.</li><br />    </ul><br />  </li><br /></ul><br /><br /><ul><br />  <li>Now let us start, first we need to set a breakpoint at main() method. We do that using &quot;stop at&quot; command.</li><br /></ul><br /><br /><pre><code><strong>stop at Sample.main</strong></code></pre><br /><br /><ul><br />  <li>Now start running the program, use the &quot;run&quot; command.</li><br /></ul><br /><br /><pre><code><strong>run</strong></code></pre><br /><br /><ul><br />  <li>You would notice the program to stop when it hits the breakpoint</li><br /></ul><br /><br /><pre><code><font face="Consolas" size="2">Breakpoint hit: &quot;thread=main&quot;, Sample.main(), line=7 bci=0<br />7                    System.out.println(&quot;Brought to you by &quot;+getName(10));</font></code></pre><br /><br /><ul><br />  <li>Now type the list command, and you get to see the code listing as shown</li><br /></ul><br /><br /><pre><font face="Consolas" size="2">3    public class Sample<br />4    {<br />5            public static void main(String[] args)<br />6            {<br />7 =&gt;                 System.out.println(&quot;Brought to you by &quot;+getName(10));<br />8<br />9            }<br />10<br />11            public static String getName(int i)<br />12            {</font></pre><br /><br /><ul><br />  <li>The =&gt; shows where the break point has been hit. Now we have option to step into the getName() method. For that type</li><br /></ul><br /><br /><pre><code>step</code></pre><br /><br /><ul><br />  <li>Now type &quot;list&quot; again. The code listing would be shown</li><br /></ul><br /><br /><pre><font face="Consolas" size="2">9            }<br />10<br />11            public static String getName(int i)<br />12            {<br />13 =&gt;                 int j = 20;<br />14                    while(i&gt;0)<br />15                            i--;<br />16                    System.out.println(&quot;Value of J is : &quot;+j);<br />17                    return <a href="http://krishnabhargav.blogspot.com">http://krishnabhargav.blogspot.com</a>;<br />18            }</font></pre><br /><br /><ul><br />  <li>Now let us skip the loop execution. For that let us first put a breakpoint at line number 16</li><br /></ul><br /><br /><pre><code>stop at Sample:16</code></pre><br /><br /><ul><br />  <li>Now to resume execution, type &quot;cont&quot; command. It would execute till it hits the next breakpoint</li><br /></ul><br /><br /><pre><code>cont</code></pre><br /><br /><ul><br />  <li>Now let us look at the local variables in the current context. For that type &quot;locals&quot; in the console as shown</li><br /></ul><br /><br /><pre><code>main[1] locals<br />Method arguments:<br />i = 0<br />Local variables:<br />j = 20</code></pre><br /><br /><ul><br />  <li>Now let us try to modify the value of j on the fly, instead of 20, let us put the value as 100. For that</li><br /></ul><br /><br /><pre><code>set j = 100</code></pre><br /><br /><ul><br />  <li>Now let us go back to the calling method. For that, type &quot;step up&quot;</li><br /></ul><br /><br /><pre><code>step up</code></pre><br /><br /><pre><code>main[1] step up<br />&gt; Value of J is : 100<br /><br />Step completed: &quot;thread=main&quot;, Sample.main(), line=7 bci=20<br />7                    System.out.println(&quot;Brought to you by &quot;+getName(10));</code></pre><br /><br /><ul><br />  <li>Now let us finish the execution till the end. For that just type &quot;cont&quot; again. You see the listing as shown.</li><br /></ul><br /><br /><pre><code>main[1] cont<br />&gt; Brought to you by <a href="http://krishnabhargav.blogspot.com">http://krishnabhargav.blogspot.com</a></code></pre><br /><br /><h6>What next?</h6><br /><br /><p>We have seen how to look at the local variables. We also have seen how to change the value of a variable in scope. But we have not seen how to work with dump &lt;ref&gt;, print &lt;ref&gt; and the other useful &quot;eval&quot; command. You could figure out doing this. But for now, try to repeat the debugging process again. Then set up a breakpoint at main() method and when it breaks, just type in &quot;dump this&quot;. See what you get? You get an exception saying that you are currently either in a static method or native method, so to test the dump functionality, you would have to have a object in your scope. And then you can dump that. Suppose you have an instance of Point in your context. Then you can set pt.x using &quot;set pt.x = 100&quot;, by this I mean to show that you can use set to manipulate all variables, even those that belong to an object.</p><br /><br /><h6>Remote Debugging with JDB</h6><br /><br /><p>Other important thing that we are missing in this tutorial is remote debugging using JDB. I would not present a step by step way to do that but for remote debugging a program, you need to<br />  <br />1. Start the program using Java command, as shown</p><br /><br /><pre><code>java -Djava.compiler=NONE -Xnoagent -Xdebug<br />-Xrunjdwp:transport=dt_socket,address=2502,server=y,suspend=y<br />Sample</code></pre><br /><br /><p>2. Attach jdb from the command line to the server. assuming it is running on localhost, it is done as shown. </p><br /><br /><pre><code>jdb -attach localhost:2502</code></pre><br /><br /><h6>References</h6><br /><br /><p><a href="http://java.sun.com/j2se/1.5.0/docs/tooldocs/windows/jdb.html">JDB Documentation</a></p>  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

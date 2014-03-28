@@ -1,0 +1,10 @@
+---           
+layout: post
+title: Using LINQ Aggregate to solve the previous problem
+date: 2010-07-16 02:37:24 UTC
+updated: 2010-07-16 02:37:24 UTC
+comments: false
+categories: 
+---
+
+In the <a href="http://krishnabhargav.blogspot.com/2010/07/algorithms-performance-and-getting.html">previous post</a> I talked about the problem which I simply re-iterate here. From the data which can look like <p/><br />Name, Value <p/><br />Sridhar, 1 <p/><br />Ashish,2<p/><br />PRasanth,3<p/><br />Ashish,5<p/><br />Sridhar,6<p/><br />Prasanth,34<p/><br />.....<br /><br />I want to aggregate the values for the names. Look at the previous post for some information on other approaches to solve this simple problem.<br /><br />The LINQ way to do this would be : <br /><pre name="code" class="csharp"><br />[Test]<br />        public void BTest()<br />        {<br />            var nvcs = tl.GroupBy(s => s.Name)<br />                .Select(s => new NameValueCollection<br />                                 {<br />                                     {"Name", s.Key},<br />                                     {"DrawerId", s.Aggregate(new StringBuilder(), <br />                                        (seed, g) => seed.AppendFormat("{0};",g.DrawerId)).ToString()}<br />                                 });<br />            //foreach (var nvc in nvcs)<br />            //    Console.WriteLine(nvc["Name"] + " : " + nvc["DrawerId"]);<br />            Assert.AreEqual(4, nvcs.Count());<br />        }<br /></pre><br /><br />Note that I wanted am generating a list of NameValueCollection and this is not of significance here. If you compare it with the previous implementation that uses dictionary or lists to generate, this solution appears more concise and to those who already knows LINQ should find this really simple.<br /><br /><ul><br /><li> All I would like to take away from this post is that the IEnumerable.Aggregate() method is a great method that is not often mentioned around. We often accumulate some value over a collection of items and aggregate method lets you do just that without all the extra for and seeds that you should track.<br /></ul>

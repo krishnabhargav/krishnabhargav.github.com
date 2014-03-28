@@ -1,0 +1,10 @@
+---           
+layout: post
+title: MSDN Question on WPF: KeyDown event and Space key
+date: 2008-11-19 04:10:06 UTC
+updated: 2008-11-19 04:10:06 UTC
+comments: false
+categories: 
+---
+
+<p>Most of us, at some point, faces this issue : KeyDown event handler does not detect Space key while PreviewKeyDown event handler does!</p> <p>KeyDown event as one expects is raised when a key is "down". KeyDown event handler attached in XAML would miss some keys like "Space" and for a reason. The reason that I can think of is that Space bar invokes a command (like a toggle or mouse click if a button has focus). So when Space bar is pressed, it invokes the tunneling event "PreviewKeyDown" in which the event is marked as Handled. So, the KeyDown event handler is no longer invoked in this case. Note that KeyDown is an attached event (a XAML event mechanism which enables elements have events which they do not have in the first place).</p> <p>As a workaround, you do not specify the event handler inside XAML and instead do it in Code-behind. If <strong>tx</strong> is a TextBox, then I set the KeyDown event handler as shown:</p><pre class="code">tx.AddHandler(<span style="color: #2b91af">TextBox</span>.KeyDownEvent, <span style="color: blue">new </span><span style="color: #2b91af">KeyEventHandler</span>(TextBox_KeyDown),<span style="color: blue">true</span>);</pre><br /><p><a href="http://11011.net/software/vspaste"></a>The third argument is "handledEventsToo" which is false by default. Setting handledEventsTrue in the AddHandler method allows KeyDown event handler be invoked even for those keys which stops tunneling in the PreviewKeyDown event itself.</p><br /><p>Even if there is a work around, it is recommended that you do not handled those events which are already handled - simply put, let the handledEventsTrue be always false. Setting it to true might result in unexpected behavior.</p>  

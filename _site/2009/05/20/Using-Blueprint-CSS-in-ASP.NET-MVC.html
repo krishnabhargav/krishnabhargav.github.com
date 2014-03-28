@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Using Blueprint CSS in ASP.NET MVC</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Using Blueprint CSS in ASP.NET MVC</h2>
+<p class="meta">20 May 2009</p>
+
+<div class="post">
+<p>I know my previous post on the blog is incomplete but I promise to get back to that complete as soon as possible. In the meantime, here is a quick info on how to include Blueprint CSS files within ASP.NET MVC applications. I add this to my Site.Master page.</p>  <div style="border-bottom: gray 1px solid; border-left: gray 1px solid; padding-bottom: 4px; line-height: 12pt; background-color: #f4f4f4; margin: 20px 0px 10px; padding-left: 4px; width: 97.5%; padding-right: 4px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; max-height: 200px; font-size: 8pt; overflow: auto; border-top: gray 1px solid; cursor: text; border-right: gray 1px solid; padding-top: 4px">   <div style="border-bottom-style: none; padding-bottom: 0px; line-height: 12pt; border-right-style: none; background-color: #f4f4f4; padding-left: 0px; width: 100%; padding-right: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-top-style: none; color: black; font-size: 8pt; border-left-style: none; overflow: visible; padding-top: 0px">     <pre style="border-bottom-style: none; padding-bottom: 0px; line-height: 12pt; border-right-style: none; background-color: white; margin: 0em; padding-left: 0px; width: 100%; padding-right: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-top-style: none; color: black; font-size: 8pt; border-left-style: none; overflow: visible; padding-top: 0px"><span style="color: #606060">   1:</span> <span style="color: #006080">&lt;</span><span style="color: #0000ff">link</span> href=&quot;<span style="color: #006080">&lt;</span>%=Url<span style="color: #cc6633">.Content</span>(&quot;~/Content/Site<span style="color: #cc6633">.css</span>&quot;) %<span style="color: #006080">&gt;</span>&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /<span style="color: #006080">&gt;</span></pre><br /><br />    <pre style="border-bottom-style: none; padding-bottom: 0px; line-height: 12pt; border-right-style: none; background-color: #f4f4f4; margin: 0em; padding-left: 0px; width: 100%; padding-right: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-top-style: none; color: black; font-size: 8pt; border-left-style: none; overflow: visible; padding-top: 0px"><span style="color: #606060">   2:</span>     <span style="color: #006080">&lt;</span>!-- Framework CSS --<span style="color: #006080">&gt;</span></pre><br /><br />    <pre style="border-bottom-style: none; padding-bottom: 0px; line-height: 12pt; border-right-style: none; background-color: white; margin: 0em; padding-left: 0px; width: 100%; padding-right: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-top-style: none; color: black; font-size: 8pt; border-left-style: none; overflow: visible; padding-top: 0px"><span style="color: #606060">   3:</span>     <span style="color: #006080">&lt;</span><span style="color: #0000ff">link</span> rel=&quot;stylesheet&quot; href=&quot;<span style="color: #006080">&lt;</span>%= Url<span style="color: #cc6633">.Content</span>(&quot;~/Content/blueprint/screen<span style="color: #cc6633">.css</span>&quot;)%<span style="color: #006080">&gt;</span>&quot;</pre><br /><br />    <pre style="border-bottom-style: none; padding-bottom: 0px; line-height: 12pt; border-right-style: none; background-color: #f4f4f4; margin: 0em; padding-left: 0px; width: 100%; padding-right: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-top-style: none; color: black; font-size: 8pt; border-left-style: none; overflow: visible; padding-top: 0px"><span style="color: #606060">   4:</span>         type=&quot;text/css&quot; media=&quot;screen, projection&quot;<span style="color: #006080">&gt;</span></pre><br /><br />    <pre style="border-bottom-style: none; padding-bottom: 0px; line-height: 12pt; border-right-style: none; background-color: white; margin: 0em; padding-left: 0px; width: 100%; padding-right: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-top-style: none; color: black; font-size: 8pt; border-left-style: none; overflow: visible; padding-top: 0px"><span style="color: #606060">   5:</span>     <span style="color: #006080">&lt;</span><span style="color: #0000ff">link</span> rel=&quot;stylesheet&quot; href=&quot;<span style="color: #006080">&lt;</span>%= Url<span style="color: #cc6633">.Content</span>(&quot;~/Content/blueprint/print<span style="color: #cc6633">.css</span>&quot;)%<span style="color: #006080">&gt;</span>&quot;</pre><br /><br />    <pre style="border-bottom-style: none; padding-bottom: 0px; line-height: 12pt; border-right-style: none; background-color: #f4f4f4; margin: 0em; padding-left: 0px; width: 100%; padding-right: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-top-style: none; color: black; font-size: 8pt; border-left-style: none; overflow: visible; padding-top: 0px"><span style="color: #606060">   6:</span>         type=&quot;text/css&quot; media=&quot;print&quot;<span style="color: #006080">&gt;</span></pre><br /><br />    <pre style="border-bottom-style: none; padding-bottom: 0px; line-height: 12pt; border-right-style: none; background-color: white; margin: 0em; padding-left: 0px; width: 100%; padding-right: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-top-style: none; color: black; font-size: 8pt; border-left-style: none; overflow: visible; padding-top: 0px"><span style="color: #606060">   7:</span>     <span style="color: #006080">&lt;</span>%=&quot;<span style="color: #006080">&lt;</span>!--[if IE]<span style="color: #006080">&gt;</span>&quot;%<span style="color: #006080">&gt;</span></pre><br /><br />    <pre style="border-bottom-style: none; padding-bottom: 0px; line-height: 12pt; border-right-style: none; background-color: #f4f4f4; margin: 0em; padding-left: 0px; width: 100%; padding-right: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-top-style: none; color: black; font-size: 8pt; border-left-style: none; overflow: visible; padding-top: 0px"><span style="color: #606060">   8:</span>     <span style="color: #006080">&lt;</span><span style="color: #0000ff">link</span> rel=&quot;stylesheet&quot; href=&quot;<span style="color: #006080">&lt;</span>%= Url<span style="color: #cc6633">.Content</span>(&quot;~/Content/blueprint/ie<span style="color: #cc6633">.css</span>&quot;)%<span style="color: #006080">&gt;</span>&quot; type=&quot;text/css&quot;</pre><br /><br />    <pre style="border-bottom-style: none; padding-bottom: 0px; line-height: 12pt; border-right-style: none; background-color: white; margin: 0em; padding-left: 0px; width: 100%; padding-right: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-top-style: none; color: black; font-size: 8pt; border-left-style: none; overflow: visible; padding-top: 0px"><span style="color: #606060">   9:</span>         media=&quot;screen, projection&quot;<span style="color: #006080">&gt;</span></pre><br /><br />    <pre style="border-bottom-style: none; padding-bottom: 0px; line-height: 12pt; border-right-style: none; background-color: #f4f4f4; margin: 0em; padding-left: 0px; width: 100%; padding-right: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-top-style: none; color: black; font-size: 8pt; border-left-style: none; overflow: visible; padding-top: 0px"><span style="color: #606060">  10:</span>     <span style="color: #006080">&lt;</span>%=&quot;<span style="color: #006080">&lt;</span>![endif]—<span style="color: #006080">&gt;</span>&quot;%<span style="color: #006080">&gt;</span></pre><br />  </div><br /></div><br /><br /><p></p><br />More later..  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

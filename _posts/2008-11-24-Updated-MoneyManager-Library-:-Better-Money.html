@@ -1,0 +1,10 @@
+---           
+layout: post
+title: Updated MoneyManager Library : Better Money
+date: 2008-11-24 13:12:09 UTC
+updated: 2008-11-24 13:12:09 UTC
+comments: false
+categories: 
+---
+
+<p>Like I mentioned in my previous post, the MoneyManager library is coming off well. My super cool colleague has helped me identify some design flaws (actually I knew the design isn't right and he helped me fix some flaws with some nice ideas). End result? Look at the class diagram below. Now if you need to add a different source for the data, you create a class that derives from <strong>IFactory</strong> and if you wish to use Multithreaded functionality, then derive from MultiThreadFactory too. Simple enough, eh!    <br /><a href="http://lh4.ggpht.com/_Oy9HuksgrdU/SSqoJ4vC2RI/AAAAAAAAAvU/aHPLbMmAbds/s1600-h/ClassDiagram1%5B3%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="426" alt="ClassDiagram1" src="http://lh4.ggpht.com/_Oy9HuksgrdU/SSqoKOM5xyI/AAAAAAAAAvY/QLqAANR4RPo/ClassDiagram1_thumb%5B1%5D.png?imgmax=800" width="644" border="0" /></a> </p>  <p>Next I should work on the super cool WPF UI which has charts, analysis helpers and much more.</p>  

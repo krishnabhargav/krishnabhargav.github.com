@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Configuring SWT Browser Widget Preferences!</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Configuring SWT Browser Widget Preferences!</h2>
+<p class="meta">28 Jan 2008</p>
+
+<div class="post">
+This technique I discovered works on Linux, ie. when SWT Browser uses Mozilla as its underlying browser. It uses JavaXPCOM to connect with Mozilla and does great job doing so. But then the Browser class do not have any options to configure the preferences of the browser. But you can still configure the preferences of the browser!!<br />Mozilla preferences are stored in a .mozilla directory for each user, in their home directory. Thanks to Dr. Li, that I could find this out. Now if you run a program that uses SWT Browser, you can see a a folder "Eclipse" inside this .mozilla directory.<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://1.bp.blogspot.com/_Oy9HuksgrdU/Rux-YFtmgiI/AAAAAAAAABU/JRoxoT4uJOY/s1600-h/q2.jpg"><img style="margin: 0px auto 10px; display: block; text-align: center; cursor: pointer;" src="http://1.bp.blogspot.com/_Oy9HuksgrdU/Rux-YFtmgiI/AAAAAAAAABU/JRoxoT4uJOY/s320/q2.jpg" alt="" id="BLOGGER_PHOTO_ID_5110598629474075170" border="0" /></a>[Note I am talking about running a Java Program which has SWT Browser, from ECLIPSE, thus the folder name is eclipse. If you run from console,  you might have a different foldername(I guess as that of the program name)]<br />It is in the /home/<user>/.mozilla/eclipse directory that the SWT Browser used Mozilla preferences are stored. It is stored in the <span style="font-weight: bold;">prefs.js </span>javascript file. You can specify a user prefernces by using user_pref() function. For example, you want a network boosted SWT Browser widget, then may be you can add the following line to prefs.js<br />user_pref("networking.http.pipelining",true);<br />Close Eclipse and start again. Now when you launch the program, the browser would use this preference.<br />Another way is to use "about:config" within your program do the configuration!<br />For this you can just write a configure() function and use it when you want. The function can be something like<br />Class ConfigurationWindow<br />{<br />public void configure()<br />{<br />    Display display = new Display();<br />    Shell shell = new Shell(display);<br /><br />    Browser browser = new Browser(shell,SWT.CENTER);<br /><br />    shell.setLayout(new GridLayout());<br /><br />    browser.setUrl("about:config");<br /><br />    shell.open();<br /><br />    while(!shell.isDisposed())<br />    if(!display.readAndDispatch()) display.sleep();<br /><br />    shell.dispose();<br />    display.dispose();<br />    browser.dispose();<br />}<br />}<br /><br />Now you can create new instance of ConfigurationWindow and call configure() which shows the user preferences window, just like the one you get when you type about:config in Mozilla Firefox.<br />This way one can configure preferences for Swt Browser Widget!
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

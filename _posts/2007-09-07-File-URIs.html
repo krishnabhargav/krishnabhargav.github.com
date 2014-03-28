@@ -1,0 +1,10 @@
+---           
+layout: post
+title: File URIs
+date: 2007-09-07 05:07:15 UTC
+updated: 2007-09-07 05:07:15 UTC
+comments: false
+categories: 
+---
+
+URI - Uniform Resource Identifier<br />A URI for a web resource might be http://krishnabhargav.blogspot.com<br />Most of the api might require you to specify URI for local files instead of having a local path. Suppose you want to pass a local system file as a parameter and it should be in the form of an URI then you can do this:<br />Let us say the file is D:/Development/MyResource.txt<br />Then the fileUri would be something like<br />file:///D:/Development/MyResource.txt<br /><br />One most common mistake is to use file:// instead of file:///. We go by the notion that http has "//" and so does ftp. So even this "file" would have "//" in its Uri. But it is "///" instead of "//".<br /><br />One good and more detailed explanation is given here.<br />http://blogs.msdn.com/ie/archive/2006/12/06/file-uris-in-windows.aspx<br />I really appreciate his post.

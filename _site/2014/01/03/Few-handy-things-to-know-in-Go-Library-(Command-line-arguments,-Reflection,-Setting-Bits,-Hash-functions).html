@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Few handy things to know in Go Library (Command line arguments, Reflection, Setting Bits, Hash functions)</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Few handy things to know in Go Library (Command line arguments, Reflection, Setting Bits, Hash functions)</h2>
+<p class="meta">03 Jan 2014</p>
+
+<div class="post">
+<h4>Command line arguments in Go</h4><div>In order to access the command line arguments passed to a Go executable, we work with the "flag" package from the standard Go library. Shown below is an example of passing command line arguments.<br /><pre name="code">go run cla.go Krishna</pre>Or if you have an executable obtained from go build, you can run it as<br /><pre name="code">./cla Krishna </pre>Shown below is an example go snippet that accesses the first argument passed &amp; prints it.<br /><pre class="c" name="code">package main<br /><br />import (<br />    "fmt"<br />    "flag"<br />)<br /><br />func main() {<br /> //Without the call to Parse(), arguments may not be accessed<br /> flag.Parse()<br /> fmt.Printf("%s\n",flag.Arg(0))<br />}</pre>Notice that you will have to invoke the call to flag.Parse() without which you will not be able to access the arguments.<br /><br /><h4>Reflection support in Go</h4></div><div>We take the previous example, add some code for reflection which will help us understand how reflection library may be used. Just some simple example without having to go deep. For that, read this <a href="http://blog.golang.org/laws-of-reflection">post from the official Go blog</a>.  <br /><br />So what is the type returned by flag.Arg(0) ? We will start from there and go use some functions.<br /><pre class="c" name="code">package main<br /><br />import (<br /> "fmt" //regular format package<br /> "flag" //package from command line arguments<br /> "reflect" //package for reflection<br />)<br /><br />func main() {<br /> //Without the call to Parse(), arguments may not be accessed<br /> flag.Parse()<br /> fmt.Printf("%s\n",flag.Arg(0))<br /><br /> passed := flag.Arg(0)<br /> //TypeOf actually returns a Type type<br /> fmt.Println("typeof : ",reflect.TypeOf(passed))<br /><br /> //ValueOf actually returns a Value<br /> fmt.Println("valueof : ",reflect.ValueOf(passed))<br /><br /> //Example functions from the Value type<br /> fmt.Println("type: ",reflect.ValueOf(passed).Type())<br /> fmt.Println("kind: ", reflect.ValueOf(passed).Kind())<br /> fmt.Println("interface:", reflect.ValueOf(passed).Interface())<br />}<br /><br /></pre><h4>Big Integer &amp; Set Bits</h4></div><div>In the future post, I would like to implement a Bloom filter in Go but for that I will need to know how to do the following:</div><div>- Create a big number and set some bit "x" to 1 or 0.</div><div>- Accept a string, convert it to byte array, then hash the byte array.</div><div><br /></div><div>To support the above, I wanted to see how simple big numbers would work. I am only looking enough to support my purpose.&nbsp;</div><div><br /></div><div>Big Numbers (multi-precision numbers) are supported using "math/big" package in Go library. Shown below is an example code that does that.</div><pre class="c" name="code">package main<br /><br />import ( <br />   "fmt"<br />   "math/big"</pre><pre class="c" name="code">   "unsafe"<br />)<br /><br />func main() {<br /> <br /> //create a new big integer<br /> filter := big.NewInt(0)<br /><br /> fmt.Println("filter value: ",filter)<br /> <br /> //accessing the sizeof from unsafe package<br /> fmt.Println("size of : ",unsafe.Sizeof(filter))<br /> <br /> //example of how to cast uintptr to int<br /> filter.SetBit(filter,int(unsafe.Sizeof(filter)*8)-1,1)<br /> <br /> fmt.Println("filter after setbit last to 1 : ",filter)<br />}<br /></pre><br />The above example shows a few things:<br />- Creating an instance of big.Int using the NewInt() call.<br />- Accessing the size of the big.Int using unsafe package exported SizeOf() function<br />- SizeOf() returns uintptr and we convert that to integer - that is a good example of casting<br />- How to set bit on the big.Int using SetBit<br /><br /><h4>Working with Hash functions</h4><div>Example below demonstrates the following</div><div><ul><li>how to convert a string to a byte array</li><li>how to use FNV Hash from the standard Go library</li></ul></div><pre class="c" name="code">package main<br /><br />import (<br /> "fmt"<br /> "hash/fnv"<br />)<br /><br />func main() {<br />        //Create a hash fnv function<br /> hash := fnv.New32()<br /> <br /> name := "Krishna"<br /><br /> //converting string to byte array<br /> namebytes := []byte(name)<br /><br /> fmt.Println("hash reset : ",hash.Sum32())<br /> <br /> hash.Write(namebytes)<br /><br /> fmt.Println("hash of Krishna : ",hash.Sum32())<br /><br /> hash.Reset() //resets the hash<br /><br /> fmt.Println("hash reset : ",hash.Sum32())<br /><br /> //write again<br /> hash.Write(namebytes)<br /> <br /> fmt.Println("hash of Krishna : ", hash.Sum32())<br />}<br /></pre>Hash libraries in the Go "hash" package implements the Hash interface. The implementations in the standard Go library as of this time are adler32, crc32, crc64, fnv-1/fnv-1a. The above example creates an instance of FNV hash, writes a byte array to it and then gets the value through Sum32() call. You can "forget" what is written to it by Reset() function which will allow you to reuse the hash instance.<br /><br />I am newly learning Go and along the way sharing some things that I learnt. If you know of a better way to accomplish what I have shared here, please feel free to comment.
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

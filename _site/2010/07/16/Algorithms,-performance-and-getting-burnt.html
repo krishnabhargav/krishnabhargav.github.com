@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Algorithms, performance and getting burnt</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Algorithms, performance and getting burnt</h2>
+<p class="meta">16 Jul 2010</p>
+
+<div class="post">
+After a long time, I am writing something on my blog. So here it is ..<p>This post is about me starting to solve a small but interesting problem with different approaches and ended up breaking my head against why an algorithm with supposedly O(n) complexity is 4 times slower than O(n^2).</p><p>So here's the issue. I have the following data : </p><p>Name,Value <p/><br />Sridhar,1<p/><br />Ashish,2<p/><br />Prasanth,3<p/><br />Sridhar,4<p/><br />Ashish,5<p/><br />Sridhar,8</p><p>and so on .. I hope you get the idea.<br /><br />Now what I would like to do is to print the following output.<p/><br />Sridhar : 1;4;8;....<p/><br />Ashish : 2;4;.....<p/><br />Prasanth: 3;......<p/><br /><br />Note that here, it does not matter what the values are, I am giving this data just for the example. So shown below is my setup which would be used by my implementations. (I am demoing it as a test).<br /></p><br /><pre name="code" class="csharp"><br />  private Stopwatch sw;<br />        [SetUp]<br />        public void SetUp()<br />        {<br />            GC.GetTotalMemory(true); // I dont know why i did this!<br />            tl = new List<Ud>(10000);<br />            var names = new[] { "Krishna", "Ashish", "Sridhar", "Prasanth" };<br />            foreach (var name in names)<br />                for (var i = 0; i < 2500; i++)<br />                    tl.Add(new Ud { Name = name, DrawerId = i.ToString() });<br />            tl.OrderBy(s => s.DrawerId);<br />            sw = Stopwatch.StartNew();<br />        }<br /><br />        [TearDown]<br />        public void TearDown()<br />        {<br />            sw.Stop();<br />            Console.WriteLine(sw.ElapsedMilliseconds);<br />            sw = null;<br />        }<br /><br />        public class Ud<br />        {<br />            public string Name { get; set; }<br />            public string DrawerId { get; set; }<br />        }<br /><br />        private List<Ud> tl;<br /></pre><br /><p>The above code is self explanatory. I basically create a lot of Ud objects which generate the data that I presented earlier. Shown below is the most straight forward way to do it. It has two for-loops which makes the complexity O(n^2).</p><br /><pre name="code" class="csharp"><br />[Test]<br />        public void BasicImplementation()<br />        {<br />            var nvcs = new List<NameValueCollection>();<br />            var list = new List<string>();<br />            foreach (var item in tl)<br />            {<br />                if (list.Contains(item.Name)) continue;<br /><br />                string val = string.Empty;<br /><br />                foreach (var item2 in tl)<br />                {<br />                    if (item2.Name == item.Name)<br />                        val += item2.DrawerId + ";";<br />                }<br /><br />                nvcs.Add(new NameValueCollection { { "Name", item.Name }, { "DrawerId", val } });<br />                list.Add(item.Name);<br />            }<br />            //foreach (var nvc in nvcs)<br />            //    Console.WriteLine(nvc["Name"] + " : " + nvc["DrawerId"]);<br />            Assert.AreEqual(4, nvcs.Count);<br />        }<br /></pre><br /><p> Now I went ahead and added another potential implementation which gives the same result but instead makes use of dictionary to track the strings that we build for each name in the list of objects. So instinctively, it appears that the dictionary method would be way faster than the one mentioned above. Lets look at that code. </p><br /><pre name="code" class="csharp"><br />        [Test]<br />        public void ADictionary()<br />        {<br />            var vals = new Dictionary<string, string>();<br />            foreach (var item in tl)<br />            {<br />                if (!vals.ContainsKey(item.Name))<br />                    vals[item.Name] = item.DrawerId;<br />                else<br />                    vals[item.Name] = vals[item.Name] + item.DrawerId + ";";<br />            }<br />            Assert.AreEqual(4, vals.Values.Count);<br />        }<br /></pre><br /><p> When I ran these two tests, I did not notice any performance gain with the above O(n) implementation and in fact it was three times slower. So why was it slower? Look at the setup, it has GC.GetTotalMemory(true) which forced a full garbage collection and its time was accounted in the time consumed by this dictionary as well since for the second time (when test with dictionary was executing) it had a lot of strings to clean up. So why did I put it in the first place? The answer is "I was not thinking straight". Never ever use GC classes in your code. It is a bad-bad-bad practice.</p><br /><p>So I remove this GC call made and rerun the tests again. Yet I do not see any performance gain. WHY?? I took a lot of time trying to diagnose why this is happening and eventually gave up manual inspection. I downloaded the trail version of dotTrace (which is freaking awesome tool) Performance 4.0 and made it profile both the tests. The culprit was the strings. If you look at the code right, we are generate a lot of strings whose "Concat" operation was so time consuming that it dominated the gain that we obtained using O(n) algorithm.</p><br /><p>So the lesson here is "Be watchful of the strings that are generated when your code executes, otherwise you would be burned". It does not matter how small the string concatenation may seem but in cases like above it piles up a lot and screws up your clever algorithm. All I did was to change the tests to use stringbuilder instead of Strings.</p> <br /><ul><br /><li> Do not use GC calls in your code, especially those which force GC.<br /><li> Use a profiler to accurately capture performance information of specific methods or your program. Stopwatch, Timers, etc are not good enough and waste of time.<br /><li> Be aware of the impact of string operations. Use StringBuilder wherever possible. Use String.Format() in other simpler cases.<br /></ul><br />I will continue in the next post with some code that shows you how to approach the problem I initially started with using LINQ and how simple things would appear.
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Dependency Injection in Scala and some other stuff</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Dependency Injection in Scala and some other stuff</h2>
+<p class="meta">26 Jan 2010</p>
+
+<div class="post">
+<p>My new&#160; found love is the Java Spring framework. I initially looked at the SpringFramework for .NET and thought it was really good and well designed. But then for a pet project of mine, my friend promised to help me given the project would be on the JVM. So we decided that we shall consider Scala as the language of choice on the JVM. Now, I know how I can do DI using Spring Container in Java. So I was wondering if I could do the same in Scala. Turns out, it is not so difficult after all (so far).</p>  <p>For my scala development environment, I played with Eclipse, IntelliJ Community Edition and then Netbeans. So far, Netbeans has the best support for Scala in the form of IDE integration. There are some issues with it but then it is not all too bad. One initial issue was that even though the Spring JAR files were in my class path, the netbeans editor complained that it could locate the Spring Jars. The error message was something like “the value springframework is not a member of the package org”. Turns out, if you clean and build the project, it would build successfully but the editor keeps complaining. The Netbeans wiki talked about having some “Reset Scala Parser” item on the context menu but I am so dumb that I still could not find it. So if there is no reset trigger then how about we close and start the IDE. And it works! For now, since I am using nightly builds (follow the wiki link here <a href="http://wiki.netbeans.org/Scala68v1">http://wiki.netbeans.org/Scala68v1</a>) I would not mind these minor issues. But let me tell you, I spent a whole evening trying to figure out which is the best IDE for latest Scala and the winner is Netbeans, without any question. </p>  <p>Now at the time I created my sample project, I made sure that I check the settings in Netbeans project creation wizard which allows me to copy all my libraries into a common folder such that it would be easier when working as a team. Then I added the following files from the Spring Distribution.</p>  <p><a href="http://lh6.ggpht.com/_Oy9HuksgrdU/S1-BLLaqxvI/AAAAAAAABKg/dH3SOpNgizA/s1600-h/image%5B3%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_Oy9HuksgrdU/S1-BLSpfZaI/AAAAAAAABKk/Y2njS3PDl0U/image_thumb%5B1%5D.png?imgmax=800" width="644" height="251" /></a> </p>  <p>Apart from these, I added commons-logging jar too.</p>  <p>Following code shows how you can use Spring within scala. So lets say I have an interface Sample. (which are almost traits in Scala). And I have a concrete implementation ScalaImpl. Follow the code carefully and with some fundamental understanding of Spring&#160; framework, you should be all set.</p>  <pre name="code" class="scala"><br />/** Main.scala **/<br />package tryscala<br />import org.springframework.context.support.FileSystemXmlApplicationContext<br /><br />object Main {<br /><br />  /**<br />   * @param args the command line arguments<br />   */<br />  def main(args: Array[String]): Unit = {<br />    val fs = new FileSystemXmlApplicationContext("Configs\\Spring.xml")<br />    val sample = fs.getBean(classOf[Sample]).asInstanceOf[Sample]<br />    println(sample sayHello)   <br />  }<br />}<br /><br />/** Sample.scala **/<br />package tryscala<br /><br />trait Sample {<br />  def sayHello(): String<br />}<br /><br />/** SampleImpl.scala"<br />package tryscala<br /><br />class SampleImpl(var firstName:String) extends Sample {<br />  def sayHello() = "Welcome to Scala : " + firstName<br />}<br /></pre><br /><br /><br/><br /><br /><p> The spring configuration file (Configs\\Spring.xml) is shown below. </p><br /><br /><pre name="code" class="xml"><br />&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;<br />&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;<br />       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;<br />       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd&quot;&gt;<br />    &lt;bean id=&quot;sample&quot; class=&quot;tryscala.SampleImpl&quot;&gt;<br />        &lt;constructor-arg name=&quot;firstName&quot; value=&quot;Krishna Vangapandu&quot;/&gt;<br />    &lt;/bean&gt;<br />&lt;/beans&gt;<br /></pre><br /><br /><p> I hope to be able to share more about what we are doing and how Scala effects us, as we move on. </p>  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

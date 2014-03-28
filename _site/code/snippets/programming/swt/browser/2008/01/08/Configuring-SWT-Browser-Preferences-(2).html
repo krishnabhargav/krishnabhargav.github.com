@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Configuring SWT Browser Preferences (2)</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Configuring SWT Browser Preferences (2)</h2>
+<p class="meta">08 Jan 2008</p>
+
+<div class="post">
+In one of my previous posts, I blogged about the way one could set <a href="http://krishnabhargav.blogspot.com/2007/09/configuring-swt-browser-widget.html">SWT Browser Widget Preferences</a> and there has been a comment on my blog!!! (well apart from the comments that my friend Suri makes)<br />The comment has rightly pointed out to a way that one could programatically set the preferences of SWT Browser widget. The way it could be done is shown in the following code snippet.<br /><div><br />Browser browser = MozBrowserUtil.openMozillaBrowser("about:blank");<br />nsIServiceManager servMgr = Mozilla.getInstance().getServiceManager();<br />nsIPrefBranch prefs = ( nsIPrefBranch )servMgr.<br />             getServiceByContractID("@mozilla.org/preferences-service;1",<br />             nsIPrefBranch.NS_IPREFBRANCH_IID);<br /><br />prefs.setIntPref("network.proxy.type", 1);<br />prefs.setCharPref("network.proxy.http", host);<br />prefs.setIntPref("network.proxy.http_port", port);<br /><br />browser.setUrl(url);<br /></div><br /><br />Again, I thank the anonymous commentor for bringing this to my notice. I appreciate all your comments and would be better if you leave me atleast an email or a URL to your page/blog so that I can get back to you.
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

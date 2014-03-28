@@ -1,0 +1,10 @@
+---           
+layout: post
+title: Code to worry!
+date: 2007-11-28 15:02:24 UTC
+updated: 2007-11-28 15:02:24 UTC
+comments: false
+categories: 
+---
+
+In this post, I intend to post something that we discussed in our Advanced Computer Network and Security. <br />1. fork() - too many forks could halt the system, if the malicious code has enough privileges to launch that many forks. This is probably not a great problem to worry about but could be given a thought!<br />2. The talk was interesting. We were shown a simple echo server code that when run and well exploited can give you a shell to own! Through which you can list files and do everything that you can do from a Bash shell. So what did the program have? <br />The problem was that the array size was fixed and then the exploit was to copy large buffer onto a smaller buffer causing a buffer overflow attack. The exploit data has to be carefully crafted. Anyway, StackGuard is a simple fix that works for most of the buffer overflows. The other fix is to have a pointer declared in the first line of the function and save its current reference and at every exit, you are going to check if the saved value did not change. I know this does not make sense unless you see the code, but unfortunately I do not have that. The overall summary is to say that when you copy buffers, you should be careful to see that the copy is going to be safe. Few commands that i came to know. You have a port x open and then see what service uses that, you could do a <br />/usr/sbin/lsof | grep x<br />3. Using netstat to check the open ports<br />netstat -lt<br />Anyway class over so more on this later,hopefully.

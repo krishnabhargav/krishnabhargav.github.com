@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Code to worry!</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Code to worry!</h2>
+<p class="meta">28 Nov 2007</p>
+
+<div class="post">
+In this post, I intend to post something that we discussed in our Advanced Computer Network and Security. <br />1. fork() - too many forks could halt the system, if the malicious code has enough privileges to launch that many forks. This is probably not a great problem to worry about but could be given a thought!<br />2. The talk was interesting. We were shown a simple echo server code that when run and well exploited can give you a shell to own! Through which you can list files and do everything that you can do from a Bash shell. So what did the program have? <br />The problem was that the array size was fixed and then the exploit was to copy large buffer onto a smaller buffer causing a buffer overflow attack. The exploit data has to be carefully crafted. Anyway, StackGuard is a simple fix that works for most of the buffer overflows. The other fix is to have a pointer declared in the first line of the function and save its current reference and at every exit, you are going to check if the saved value did not change. I know this does not make sense unless you see the code, but unfortunately I do not have that. The overall summary is to say that when you copy buffers, you should be careful to see that the copy is going to be safe. Few commands that i came to know. You have a port x open and then see what service uses that, you could do a <br />/usr/sbin/lsof | grep x<br />3. Using netstat to check the open ports<br />netstat -lt<br />Anyway class over so more on this later,hopefully.
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

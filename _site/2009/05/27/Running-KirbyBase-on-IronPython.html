@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Running KirbyBase on IronPython</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Running KirbyBase on IronPython</h2>
+<p class="meta">27 May 2009</p>
+
+<div class="post">
+<p>As I was looking for embedded database systems, I came across this pure python database called KirbyBase. So I decided that I would make it run on IronPython. So this post describes on how to make KirbyBase run on IronPython and using ipy.exe. Note that I am not looking at integrating this database into C# application yet. [may be in the future post]</p>  <p>So what are the steps?</p>  <p>1. Get the latest IronPython and install it on your machine. You should be seeing ipy.exe in the installation directory.</p>  <p>2. Get the <a href="http://www.netpromi.com/kirbybase_python.html">KirbyBase download from its website</a>.</p>  <p>3. Download and install Python 2.6 whose libraries are required to run the database tests.</p>  <p>4. Once Kirbybase and Python 2.6 are installed, look for kbtest.py inside kirbybase installation directory.</p>  <p>5. Copy the kbtest.py into the directory which has ipy.exe (the IronPython installation directory).</p>  <p>6. Modify the kbtest.py to include the Python and KirbyBase directories into the path. The final result should look something like shown below.</p>  <p><a href="http://lh3.ggpht.com/_Oy9HuksgrdU/Sh2oS-fqxbI/AAAAAAAAA0o/jSlhbVH2Z44/s1600-h/image%5B3%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_Oy9HuksgrdU/Sh2oS8i6gtI/AAAAAAAAA0s/2AF6rEflp9A/image_thumb%5B1%5D.png?imgmax=800" width="420" height="313" /></a> </p>  <p>Notice that I have moved “import sys” statement ahead of “import os”. The lines 2 and 3 adds the directories for Python2.6 and KirbyBase to the path.</p>  <p>Then from command prompt type in the following</p>  <p><strong>ipy kbtest.py</strong></p>  <p>The result should look like shown below.</p>  <p><a href="http://lh4.ggpht.com/_Oy9HuksgrdU/Sh2oTCIum4I/AAAAAAAAA0w/q-vPiXWTITo/s1600-h/image%5B9%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_Oy9HuksgrdU/Sh2oTT1jfDI/AAAAAAAAA00/f0_KgrTOwqw/image_thumb%5B5%5D.png?imgmax=800" width="636" height="782" /></a> </p>  <p>May be next time, I would like to see what it takes to integrate this database into C# application. Until then, have a nice time. Let me know if you have better approaches than what I did here. Thank you.</p>  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

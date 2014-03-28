@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Deleting duplicate rows with unique key from MySQL</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Deleting duplicate rows with unique key from MySQL</h2>
+<p class="meta">13 Oct 2008</p>
+
+<div class="post">
+<p>A requirement just popped up for me, where I have to delete rows with duplicate &quot;MainUrl&quot; but these rows have unique ID, generated as an auto-increment column. Thought, it would be a straight-forward thing, but not until I actually sat down writing the query. Finally, after some lookup and some meditation, I ended up with the following query.   <br /><span style="color: blue">DELETE FROM&#160;&#160;&#160; </span>CrawledUrl    <br /><span style="color: blue">WHERE </span>ID <span style="color: gray">NOT IN     <br />(</span><span style="color: blue">SELECT&#160;&#160;&#160; </span><span style="color: magenta">MIN</span><span style="color: gray">(</span>ID<span style="color: gray">)     <br />&#160; </span><span style="color: blue">FROM&#160; </span>CrawledUrl    <br />&#160; <span style="color: blue">GROUP BY&#160;&#160; </span>MainUrl<span style="color: gray">)     <br />&#160; AND </span>IsProcessed <span style="color: gray">&lt;&gt; </span><span style="color: red">'True'</span></p> Well, now that I have tested it in SQL Server, it worked and I was happy. So I decided to try it out on my production database (I now call my thesis database as production database, sounds professional). So, I ran the query&#160; and I ended up with this error:  <br /><code>ERROR 1093 (HY000): You can't specify target table 'CrawledUrl' for update in FROM clause</code>  <br />So after doing a little more meditation, I came to know that MySQL right now does not support both updates and select on the same table.  <br />So, the fix? The problem, like I mentioned is to work on the same table which MySQL does not allow. So we need a temporary table - create one or let MySQL create one.   <br />  <br />So when does MySQL create a temporary database? It does when you create an alias in the query saying (select * from myTable) as mT. Now mT is a temporary table and no longer the same myTable. So pretty neat huh!  <br />  <br />Finally, the changed query was:  <div style="border-right: gray 1px solid; padding-right: 4px; border-top: gray 1px solid; padding-left: 4px; font-size: 8pt; padding-bottom: 4px; margin: 20px 0px 10px; overflow: auto; border-left: gray 1px solid; width: 97.5%; cursor: text; max-height: 200px; line-height: 12pt; padding-top: 4px; border-bottom: gray 1px solid; font-family: consolas, &#39;Courier New&#39;, courier, monospace; background-color: #f4f4f4">   <div style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none">     <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: white; border-bottom-style: none"><span style="color: #606060">   1:</span> <span style="color: #0000ff">delete</span> <span style="color: #0000ff">FROM</span> thesis.CrawledUrl</pre><br /><br />    <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><span style="color: #606060">   2:</span>     <span style="color: #0000ff">WHERE</span>  ID <span style="color: #0000ff">NOT</span> <span style="color: #0000ff">IN</span></pre><br /><br />    <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: white; border-bottom-style: none"><span style="color: #606060">   3:</span>     (</pre><br /><br />    <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><span style="color: #606060">   4:</span>     <span style="color: #0000ff">SELECT</span> <span style="color: #0000ff">MIN</span>(ID)</pre><br /><br />    <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: white; border-bottom-style: none"><span style="color: #606060">   5:</span>         <span style="color: #0000ff">FROM</span>  (<span style="color: #0000ff">select</span> Id,MainUrl <span style="color: #0000ff">from</span> thesis.CrawledUrl) <span style="color: #0000ff">as</span> x</pre><br /><br />    <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: #f4f4f4; border-bottom-style: none"><span style="color: #606060">   6:</span>         <span style="color: #0000ff">GROUP</span> <span style="color: #0000ff">BY</span>  MainUrl)</pre><br /><br />    <pre style="padding-right: 0px; padding-left: 0px; font-size: 8pt; padding-bottom: 0px; margin: 0em; overflow: visible; width: 100%; color: black; border-top-style: none; line-height: 12pt; padding-top: 0px; font-family: consolas, &#39;Courier New&#39;, courier, monospace; border-right-style: none; border-left-style: none; background-color: white; border-bottom-style: none"><span style="color: #606060">   7:</span>     <span style="color: #0000ff">and</span> IsProcessed = <span style="color: #006080">'False'</span></pre><br />  </div><br /></div>  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

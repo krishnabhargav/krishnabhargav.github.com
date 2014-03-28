@@ -1,0 +1,10 @@
+---           
+layout: post
+title: C# Code to check if the machine is 64-bit
+date: 2008-10-17 15:14:20 UTC
+updated: 2008-10-17 15:14:20 UTC
+comments: false
+categories: 
+---
+
+<p>I once had a requirement for the same problem. I figured out the solution but never made a point to blog it. But recently few others had the same issue and I had to think again how I did it. Anyway here is the simple method which tells you if you are running a 64-bit OS.</p>  <pre class="code"><span style="color: blue">public bool </span>Is64BitMachine()<br />{<br />            <span style="color: blue">return </span><span style="color: #2b91af">IntPtr</span>.Size == 8;<br />}</pre><br />The idea is to use size of the IntPtr to determine if it is 64-bit or 32-bit. In case of 32-bit machines, IntPtr size is 4 bytes.  

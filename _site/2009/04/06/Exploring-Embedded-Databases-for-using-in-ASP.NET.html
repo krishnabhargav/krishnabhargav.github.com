@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Exploring Embedded Databases for using in ASP.NET</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Exploring Embedded Databases for using in ASP.NET</h2>
+<p class="meta">06 Apr 2009</p>
+
+<div class="post">
+<p align="justify">Recently, from the past couple of days I have been obsessed with finding an embedded database that supports concurrent read/write operations and which is easy to deploy. The following are the ones that I have come across and as we see, I share my personal opinion on what issues I think I might face if i ever have to use it in a ASP.NET application which might potentially have multiple users performing read/write on the database. Let me start with the ones I would not be using</p>  <p align="justify"><strong>SQL Server compact edition</strong></p>  <p align="justify">I have seen mixed reviews about this database. I found Ayende personally moved to SSCE from SQLite as his choice of embedded database and he is having some issues. If he is unable to resolve this, I dont think I will ever be able to. </p>  <p align="justify">Moreover, the licensing of SSCE is intriguing though it says FREE. I personally did not get a nice feel about it.</p>  <p align="justify">The benefits : use entity framework, LINQ2SQL straight off the box from Visual Studio 2008.</p>  <p align="justify">Personal Verdict? Don’t care.</p>  <p align="justify"><strong>Firebird SQL</strong></p>  <p align="justify">Some say, its good and some does not think so. Anyway the issue I have with this one is that one needs to go through a <a href="http://firebirdsql.org/dotnetfirebird/blog/2005/11/how-to-use-embedded-firebird-in-aspnet.html">lot of workarounds</a> to make it work with ASP.NET application and they say “try not to use this one in ASP.NET application”. Seriously – I believe 8 out of 10 applications people try to make are web applications and is intended to have multiple read/writes so they expect the database to have workaround the Reader/Writer scenario. Moreover, I decided I will stick to using NHibernate + FluentNHibernate as my DAL which makes me not feel good about using Firebird. I love FluentNHibernate and always disliked configurations using XML. I think, if something changes in your system then why not recompile your system and test it. Is it so hard? </p>  <p align="justify">Benefits? FirebirdSQL supposedly provides what SQLite cannot – better concurrency and “no file based locking”.</p>  <p align="justify">Issues? Oh! Lot many. First of all, there is a <a href="http://www.firebirdsql.org/index.php?op=files&amp;id=netprovider">DDEX</a> which they claim to work (did not work for me after spending two hours and yeah this has been the only thing I could not get to work in the past few months - but the documentation sucks big time). No one has ever bothered to write about using Firebird with C# applications (from what I searched) and those who have written did not do a great job, given the lack of proper official documentation.&#160; Another issue is that the work somehow is progressing very slow and this made me think that future releases are way too far to see any of my issues to be fixed. Moreover, FluentNHibernate does not support Firebird straight off the box. I need to write hibernate.cfg.xml and pass it on to the Configure() method which I don’t think I would want to do.</p>  <p align="justify"> Personal Verdict? Don’t care.</p>  <p align="justify"><strong>ScimoreDB</strong></p>  <p align="justify">Sounds scary to be used in an application that I plan to support for a long time. The documentation was decent but I don’t think it is that popular with the NHibernate folks out there. And being a lazy person that I am, I do not want to spend time mapping entities with tables. </p>  <p align="justify">Benefits? Not entirely clear about what to write – but the few folks who used it says its fast. Havent bothered trying it.</p>  <p align="justify">Issues? No ORM tutorial!! :)</p>  <p align="justify"><strong>VistaDB – </strong>commercial, so forget about it. Anyway, they say it is very good if you are willing to pay for it. If it was free, then I might have spent time to write my own mini ORM for this one (if there wasnt NHibernate support)</p>  <p align="justify"><strong>EasyDB – </strong>they had a dnrTV session but the site disappeared –&gt; Another reason why i think everyone in the blogging community is smarter than me. Stick to SQLite!!</p>  <p align="justify">Now the bigger part of the blog – using SQLite in ASP.NET scenario.</p>  <p align="justify"><strong>Working with SQLite in ASP.NET environment.</strong></p>  <p align="justify">Now, for those who are here looking for an answer to SQLite issue with file-level locking, you might be disappointed. Anyway, I did play with SQLite with NHibernate (ofcourse used FluentNH). It looks good for my sample tests and haven’t seen any major issues yet – because I haven’t written anything complex yet. </p>  <p align="justify">Issues? Folks says there is no support for concurrent read/write situations since the locks are implemented on file-level instead of table-level. So a writer is blocked out if there are any readers and readers are blocked out if there is a writer. But i hope to find some answer. I saw <a href="http://www.sqlite.org/sharedcache.html">this page on the SQLite documentation</a> which I plan to test out pretty soon. As of now, I have no idea on how to make it work from NHibernate using <a href="http://sqlite.phxsoftware.com/">System.Data.SQLite.</a></p>  <p align="justify">Benefits? This is by far the most widely accepted embedded database that I have seen during my research and I personally like the support for .NET in the form of excellent .NET providers that Robert has come up with.</p>  <p align="justify">What else? I came across others like SharpHSQL (project looks dead), one from IBM and few other paid ones – I don’t want to pay at this moment.</p>  <p align="justify"><strong>What next?</strong></p>  <p align="justify">I have had some questions whose answers I wish to find out either looking or trying. Once I have them, I would post them very soon. Also I would like to post a simple Database Interface wrapper using Fluent NHibernate which I used in my sample applications. The following is the road map for what I will be doing next. There might a couple of posts about them here.</p>  <p align="justify">1. <a href="http://www.mail-archive.com/sqlite-users@sqlite.org/msg06934.html">One of the discussions on SQLite forums</a> suggested that we serialize all read/write operations to a single thread. I need to figure out doing this on ASP.NET applications where having a background thread is not a good idea since the application pool is recycled killing all my threads.</p>  <p align="justify">2. If the above option does not work, then I have to play with the Shared Cache mode.</p>  <p align="justify">3. Tweaking and squeezing the best out of NHibernate for concurrent usages.</p>  <p align="justify">4. What is the best way to have NHibernate sessions in an ASP.NET application. Right now, I create a session as soon as a new ASP.NET session starts and flush it when the session ends. Theoretically it should be a good choice, but I need to dig more into it.</p>  <p align="justify">If you have found out anything more interesting than what I wrote here, please feel free to leave me a comment.</p>  <p align="justify">Anyway my final choice of free/embeddable database for my ASP.NET application would be SQLite. I would somehow figure out a way to allow concurrent read/write operations and will post here if i figure out something.</p>  <p align="justify"></p>  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

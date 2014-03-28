@@ -1,0 +1,10 @@
+---           
+layout: post
+title: MSDN Question on WPF : Display Image XAML without copy/paste
+date: 2008-10-03 15:22:00 UTC
+updated: 2008-10-03 15:22:00 UTC
+comments: false
+categories: WPF Forum Questions
+---
+
+<p>As a part of personal development, I have once again started answering questions on forums. I was once a top contributor at dotnetforums.com but the site is no longer up. From what I learnt back then, I strongly believe that you get to learn more by answering people's questions online. As a part of it, I decided I would write a little about every answer that I give on windowsclient.net, if it is marked as answer. So, here comes the first post. One member had company logo exported as XAML. Now he wants the logo to show up inside an Image element, without having to paste the XAMl at all the places.</p>  <p><strong><u>Question: Is there a way to display the contents of this file inside an &lt;Image&gt; element, therefore without copying/pasting the file content?</u></strong></p>  <p><em><strong>My suggestion (definitely not perfect):</strong>      <br /></em>Give the Image a name. Modify the XAML you got into a drawing image root and save it as a resource. Load the XAML at runtime from the resource and use XamlReader.Load(&quot;your xaml&quot;). It now returns DrawingImage and set it to the source of the actual image. So, it would look something like this.</p>  <p>DrawingImage img = XamlReader.Load(&quot;mylogo.xaml&quot;) as DrawingImage;</p>  <p>Set this &quot;img&quot; as Source for the Image element.</p>  <p>where mylogo.xaml would be like:</p>  <p>&lt;DrawingImage xmlns=&quot;wpf namespace...&quot;&gt;</p>  <p>&lt;!-- Xaml for your image, that fits in as a child for DrawingImage --&gt;</p>  <p>&lt;/DrawingImage&gt;</p>  

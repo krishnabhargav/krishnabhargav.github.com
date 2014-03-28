@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Debugging W3WP with “Attach to Process”</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Debugging W3WP with “Attach to Process”</h2>
+<p class="meta">26 May 2009</p>
+
+<div class="post">
+<p>When trying to load SOS.dll while the debugger is attached to the w3wp process, if you encounter the following message.</p>  <p><strong>SOS not available while Managed only debugging.&#160; To load SOS, enable unmanaged debugging in your project properties.</strong></p>  <p>Then, stop the debugging session and in the “attach to process” dialog, select your process and click on the “select” button. Then you can pick what kind of debugging sessions would you like to permit.</p>  <p><a href="http://lh4.ggpht.com/_Oy9HuksgrdU/ShxaVN2TwYI/AAAAAAAAA0Y/JjpY4Zzi-Qs/s1600-h/image%5B6%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_Oy9HuksgrdU/ShxaVXajpFI/AAAAAAAAA0c/g_4SXy__Mns/image_thumb%5B2%5D.png?imgmax=800" width="482" height="256" /></a> </p>  <p>By default, the code to debug is automatically determined in which case only Managed and T-SQL debugging is enabled.</p>  <p>Another useful feature would be using “New Breakpoint” functionality. This would be useful when you are using&#160; Attach to Process and do not have the source code opened as a project. In this case, you can go to Debug-&gt;New Breakpoint-&gt; Break at function.</p>  <p><a href="http://lh4.ggpht.com/_Oy9HuksgrdU/ShxaVZai4jI/AAAAAAAAA0g/8Exn9_NTIUs/s1600-h/image%5B10%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_Oy9HuksgrdU/ShxaVjDKmDI/AAAAAAAAA0k/6iV6ULFk3r8/image_thumb%5B4%5D.png?imgmax=800" width="598" height="271" /></a> </p>  <p></p>  <p></p>  <p>Once you are in this window, give the function name where you want to break and then click OK. Ignore any warning messages that it gives and then it would hit the breakpoint if the function you named would be executed. I will be posting more as I learn more about using SOS.dll with W3WP.</p>  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

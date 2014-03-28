@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Makefile to compile java programs</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Makefile to compile java programs</h2>
+<p class="meta">05 Feb 2007</p>
+
+<div class="post">
+The following is the makefile to compile java programs:<br /><br />all: | remove_classes ProxyServer.class<br /><br />remove_classes:<br />       rm -f *.class<br /><br />ProxyServer.class: ProxyServer.java<br />       javac ProxyServer.java -nowarn<br /><br /><br />The order of execution of jobs within the makefile can be normal or we can specify the order.  The jobs listed after the pipe (|) are all orderly, as mentioned above.<br /><br />all: | first second third<br /><br />Makefile can be executed as:<br />> make <target-name><br /><br />If target-name is omitted, then the first job is run. So in the first job, we name it as "all" and then there we specified the jobs it should run, along with the order. It is simple to understand that the current make file removes all old class files and then compiles the java program to get the latest class files. Though this is not needed, as javac would update the class files, this simple example helps us to understand "make".<br /><br />Have fun!</target-name>
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

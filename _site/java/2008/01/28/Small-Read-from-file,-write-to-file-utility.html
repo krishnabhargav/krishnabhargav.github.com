@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Small Read from file, write to file utility</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Small Read from file, write to file utility</h2>
+<p class="meta">28 Jan 2008</p>
+
+<div class="post">
+A Java Class that I wrote for my own use. Just to have ease of access.....<br />--------------------------------------------------------------------------------------------------<br />package buddi.thesis;<br /><br />import java.io.BufferedReader;<br />import java.io.File;<br />import java.io.FileNotFoundException;<br />import java.io.FileReader;<br />import java.io.IOException;<br />import java.io.PrintWriter;<br /><br />public class DataStore {<br /><br />   private PrintWriter writer=null;<br />   private BufferedReader reader=null;<br />   public DataStore(String input, String output)<br />   {<br />       try {<br />           reader = new BufferedReader(new FileReader(input));<br />           writer = new PrintWriter(new File(output));<br />       } catch (FileNotFoundException e) {<br />           e.printStackTrace();<br />       }<br />   }<br /> <br />   public String getNextItem()<br />   {<br />       if(reader==null)<br />           return null;<br />       String temp;<br />       try {<br />           temp = reader.readLine();<br />           if(temp!=null)<br />               return temp;<br />       } catch (IOException e) {        }<br />       return null;<br />   }<br /> <br />   public void writeToOutput(String text)<br />   {<br />       if(writer==null)<br />       {<br />           System.out.println("ERROR : COULD NOT WRITE TO OUTPUT!");<br />           return;<br />       }<br />       writer.println(text);<br />       writer.flush();<br />   }<br /> <br />   public void close()<br />   {<br />       try {<br />           reader.close();<br />           writer.close();<br />           reader=null;<br />           writer=null;<br />       } catch (IOException e) {<br />       }<br />   }<br />}
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

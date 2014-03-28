@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>How to resolve StackOverflowException in Java?</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>How to resolve StackOverflowException in Java?</h2>
+<p class="meta">16 Jul 2007</p>
+
+<div class="post">
+Well, not only when you use deep recursion that you encounter a StackOverflowException but also when you serialize objects you might see this exception.<br />Well you can always avoid this error by setting a VM option to java, either from eclipse or when you run it from command line, as an argument.<br />If it is in Eclipse, go to the Run dialog of the current Java program that you wish to run and go to the second tab (arguments I guess) and then in the VM Options you can set "-Xss1024K" which means that any thread that runs on Java VM will be allotted a Stack size of 1 MB which is quite enough for most of the cases.<br />If you wish to serialize data that has a lot of interlinked references then you might want to keep it something really high, just to be on safer side.<br />Interesting stuff is going on in the DBMS class at my university and we are learning really good stuff especially the performance oriented nature of DB algorithms! I enjoy the programming assignments, its fun to learn and code!
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

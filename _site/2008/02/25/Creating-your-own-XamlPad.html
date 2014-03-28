@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Creating your own XamlPad</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Creating your own XamlPad</h2>
+<p class="meta">25 Feb 2008</p>
+
+<div class="post">
+<p>When I was learning WPF Development through the Petzold’s book, in Chapter 19 the author talks a lot about XamlReader (and less about Xaml as such ;), Guess Petzold likes to code more than what he likes to design). Anyway during this I implemented my own XamlPad called “Buddi-XamlPad” which has two meanings <ol> <li>Buddi is my nickname <li>Buddi in Telugu mean “small”.</li></ol> <p>So the xamlpad is like a small-xamlpad like application. It does nothing but render your xaml and it is really really stupid. If you are looking for a better xamlpad than what that ships with VS SDK, then you better take a look at Kaxaml (notstatic.com) which is very good and it has good Xaml intellisense! <p>Anyway, lets get started with Buddi-XamlPad. <ol> <li>My application is as shown below.</li></ol> <p><a href="http://lh5.google.com/krishbhargava/R8Iqaei1-UI/AAAAAAAAAKQ/aEBfK2RtEK8/Capture%5B4%5D"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="240" alt="Capture" src="http://lh4.google.com/krishbhargava/R8IqbOi1-VI/AAAAAAAAAKY/43ItTwDucHc/Capture_thumb%5B2%5D" width="408" border="0"></a>  <ol start="2"> <li>You have a class called BuddiXamlPad which has a static method GetXamlWindow(). It returns an instance of Window which you can run in your application by saying “new Application().Run(BuddiXamlPad.GetXamlWindow())” <li>The code for the BuddiXamlPad class is shown below.</li></ol><pre class="code"><span style="color: blue">class </span><span style="color: black">BuddiXamlPad<br />{<br />    </span><span style="color: blue">static </span><span style="color: black">Window wi;<br />    </span><span style="color: blue">static </span><span style="color: black">RichTextBox rtb;<br />    </span><span style="color: blue">static </span><span style="color: black">Button outputButton;<br />    </span><span style="color: blue">public static </span><span style="color: black">Window GetXamlWindow()<br />    {<br />        wi = </span><span style="color: blue">new </span><span style="color: black">Window();<br />        Grid gd = </span><span style="color: blue">new </span><span style="color: black">Grid();<br />        gd.ColumnDefinitions.Add(</span><span style="color: blue">new </span><span style="color: black">ColumnDefinition());<br />        gd.ColumnDefinitions.Add(</span><span style="color: blue">new </span><span style="color: black">ColumnDefinition());<br />        <br />        outputButton = </span><span style="color: blue">new </span><span style="color: black">Button();<br />        outputButton.Content = </span><span style="color: maroon">"Your XAML output!"</span><span style="color: black">;<br />        gd.Children.Add(outputButton);<br />        Grid.SetColumn(outputButton,</span><span style="color: red">0</span><span style="color: black">);<br />        outputButton.Click += ButtonClick;<br />        <br />        rtb = </span><span style="color: blue">new </span><span style="color: black">RichTextBox();<br />        rtb.Name=</span><span style="color: maroon">"xaml"</span><span style="color: black">;<br />        rtb.AcceptsReturn = </span><span style="color: blue">true</span><span style="color: black">;<br />        gd.Children.Add(rtb);<br />        Grid.SetColumn(rtb,</span><span style="color: red">1</span><span style="color: black">);<br />        wi.KeyDown += WinKeyDown;<br />        wi.Content = gd;<br />        <br />        wi.Title = </span><span style="color: maroon">"Buddi rocks with this XamlPad!"</span><span style="color: black">;<br />        </span><span style="color: blue">return </span><span style="color: black">wi;<br />    }<br />    <br />    </span><span style="color: blue">private static void </span><span style="color: black">WinKeyDown(</span><span style="color: blue">object </span><span style="color: black">sender, KeyEventArgs args)<br />    {<br />        </span><span style="color: blue">if</span><span style="color: black">(args.Key == Key.F5)<br />            ProcessXaml();<br />    }<br />    </span><span style="color: blue">private static void </span><span style="color: black">ButtonClick(</span><span style="color: blue">object </span><span style="color: black">sender,RoutedEventArgs args)<br />    {<br />        ProcessXaml();<br />    }<br />    </span><span style="color: blue">public static void </span><span style="color: black">ProcessXaml(){<br />        </span><span style="color: blue">try</span><span style="color: black">{<br />        TextRange tR = </span><span style="color: blue">new </span><span style="color: black">TextRange(rtb.Document.ContentStart,rtb.Document.ContentEnd);<br />        </span><span style="color: blue">string </span><span style="color: black">xaml = tR.Text;<br />        StringReader reader = </span><span style="color: blue">new </span><span style="color: black">StringReader(xaml);<br />        <br />        </span><span style="color: green">//Append Xaml Namespace<br />        </span><span style="color: black">XmlDocument xd = </span><span style="color: blue">new </span><span style="color: black">XmlDocument();<br />        xd.Load(reader);<br />        xd.DocumentElement.SetAttribute(</span><span style="color: maroon">"xmlns"</span><span style="color: black">,</span><span style="color: maroon">"http://schemas.microsoft.com/winfx/2006/xaml/presentation"</span><span style="color: black">);<br />        StringBuilder sb = </span><span style="color: blue">new </span><span style="color: black">StringBuilder();<br />        StringWriter sw= </span><span style="color: blue">new </span><span style="color: black">StringWriter(sb);<br />        xd.Save(sw);<br />        <br />        </span><span style="color: green">//Now Read the complete XAML.<br />        </span><span style="color: black">XmlReader xmlReader = </span><span style="color: blue">new </span><span style="color: black">XmlTextReader(</span><span style="color: blue">new </span><span style="color: black">StringReader(sb.ToString()));<br />        </span><span style="color: blue">object </span><span style="color: black">obj = XamlReader.Load(xmlReader); </span><span style="color: green">//Get the objects of the corrs. Xaml<br />        </span><span style="color: black">outputButton.Content = obj;<br />        }</span><span style="color: blue">catch</span><span style="color: black">(Exception ex){ MessageBox.Show(ex.Message);}<br />    }<br />}</span></pre><a href="http://11011.net/software/vspaste"></a><br /><p>The code is pretty simple, the only problem I initially faced was that I had to add “xmlns” to the WPF namespace to the root of the xaml I write into the RichTextbox, which is kind of lame if not fixed. So I used Xml API to read the Xaml as XML and added the namespace. Isn’t it fun? Not many comments in the code but hey its all like 40-50 lines and I don’t think anyone would be bothered to look at it. Wish, I had time so that I would have done something good but given my masters’ thesis and other projects I do, I hardly have any time left.<br /><p>Well the point is that it is pretty much possible to write good applications with .NET Framework and with every release it is getting bigger and better. Microsoft Rocks!</p>  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

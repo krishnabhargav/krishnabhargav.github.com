@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Groovy Programming with Eclipse - 2</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Groovy Programming with Eclipse - 2</h2>
+<p class="meta">28 Jan 2008</p>
+
+<div class="post">
+In the current post, I would present how to work with Numbers and variables in Groovy. Before we move into the program, some Groovy fundas.<br />1. Groovy classes are binary-compatible with Java classes - the Groovy compiler generates the same byte codes as that of javac.<br />2. Groovy brings uniformity to Java language. Everything in Groovy is an object - including fundamental data-types.<br />3. Groovy is dynamically typed. For example, having the following statements in the same block would work in Groovy while fails in Java<br />def x = 10; // integer<br />x = "bhargav"; // string<br />Based on the value assigned to the variable, the type of the variable is determined.<br />4. Groovy provides "Properties" which are already present in C# and VB.NET. They are kind of mixture of both instance fields and methods.<br />5. Other interesting feature is the presence of data structures like Maps, List as native language constructs. In java we use ArrayList or LinkedList, while in Groovy, its just []. For example,<br />def names = []; //creates an empty names list.<br /><br />Well as you have already seen, to create a variable we use the keyword "def" and if the variable name already exists then we can assign the value we wish to straight-away. Its just that simple.<br />Use the earlier post and create a new Groovy class in Eclipse. Then try to create a variable using "def" as shown.<br />def name = "Krishna";<br />Now since the RHS is a string, internally Groovy compiler picks java.lang.String. We can know what class an object belongs to using the ".class" property.<br /><br />println name.class;<br /><br />The above statement would now print "java.lang.String". Now try assigning a different value, now lets assign an integer and look at the class.<br /><br />name = 100;<br />println name.class;<br /><br />This would now print "Integer" on the console. Similary, let us create a list and then see what class internally it uses.<br /><br />def names = ["Bhargava", " loves ", " Programming."];<br />println names.class;<br /><br />Guess what this would print? This prints java.util.ArrayList !! So lists of Groovy internally uses "ArrayList". As we can see everything here is a class and its basically appears as top-layer on Java to make programmers lazy. So other language rules/regulations are still applicable to Groovy. For example, you cannot call non-static methods from a static method directly. Now that we are talking about methods, let us write a simple method. This method should now return us what class the argument passed belongs to. Well, for not-so-experienced but good programmers, one question raises. What should be the return type? Well the class property is of type "Class".<br />So is name.class.class a valid one?? Definitely! it would be java.lang.Class. Now let us get back to a simple program showing methods in Groovy.<br />class VariablesAndMethods<br />{<br />static main(args) //<strong>notice with groovy even the main args is not specified as String[]</strong><br />{<br />println className(5);<br />println className("Bhargava");<br />println className(100.00);<br />println className(true);<br />println className(true.class);<br />}<br />static Class className(object)<br />{<br />object.class;<br />}<br /><br />Wait! where is the "return" statement? Well in groovy, there is no need to specify return explictly. Kind of bad! Well atleast for me. Now the output looks like this:<br /><br />class java.lang.Integer<br />class java.lang.String<br />class java.math.BigDecimal<br />class java.lang.Boolean<br />class java.lang.Class<br /><br />Well let me confuse you more. Shown below is a small method. Tell me what it prints.<br />static increment(value)<br />{<br />value++;<br />}<br />Well this returns "value" itself. ( Post Increment operator ).<br />How about this?<br />static increment(value)<br />{<br />value++;<br />value;<br />}<br />If we notice the return value of this method, we can notice that if there are multiple statements which are like "value;"(equi to return value;) then only the last statement would be equivalent to "return value;".<br /><br />If you already know, in Java 0 is not False and 1 or more is not true. But in Groovy, the old ways are back. Try this statement ( well for simple statements you can use Groovy console. (From rt click on project->Groovy->Groovy Console. Type in a statement and press CTRL + R ).<br />println 0==false;<br /><br />When you run the above statement you would end up getting ClassCastException. But try this:<br /><strong>println someFunction();</strong><br />where someFunction is defined as<br /><strong>Boolean someFunction()</strong><br /><strong>{</strong><br /><strong>return 0; //return zero.</strong><br /><strong>}</strong><br />This would print "false" and for any +ve number returned, this prints "true". Kind of confusing, isnt it??<br /><br />Well enough of methods, in the next post I would continue my talk on numbers and we will see how to perform operations on numbers and stuff.
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

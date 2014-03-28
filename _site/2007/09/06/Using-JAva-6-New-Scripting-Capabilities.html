@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Using JAva 6 New Scripting Capabilities</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Using JAva 6 New Scripting Capabilities</h2>
+<p class="meta">06 Sep 2007</p>
+
+<div class="post">
+I was working on my thesis work where I had a requirement to execute certain code snippets of JavaScript and see if they make calls or modify a specific set of objects. For example, I wanted to see if the code I wish to run sets "location" property. So I wanted to use the Rhino Engine to execute the Javascript and the major problem with that is that Rhino is just an engine for JavaScript and does not provide any DOM API. So any DOM calls made in the JavaScript would terminate the execution. So we have to expose a set of objects by ourselves to the engine. Anyway in the mean time I came across an article which used Java 6 Scripting Engines! I knew Java 6 had some scripting facilities but never gave it a hard thought. It is a really simple API and works really well. In the past I have tried to use Rhino to run javascript but it is really a tedious process. anyway here is how it is done using javax.script package.<br /><br />import java.io.FileNotFoundException;<br />import java.io.FileReader;<br />import javax.script.ScriptEngineManager;<br />import javax.script.ScriptException;<br />import com.sun.script.javascript.RhinoScriptEngine;<br /><br />public class TestScripting {<br />public static void main(String[] args)<br />{<br />    ScriptEngineManager mgr = new ScriptEngineManager();<br />    RhinoScriptEngine js = (RhinoScriptEngine)mgr.getEngineByName("js");<br />    try {<br />        js.put("location",new TestScripting()); <span style="font-weight: bold;">// tell the script engine to use the object passed when it encounters "location"</span><br />        js.eval("function alert(x) { print(x);}"); <span style="font-weight: bold;">// implement your own global alert function</span><br />        try {<br />            js.eval(new FileReader("/home/krishna/workspace/SuriLearning/bin/test.js"));<br />        } catch (FileNotFoundException e) {<br />            // TODO Auto-generated catch block<br />            e.printStackTrace();<br />        }<br />    } catch (ScriptException e) {<br />        // TODO Auto-generated catch block<br />        e.printStackTrace();<br />    }<br />}<br /><br />public void write(Object mesg)<br />{<br />    System.out.println(mesg);<br />}<br /><br />public void replace(String mesg)<br />{<br />    System.out.println("Called location.replace to go to : "+mesg);<br />}<br /><br />}<br /><br />Then I have updated the test.js file with some statement like "location.replace("http://google.com")". This is a basic idea on how we can use Rhino to detect redirections, which is portion of my work.
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

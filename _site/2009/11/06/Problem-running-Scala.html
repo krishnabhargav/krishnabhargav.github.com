@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Problem running Scala</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Problem running Scala</h2>
+<p class="meta">06 Nov 2009</p>
+
+<div class="post">
+<p>I was just trying to run scala on my machine and failed to do so with an error message “…..\java.exe unexpected at this time.” Look at the screenshot shown below.</p>  <p><a href="http://lh5.ggpht.com/_Oy9HuksgrdU/SvOyB_1mOMI/AAAAAAAABHQ/KTkg54VOgJ0/s1600-h/image%5B6%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_Oy9HuksgrdU/SvOyCOu-IwI/AAAAAAAABHU/HlacqeXVaUw/image_thumb%5B2%5D.png?imgmax=800" width="644" height="327" /></a></p>  <p>Well, the problem was that environment variables for JAVA was set up using JAVA_HOME variable. The JAVA_HOME environment variable was pointing to the JDK directory and the Path was modified to include the “%JAVA_HOME%\bin” directory.</p>  <p>I removed the JAVA_HOME and then modified the path to specify the complete path to the JDK bin folder and it works now. :)</p>  <p>I might be talking more about Scala in the future, the concurrency scala supports appears to be interesting.</p>  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

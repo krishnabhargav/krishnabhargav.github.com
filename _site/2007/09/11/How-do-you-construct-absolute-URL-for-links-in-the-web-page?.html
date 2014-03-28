@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>How do you construct absolute URL for links in the web page?</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>How do you construct absolute URL for links in the web page?</h2>
+<p class="meta">11 Sep 2007</p>
+
+<div class="post">
+Suppose you crawl a page at http://cs.uga.edu/~krishna and one of the HREF links to contact.html, then how do you get the absolute URL for the contact.html ? We can say simply concatenate the original HREF to contact.html, but then it is not that simple. There might be cases where the href was "../../../../contact.html", we need to take into account those cases too. So the simplest way that I found was to use URL class in the java.net package. And the following code does the trick for us.<br /><br /><span style="font-weight: bold;">URL start = new URL("http://cs.uga.edu/~krishna");</span><br /><span style="font-weight: bold;">URL newUrl = new URL(start,"contact.html"); //construct the absolute URL</span><br /><br />Thats the way you construct absolute URL. Very simple, isn't it?
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

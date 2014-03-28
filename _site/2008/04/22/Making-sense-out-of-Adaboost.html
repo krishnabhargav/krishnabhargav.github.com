@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Making sense out of Adaboost</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Making sense out of Adaboost</h2>
+<p class="meta">22 Apr 2008</p>
+
+<div class="post">
+<p align="justify">So, atlast I could make some sense out of the Adaboost algorithm. Atlast I could make something that runs "adaboost". Though, I did not write code for the adaboost(In the past, I have and I did not have that great success). Until yesterday,&nbsp; I could not understand what Adaboost was all about. Thanks to the lecture at videolectures.net, I now know what Adaboost is and what makes it run. Before I jump into practicals of running an Adaboost application, let me attempt to explain what Adaboost is in my own words.  <p align="justify"><strong>What is Adaboost?</strong> <p align="justify">You have a bunch of "weak" classifiers, and an adaboost classifier is a strong classifier that is made by cascading these weak classifiers. When these classifiers are cascaded, they are multiplied with "weights" which tells how important this feature is. <p align="justify"><strong>Wait a second, what is a weak classifier?</strong> <p align="justify">Ok, a weak classifier is a classifier that could be understood as classifier that takes one feature and based on a rule, it outputs a class that this feature falls in. For example, I have a weak classifier that takes in "age" as the input feature and based on the rule that "if age is less than 18, he is a minor otherwise he is a major", the classifier returns "major" or "minor". So my classifier in Java could look something like this. <p align="justify">public PeopleClass classify(int age) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return (age&lt;18)?PeopleClass.Minor:PeopleClass.Major;<br>} <p align="justify"><strong>So what is the big deal?</strong> <p align="justify">There is nothing great that we get with a weak classifier when it is used on its own. Just an age class would not help you identify if a person is rich or poor. But you have more than one such classifiers (such as salary, property, marital status, etc.). Together when these classifiers are used, they would form a single strong classifier which tells if you if the person whose features are given, is rich or not. But you cannot just add these classifiers (for now, take Minor as -1 and Major as +1) to get a total weighted value. You have to assign some "importance" to the features you input. So how do you decide how important a particular feature is? This is where the "training set" comes into play. Before, I jump in and give training details, you should know that sign(x) is +1 if x&gt;0 and -1 if x&lt;0 and 0 if x=0. <p align="justify"><strong>How does training work?</strong> <p align="justify">I would like to write a disclaimer that I am not an expert on Adaboost and probably half the stuff I wrote here is wrong. But what I write here is my understanding of Adaboost and hey! it works, at least for me. Now let us look into the training. In a training set, you give different feature-sets and for each feature-set you already know the class the object whose feature-set is the input, falls into. So your training set for a Richness classifier could look something like this. <p align="justify"><em>//age,status,salary,property,habits,label</em> <p align="justify"><em>23,single,12000,100000,smoking drinking,poor<br>35,married,500000,5000000,none,rich<br>45,single,400000,3023000,none,rich</em></p> <p align="justify">We have such a list of different possible inputs for the Adaboost classifier to train itself and learn what good weights are. So, the magic of the learning works and finally you have good estimate of weights. So later, if you input some feature-set whose class you do not know, then this weights are ideal for the classifier to spit out the class.</p> <p align="justify"><strong>Java Implementation of AdaBoost</strong></p> <p align="justify">The theory behind Adaboost is so-far simple and yet it is not so easy to write your own implementation of Adaboost, may be you could write one if you have more in depth understanding of the pseudo-code than what I presented. Anyway, there is a good implementation of Adaboost called the JBoost library, which not only implements Adaboost but also implements few other learning algorithms. Jboost does not have good straight-forward step-by-step example and in my next post, I intend to give a step-by-step guide with application to skin-detection in images. With very simple features like R,G,B values of a pixel, the classifier generated by Jboost does great when it comes to true positives (it identifies all the skin pixels) but it does require improvement in the false positive aspect(it identifies non-skin pixels as skin pixels). Look out for this post and it would be very helpful for a lot of CS guys who works on Computer Vision, Machine Learning and other many fields where classifiers need to be used.</p>  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

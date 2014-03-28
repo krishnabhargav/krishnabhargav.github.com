@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Pain with DHCP</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Pain with DHCP</h2>
+<p class="meta">08 Feb 2006</p>
+
+<div class="post">
+having searched online for all possible ways to know if the DHCP is enabled on a system, i could finally get hold some WMI way to do so. Thanks to aspfree, i did not go through it yet but woud do so very soon. Anyway heres the code:<br /><br />Try<br />Dim searcher As New ManagementObjectSearcher( _<br />"root\CIMV2", _<br />"SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = True")<br />Dim dt As DataTable = globals.getNetworkInfoStructure<br />For Each queryObj As ManagementObject In searcher.Get()<br />Dim IPAddress As String = ""<br />If queryObj("IPAddress") Is Nothing Then<br />IPAddress = queryObj("IPAddress")<br />Else<br />Dim arrIPAddress As String()<br />arrIPAddress = queryObj("IPAddress")<br />For Each arrValue As String In arrIPAddress<br />IPAddress &= arrValue<br />Next<br />End If<br />globals.addNetworkInfo(dt, queryObj("Caption"), queryObj("Description"), queryObj("DHCPEnabled"), queryObj("DHCPServer"), queryObj("DNSDomain"), queryObj("DNSHostName"), IPAddress)<br /><br />Next<br />Me.DataGrid1.DataSource = dt<br /><br />Catch err As ManagementException<br />MessageBox.Show("An error occurred while querying for WMI data: " &amp; err.Message)<br />End Try<br /><br />This is ofcourse only a part of the code and i shall update it very soon, once i modify it as per my need.<br />Anyway heres another new thing i learnt in .NET SDK.<br />You have this mgmtclassgen tool which you should run from visual studio commmadn prompt and generate a vb or C# or any other .net class which functions exactly like the WMI object, just that you need not use any managementobjectsearcher. More information on it later. Meanwhile just google out for "mgmtclassgen" and you ll get the information needed.<br />Thats it for now.
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

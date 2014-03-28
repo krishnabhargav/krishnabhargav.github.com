@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Storage Classes in C++</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Storage Classes in C++</h2>
+<p class="meta">15 Jan 2008</p>
+
+<div class="post">
+Courtesy: Dave, UGA<br /><br /><span style="font-weight: bold;">Storage Classes<br /><br /></span>Storage class specifies where the object exists in memory. Also the lifetime of the variable's storage determines the storage class of the variable/object.<br /><br /><span style="font-weight: bold;">Automatic Storage</span><br /><ol><li>Default for all the variables</li><li>Object is created and destroyed within the block</li><li>eg: auto float x,y;</li><li><span style="font-weight: bold;">register</span> storage classes is same as auto storage class. Just that it tells the compiler to place the variable to be put in registers(for better performance)</li></ol><span style="font-weight: bold;">Static Storage</span><br /><ol><li>Lifetime of variable is entire program execution</li><li><span style="font-weight: bold;">static</span> can be applied to local variables defined in functions or to global variables</li><li>Keeps the value even after the function ends, if its a local variable</li></ol><span style="font-weight: bold;">Scopes<br /></span><ol><li>Global Scope - visible to any other file -<span style="font-weight: bold;"> extern</span><br /></li><li>File Scope - visible to only that file<span style="font-weight: bold;"> - static<br /></span></li><li>Block Scope - visible only within the block.<span style="font-weight: bold;"></span></li></ol><span style="font-weight: bold;">Some funda</span><br /><ol><li><span style="font-weight: bold;">extern int globalVariable; </span>This is a variable declaration and this can be specified any number of times. No memory is allocated to this variable yet and thus multiple declarations are allowed. If you have an extern variable and try to access it you get a linker error. To prevent this, you should define a variable of the same name. Then you have actually defined a reference.<br />Ex: <span style="font-weight: bold;">extern int gv; int gv; //then you can access gv.<br /></span></li><li><span style="font-weight: bold;">int anotherVar;  </span>This is a variable definition and this can be done only once. This variable has been allocated memory and falls under the <span style="font-weight: bold;">auto </span>storage class.<br /></li><li><span style="font-weight: bold;">static int getVar()</span> If this function is present in File1.cc and if you try to invoke getVar() in File2.cc, then this is a compiler error since the scope of this function is limited to the File1.cc only.</li><li><span style="font-weight: bold;">static </span>has another purpose in C/C++. You have a static variable in a function foo(), then within foo(), increment the variable and print out the variable. Now within main call foo() three times. Then each time you get a different(incremented) value. That is the lifetime of the variable is "complete" program. As long as the program runs, the variable value would be stored. The value is restored even after the function returns.</li><li>Global variables in C/C++ default to zero, while local variables are garbage!<br /></li></ol>
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

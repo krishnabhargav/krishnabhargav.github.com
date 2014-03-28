@@ -1,0 +1,10 @@
+---           
+layout: post
+title: Visual Studio Test System : “Test Run Deployment Issue : The location of the file or directory … is not trusted”
+date: 2009-09-01 03:05:37 UTC
+updated: 2009-09-01 03:05:37 UTC
+comments: false
+categories: 
+---
+
+<p><a href="http://lh4.ggpht.com/_Oy9HuksgrdU/SpyPfDQTk5I/AAAAAAAABGQ/zXSlTH_4zD4/s1600-h/image%5B6%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_Oy9HuksgrdU/SpyPfgk1FdI/AAAAAAAABGU/vmsfbc2LUrw/image_thumb%5B4%5D.png?imgmax=800" width="1092" height="283" /></a></p>  <p>I just came across this issue when trying to run tests from Visual Studio test system. To resolve this, simple go to the source of the DLL (in my case, I placed them under LIB directory inside my solution directory), right click on each of the libraries that were taken from external sources (like Log4Net, Moq, etc.) and view the Properties. In the properties window, you should be seeing “Unblock” option as shown below.</p>  <p><a href="http://lh5.ggpht.com/_Oy9HuksgrdU/SpyPfx_p5hI/AAAAAAAABGY/ly2vtH8NtKk/s1600-h/image%5B12%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_Oy9HuksgrdU/SpyPgaDwSWI/AAAAAAAABGc/JdQUnzrPf0g/image_thumb%5B8%5D.png?imgmax=800" width="381" height="519" /></a> </p>  <p>Simply click “Unblock” button and release the library’s security constraint. Now perform a clean on the solution and rebuild the solution. Your tests should run without any deployment issues. </p>  <p>good luck!</p>  

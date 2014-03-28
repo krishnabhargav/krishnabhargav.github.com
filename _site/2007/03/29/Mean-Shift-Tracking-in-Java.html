@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Mean Shift Tracking in Java</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Mean Shift Tracking in Java</h2>
+<p class="meta">29 Mar 2007</p>
+
+<div class="post">
+After long long attempts to learn - understand the Mean Shift tracking, I have finally implemented the Kernel Based Object Tracking in Java. First I have tried to implement the tracker in openCV but I had some problems with the rectangle selection(the bounding box) so I moved back to Java and implemented the code offline using Java Media FrameWork. I have written a nice small class using JMF which we can use to extract frames out of a given Video file. There is no support for WMV format - it says NoPlayerException and some DivX formats, but then most of the files were played successfully.<br /><br />My tracking results are shown below. Shown are the first, 19th and the 10th frame of a striker - video courtesy "WEB".<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://1.bp.blogspot.com/_Oy9HuksgrdU/RgxC1TmFjyI/AAAAAAAAAAM/gcl9pN23vN8/s1600-h/01.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://1.bp.blogspot.com/_Oy9HuksgrdU/RgxC1TmFjyI/AAAAAAAAAAM/gcl9pN23vN8/s320/01.jpg" alt="" id="BLOGGER_PHOTO_ID_5047482765936004898" border="0" /></a><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://2.bp.blogspot.com/_Oy9HuksgrdU/RgxC1jmFj0I/AAAAAAAAAAc/ABQM4cRgWZM/s1600-h/19.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://2.bp.blogspot.com/_Oy9HuksgrdU/RgxC1jmFj0I/AAAAAAAAAAc/ABQM4cRgWZM/s320/19.jpg" alt="" id="BLOGGER_PHOTO_ID_5047482770230972226" border="0" /></a><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://2.bp.blogspot.com/_Oy9HuksgrdU/RgxC1jmFjzI/AAAAAAAAAAU/FXbF5yV0GNs/s1600-h/10.jpg"><img style="margin: 0pt 10px 10px 0pt; float: left; cursor: pointer;" src="http://2.bp.blogspot.com/_Oy9HuksgrdU/RgxC1jmFjzI/AAAAAAAAAAU/FXbF5yV0GNs/s320/10.jpg" alt="" id="BLOGGER_PHOTO_ID_5047482770230972210" border="0" /></a>
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

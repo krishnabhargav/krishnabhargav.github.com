@@ -1,0 +1,10 @@
+---           
+layout: post
+title: Makefile to compile java programs
+date: 2007-02-05 01:25:51 UTC
+updated: 2007-02-05 01:25:51 UTC
+comments: false
+categories: 
+---
+
+The following is the makefile to compile java programs:<br /><br />all: | remove_classes ProxyServer.class<br /><br />remove_classes:<br />       rm -f *.class<br /><br />ProxyServer.class: ProxyServer.java<br />       javac ProxyServer.java -nowarn<br /><br /><br />The order of execution of jobs within the makefile can be normal or we can specify the order.  The jobs listed after the pipe (|) are all orderly, as mentioned above.<br /><br />all: | first second third<br /><br />Makefile can be executed as:<br />> make <target-name><br /><br />If target-name is omitted, then the first job is run. So in the first job, we name it as "all" and then there we specified the jobs it should run, along with the order. It is simple to understand that the current make file removes all old class files and then compiles the java program to get the latest class files. Though this is not needed, as javac would update the class files, this simple example helps us to understand "make".<br /><br />Have fun!</target-name>

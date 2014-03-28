@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Installing Toshiba L35-1054 Audio Drivers on Fedora Core 7</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Installing Toshiba L35-1054 Audio Drivers on Fedora Core 7</h2>
+<p class="meta">27 Jul 2007</p>
+
+<div class="post">
+The Toshiba L35-1054 Laptop comes with a RealTek Audio Card. In order to install the drivers on Linux (I use Fedora Core 7 which rocks!), first download the driver pack from realtek.com. Given is the straight link for the pack ..<br />ftp://202.65.194.211/pc/audio/realtek-linux-audiopack-4.06a.tar.bz2<br /><br />Extract the archive using the tar command passing -xvf options.<br />tar -xvf realtek-linux-audiopack-4.06a.tar.bz2<br /><br />Go into the directory that was created during the extraction. You can see a Readme.txt which explains how to install manually or automatically. Since I am a novice I prefer to do it automatically. So I type in<br />./install<br /><br />It takes around 10 mins for the drivers to be installed. I had all the needed compilers like the cc,g++ and fortran stuff installed on my box so I did not face any errors. Anyway after installation, restart the system. You might get an error saying device not found. Just check the box asking it not to show the message again. Now you can go to the Sound Card Detection Tool ( I run KDE, it rocks too! - Start -> Administration -> Sound Card Detection). Test the card and you should be able to hear the sound!<br /><br />Well all the best!<br /><br />Keywords:<br />RealTek Audio Drivers<br />Toshiba Satellite L35-S1054 Audio Drivers<br />Audio Drivers Linux Fedora Core 7<br />Installing Audio Drivers on Linux 2.6
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

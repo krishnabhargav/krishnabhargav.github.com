@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>More C++ Pointers</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>More C++ Pointers</h2>
+<p class="meta">24 Jul 2008</p>
+
+<div class="post">
+<p>When you perform pointer arithmetic, you move the pointer to the next or previous element of the array. When you say ptr++ where ptr is an integer pointer, it is equivalent to ptr = ptr + 4 (mathematically) assuming integer is of 4 bytes.</p>  <p>Do not do math on pointers that does not point to array. If one keeps this in mind, then you would probably prevent most of the problems.</p>  <p>The following code snippet is perfectly legal:   <br /><span style="color: #0000ff">     <br />int</span> *ptr = array;    <br />ptr = ptr+2;    <br />ptr--;    <br />ptr++;    <br />    <br />Consider the following declaration:    <br /><span style="color: #0000ff">     <br />int</span> numbers[10];    <br />    <br />In the above declaration, <strong>numbers</strong> is of type <strong>int const*. </strong>This implies that <strong>numbers</strong> even though is a pointer, is a constant pointer and it cannot appear on the left side of an expression(as a pointer).</p>  <p><span style="color: #0000ff">int</span> *numbers;    <br />    <br />In the above shown declaration,<strong>numbers </strong>is of type <strong>int*. </strong>It can still point to an array of itegers and you can actually do a math and can appear on the left side of an expression. So the statement numbers++ in this case is perfectly legal while in the previous case; it is not legal.    <br />    <br />    <div class="wlWriterSmartContent" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:5b61d670-3b30-44b5-a982-637c3f6aaa1a" style="padding-right: 0px; display: inline; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px">Technorati Tags: <a href="http://technorati.com/tags/C++" rel="tag">C++</a>,<a href="http://technorati.com/tags/Dave" rel="tag">Dave</a></div></p>  
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

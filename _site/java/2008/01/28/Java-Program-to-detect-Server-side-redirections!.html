@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Java Program to detect Server side redirections!</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Java Program to detect Server side redirections!</h2>
+<p class="meta">28 Jan 2008</p>
+
+<div class="post">
+As a part of my research work, I wrote this small function in Java which gives you HTTP Response Code and with which we can actually detect server side redirects. The server side redirects have a response code as 302. Well here is the program,<br /><br />public class NetworkTool {<br />    public static int getResponseCode(String url) {<br /><br />        try {<br />            URL urlItem = new URL(url);<br />            HttpURLConnection con = (HttpURLConnection) urlItem.openConnection();<br />            <span style="font-weight: bold;">con.setReadTimeout(1000);</span><br /><span style="font-weight: bold;">            con.setConnectTimeout(5000);</span><br />            //System.out.println(con.getConnectTimeout());<br />            con.setInstanceFollowRedirects(false);<br />            int res = con.getResponseCode();<br />            return res;<br />        } catch (MalformedURLException e) {<br />            // TODO Auto-generated catch block<br />            //e.printStackTrace();<br />        } catch (IOException e) {<br />            // TODO Auto-generated catch block<br />            //e.printStackTrace();<br />        }<br />        catch(Exception ex){//System.out.println("hehe");<br />                    }<br />        return -1;<br />    }<br />   <br />    public static void main(String[] args)<br />    {<br />        System.out.println(getResponseCode("http://cs.uga.edu/index.htmx"));<br />        System.out.println(getResponseCode("http://buddibuddibuddi.com"));<br />        System.out.println(getResponseCode("http://128.192.1.21"));<br />    }<br />}<br /><br />The statements highlighted in bold are important. Otherwise, there are some url for which you get connected to the server but you keep waiting for infinite time for the data to come on the connection. So if we set time-out on read, we don't wait for long and this is especially helpful when you run the tests on huge data.<br />It took me quite a long time to get the actual code fixed, and then to find out the two statements. So I hope this post would be useful for others too.
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

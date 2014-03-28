@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Fast and Furious:Make .NET apps a hare that wins</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Fast and Furious:Make .NET apps a hare that wins</h2>
+<p class="meta">21 Feb 2006</p>
+
+<div class="post">
+<div style="text-align: justify;">The future is all virtual machine based-i mean to say every platform would become more and more managed. But at the cost of performance. C++ is still favorite of many because machine code is directly generated but not any MSIL or a bytecode. This makes the applications very fast to executed. But the managed environments provides developer a lot many comforts for which they are ready to give up performance to some extent. But with recent research in optimized JIT compilers, even Managed applications could be faster(not as much as native code). Well let me not drag the topic - i aint writing any book! I wanted to share some information which could be used to make your applications a bit faster(by applications i mean .NET apps)<br /><ul>   <li>Firstly, create as many less objects as possible - if your application runs for longer durations. Then also make sure to set the object reference to "nothing"/"null" when you are done while using it.</li>   <li>Read FxCop rules and also PMD rules from pmd.sourceforge.net, though PMD is for Java the rules are well applicable to .NET since both of them rely about the same basics of runtime.</li>   <li>Make sure that you save unnecessary loops, reducing loops always saves you CPU time. Also read this article on MSDN about performance of .NET applications.      http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnpag/html/scalenetchapt13.asp<br />  </li> </ul> <ul>   <li>One thing is that, avoid Boxing/UnBoxing as much as possible - the lesser the work for CLR for type-casting, better the performance.<br />  </li> </ul> Well, these so called tips are almost useless, not many want to learn something extra to improve the performance of their code. Do we??? Well, when using Visual Studio you can improve the performance. Select Project in Solution Explorer, go to project properties, then go to Build Tab. There you can see "Optimize Performance" and "Integer Overflow checks". Check the Optimize Performance and also if you dont wish to perform any integer overflow checks, make that setting too.<br /><br />There is also a tool called NGen that ships along with .NET SDK. Ngen.exe could be used to generate JIT compiled code and it saves the compiled code in GAC. Make a note that even this compiled code is managed, but when the application whose NGEN code is available in the GAC, JIT is no more functional at runtime- performance improves drastically. The documentation for NGen is really stupid and overly complex. Very soon i shall be working with Ngen and then i would post a simple tutorial on how to use it. Till then those interested can refer MSDN article here :<br />http://msdn.microsoft.com/msdnmag/issues/05/04/NGen/<br />Also there are more articles on Ngen and none of them are cool :( unfortunately they arent meant for you and me, they are for advanced geeks.<br /></div>
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Send Keys in Java or automate repetitive tasks programmatically.</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Send Keys in Java or automate repetitive tasks programmatically.</h2>
+<p class="meta">28 Jan 2008</p>
+
+<div class="post">
+If you have ever programmed in VB, you will definitely know what SendKeys are. You can use send keys function in vb to send in keystrokes to other applications, to be specific to that application which has focus. You can do similar work in Java.<br /><br />You have send keys like functionality in java.awt.Robot class. You can instantiate a Robot class and then use methods like keyPress(KeyEvent.ENTER), keyRelease, mouseMove, mouseClick, etc.<br /><br />This is very useful. Like I mentioned in the previous posts, I am running certain tests using Browser Widget. And I am not always infront of the system. And I do get a lot of dialog pop-ups which require a user to manually click OK. I mentioned about <span style="font-weight: bold;">wmctrl  </span>in the previous posts but I did not get to send keys from <span style="font-weight: bold;">wmctrl</span>, so here is what I did.<br /><br />I used <span style="font-weight: bold;">wmctrl </span>to get a list of open windows and specifying -x option to <span style="font-weight: bold;">wmctrl</span> would give you even the WM_CLASS and based on this, I use -a option to bring the particular window on top. Then once when the window is on top, I use Robot class to send keys.<br /><br />There are other good tools like Expect scripts, Devilspie which can automate tasks but I did not have enough time to learn them from scratch. EXPECT is more prominent out there but Devilspie too looked promising.
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Powershell Script to delete bin/obj folders</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
+
+    </head>
+    <body>
+
+        <div class="site">
+          <div class="header">
+            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
+            <a class="extra" href="/">home</a>
+          </div>
+
+          <h2>Powershell Script to delete bin/obj folders</h2>
+<p class="meta">23 Jul 2009</p>
+
+<div class="post">
+Shown below is a simple powershell script that can be used to clean up a solution folder. The script excludes the "Libraries" directory and deletes any folder named bin or obj in the specified location.<br /><br /><pre name="code" class="C#"><br />Get-childitem c:\Temp\MyProjectSolutionFolder -recurse -include *.exe,*.dll,*.pdb,*.exe.config, bin,obj | where {$_ -notmatch 'Libraries'} | Remove-Item -Recurse<br /></pre><br /><br />This script saves my time a lot and also does not require me to install any tools that does the same but adds registry entries for explorer context menu.<br /><br />NOTE: Please verify thoroughly before blindly running the script. Use the -WhatIf flag to simulate the execution of the command instead of actually running it.
+</div>
+
+
+          <div class="footer">
+            <div class="contact">
+              <p>
+                Your Name<br />
+                What You Are<br />
+                you@example.com
+              </p>
+            </div>
+            <div class="contact">
+              <p>
+                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
+                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
+              </p>
+            </div>
+          </div>
+        </div>
+
+    </body>
+</html>
