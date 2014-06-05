@@ -5,6 +5,7 @@ date: 2014-06-04 14:46:29 UTC
 updated: 2014-06-04 14:46:29 UTC
 comments: false
 categories: Scala
+readmore: true
 ---
 
 In 2009, when Scala was just getting popular, I tried to build a data-pipeline system based on Scala. At the time, the intention was to build an ETL system where data flow is defined as spring configuration files. The project went very well for a few weeks and then I moved on to better (?) things. But at the time, I really liked Scala.
@@ -20,12 +21,12 @@ The intention here is to list a bunch of things that I know about scala that are
 
 For example, if you have a function which returns another function of type "Int => Boolean" as shown below.
 
-{% highlight scala %}
+{% highlight scala linenos %}
 def scalaFunc(input : Int => Boolean) : Int => Boolean = {...}
 {% endhighlight %}
 You can change it to:
 
-{% highlight ruby %}
+{% highlight ruby linenos %}
 type IntToBool = Int=>Boolean
 def scalaFunc(input: IntToBool) : IntToBool = { ... }
 {% endhighlight %}
