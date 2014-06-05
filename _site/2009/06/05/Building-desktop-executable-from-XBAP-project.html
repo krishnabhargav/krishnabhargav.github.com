@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Building desktop executable from XBAP project</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Building desktop executable from XBAP project</h2>
-<p class="meta">05 Jun 2009</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p>I just ran across this question on MSDN forums where a member wanted to build .exe from the same XBAP project which he wishes to use locally and XBAP for the Internet. So is it possible? Well, it is possible. There is nothing magic that happens in XBAP build procedure. Both XBAP and windows executables have OutputType set to WinExe in the csproj definition. Anyway, if you look at the XBAP project bin files after a build, you notice a .exe is also generated. And we know XBAP are accessed from browser with .xbap extension. So what is this executable doing there? </p>  <p>If you open the executable inside reflector and navigate to main() method in the App class, you notice that the App is created and InitializeComponent() is called. But you do not find Run() be invoked on that App. Where as in a normal executable, you can see something like: </p>  <pre class="csharp" name="code">	App app = newApp(); <br />	app.InitializeComponent(); <br />	app.Run(); //missing in XBAP exe <br />  </pre><br /><br /><p>For this reason, the exe generated in a XBAP build does not run in spite of you clicking it. </font></span><span style="color: green"><font color="#111111" face="Calibri">So this must give an idea that if we can make the build process to add app.Run() to the XBAP executable, we could generate a windows executable out of the same XBAP set of files. So how do we do this?</font></span></p><br /><br /><p><span style="color: green"><font color="#111111" face="Calibri">If you open the XBAP project file(.csproj), you can see the following additional statements inside the project group.</font> </span></p><br /><br /><pre class="xml" name="code">&lt;EnableSecurityDebugging&gt;true&lt;/EnableSecurityDebugging&gt;<br />&lt;Install&gt;False&lt;/Install&gt;<br />&lt;StartAction&gt;URL&lt;/StartAction&gt;<br />&lt;HostInBrowser&gt;true&lt;/HostInBrowser&gt;<br />&lt;BootstrapperEnabled&gt;false&lt;/BootstrapperEnabled&gt;<br />&lt;TargetZone&gt;Internet&lt;/TargetZone&gt;<br />&lt;GenerateManifests&gt;true&lt;/GenerateManifests&gt;<br />&lt;SignManifests&gt;True&lt;/SignManifests&gt;<br />&lt;ManifestKeyFile&gt;NiceXBAP_TemporaryKey.pfx&lt;/ManifestKeyFile&gt;&lt;ManifestCertificateThumbprint&gt;E84CB4F96A15C0B07DDD12A6A731ECC918298250&lt;/ManifestCertificateThumbprint&gt;</pre><br /><br /><div>&#160;</div><br /><br /><div>If you comment these lines from the Project/PropertyGroup node and rebuild the project, you end up getting actual executable that runs and shows WPF application, just like normal windows application. This has been an interesting find for me and I hope those of you who wants to generate two sets of builds using the same set of files. Note that XBAP assemblies have certain security limitations. So you cannot use a fully trusted WPF application's project, make changes and generate a XBAP. It might not work as you expect. <br />  <p>As of deployment of XBAPs, </font><a href="http://krishnabhargav.blogspot.com/2008/07/getting-started-with-windows.html" target="_blank"><font color="#000000" face="Calibri">refer to this post which explains what mime-types should be enabled on the IIS.</font></a><font face="Calibri"><font color="#000000"> It is a pretty long post, so you might want to scroll down until you see &quot;<strong>WPF application types and wpf-ish applications</strong>&quot; section</font>. <br /><br />      <br /><br /><br />      <br /><strong>Update: Tool to generate WPF application for desktop from XBAP project. <br />        <br /></strong>Use the following code to generate a .csproj which when used in <strong>msbuild</strong> or Visual Studio generates a desktop WPF executable. For beginners, if you like to use msbuild to run a build process then, the command is <br /><br />      <br /><em></em></font></p><br /><br />  <p><font face="Calibri"><strong><u><em>msbuild /t:build /p:configuration=debug projectFile.csproj</em> <br /><br />          <br /></u></strong></font></p><br /><br />  <p><font face="Calibri">Anyway, the code I wrote is shown below. </font></p><br /><br />  <pre class="csharp" name="code">class Program <br />    { <br />        static void Main(string[] args) <br />        { <br />            if(args.Length==0) <br />            { <br />                Console.WriteLine(&quot;Usage: Pass path to the folder that has the CSPROJ file.&quot;); <br />                return; <br />            } <br />            String path = args[0]; <br />            String projFile = GetCSProjFile(path); <br />            Console.WriteLine(&quot;Project File Loaded : &quot; + projFile); <br />            XDocument xdoc = XDocument.Load(projFile); <br />            xdoc.Descendants().Where(it =&gt; ShouldRemove(it.Name)).Remove(); <br />            Console.WriteLine(&quot;Saving project file&quot;); <br />            xdoc.Save(path + &quot;\\desktopProjectFile.csproj&quot;); <br />        } <br /><br />        private static string GetCSProjFile(string path) <br />        { <br />            string projFile = Directory.GetFiles(path).FirstOrDefault(it =&gt; it.EndsWith(&quot;csproj&quot;)); <br />            if (projFile == null) <br />                throw new ApplicationException(&quot;No CSProj file found in the directory&quot;); <br />           else <br />            { <br />                return projFile; <br />            } <br />        } <br /><br />        private static bool ShouldRemove(XName xName) <br />        { <br />            List<string> removalList = new List<string>() <br />                                           { <br />                                               &quot;HostInBrowser&quot;, <br />//                                               &quot;BootstrapperEnabled&quot;, <br />//                                               &quot;TargetZone&quot;, <br />//                                               &quot;GenerateManifests&quot;, <br />//                                               &quot;SignManifests&quot;, <br />//                                               &quot;ManifestKeyFile&quot;, <br />//                                               &quot;ManifestCertificateThumbprint&quot;, <br />//                                                 &quot;StartAction&quot; <br />                                           }; <br />           //Only HostInBrowser option is good enough to generate Windows Executable that runs on desktop. <br />            //The other options when removed does not generate unwanted stuff like .application files etc. <br /><br />            if (removalList.FirstOrDefault(it =&gt; xName.LocalName.EndsWith(it)) == null) <br />                return false; <br />           else <br />            { <br />                return true; <br />            } <br />        } <br />    }<br /><p></p><br /><br />  <p>The code is not tested and is just a proof-of-concept. There would be a bug or two, but it does generate a valid CSProj file that builds successfully. </p></pre><br /></div>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2009-06-05">05 Jun 2009</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Building desktop executable from XBAP project</h1>
+
+        <section class="post-content">
+            <p>I just ran across this question on MSDN forums where a member wanted to build .exe from the same XBAP project which he wishes to use locally and XBAP for the Internet. So is it possible? Well, it is possible. There is nothing magic that happens in XBAP build procedure. Both XBAP and windows executables have OutputType set to WinExe in the csproj definition. Anyway, if you look at the XBAP project bin files after a build, you notice a .exe is also generated. And we know XBAP are accessed from browser with .xbap extension. So what is this executable doing there? </p>  <p>If you open the executable inside reflector and navigate to main() method in the App class, you notice that the App is created and InitializeComponent() is called. But you do not find Run() be invoked on that App. Where as in a normal executable, you can see something like: </p>  <pre class="csharp" name="code">	App app = newApp(); <br />	app.InitializeComponent(); <br />	app.Run(); //missing in XBAP exe <br />  </pre><br /><br /><p>For this reason, the exe generated in a XBAP build does not run in spite of you clicking it. </font></span><span style="color: green"><font color="#111111" face="Calibri">So this must give an idea that if we can make the build process to add app.Run() to the XBAP executable, we could generate a windows executable out of the same XBAP set of files. So how do we do this?</font></span></p><br /><br /><p><span style="color: green"><font color="#111111" face="Calibri">If you open the XBAP project file(.csproj), you can see the following additional statements inside the project group.</font> </span></p><br /><br /><pre class="xml" name="code">&lt;EnableSecurityDebugging&gt;true&lt;/EnableSecurityDebugging&gt;<br />&lt;Install&gt;False&lt;/Install&gt;<br />&lt;StartAction&gt;URL&lt;/StartAction&gt;<br />&lt;HostInBrowser&gt;true&lt;/HostInBrowser&gt;<br />&lt;BootstrapperEnabled&gt;false&lt;/BootstrapperEnabled&gt;<br />&lt;TargetZone&gt;Internet&lt;/TargetZone&gt;<br />&lt;GenerateManifests&gt;true&lt;/GenerateManifests&gt;<br />&lt;SignManifests&gt;True&lt;/SignManifests&gt;<br />&lt;ManifestKeyFile&gt;NiceXBAP_TemporaryKey.pfx&lt;/ManifestKeyFile&gt;&lt;ManifestCertificateThumbprint&gt;E84CB4F96A15C0B07DDD12A6A731ECC918298250&lt;/ManifestCertificateThumbprint&gt;</pre><br /><br /><div>&#160;</div><br /><br /><div>If you comment these lines from the Project/PropertyGroup node and rebuild the project, you end up getting actual executable that runs and shows WPF application, just like normal windows application. This has been an interesting find for me and I hope those of you who wants to generate two sets of builds using the same set of files. Note that XBAP assemblies have certain security limitations. So you cannot use a fully trusted WPF application's project, make changes and generate a XBAP. It might not work as you expect. <br />  <p>As of deployment of XBAPs, </font><a href="http://krishnabhargav.blogspot.com/2008/07/getting-started-with-windows.html" target="_blank"><font color="#000000" face="Calibri">refer to this post which explains what mime-types should be enabled on the IIS.</font></a><font face="Calibri"><font color="#000000"> It is a pretty long post, so you might want to scroll down until you see &quot;<strong>WPF application types and wpf-ish applications</strong>&quot; section</font>. <br /><br />      <br /><br /><br />      <br /><strong>Update: Tool to generate WPF application for desktop from XBAP project. <br />        <br /></strong>Use the following code to generate a .csproj which when used in <strong>msbuild</strong> or Visual Studio generates a desktop WPF executable. For beginners, if you like to use msbuild to run a build process then, the command is <br /><br />      <br /><em></em></font></p><br /><br />  <p><font face="Calibri"><strong><u><em>msbuild /t:build /p:configuration=debug projectFile.csproj</em> <br /><br />          <br /></u></strong></font></p><br /><br />  <p><font face="Calibri">Anyway, the code I wrote is shown below. </font></p><br /><br />  <pre class="csharp" name="code">class Program <br />    { <br />        static void Main(string[] args) <br />        { <br />            if(args.Length==0) <br />            { <br />                Console.WriteLine(&quot;Usage: Pass path to the folder that has the CSPROJ file.&quot;); <br />                return; <br />            } <br />            String path = args[0]; <br />            String projFile = GetCSProjFile(path); <br />            Console.WriteLine(&quot;Project File Loaded : &quot; + projFile); <br />            XDocument xdoc = XDocument.Load(projFile); <br />            xdoc.Descendants().Where(it =&gt; ShouldRemove(it.Name)).Remove(); <br />            Console.WriteLine(&quot;Saving project file&quot;); <br />            xdoc.Save(path + &quot;\\desktopProjectFile.csproj&quot;); <br />        } <br /><br />        private static string GetCSProjFile(string path) <br />        { <br />            string projFile = Directory.GetFiles(path).FirstOrDefault(it =&gt; it.EndsWith(&quot;csproj&quot;)); <br />            if (projFile == null) <br />                throw new ApplicationException(&quot;No CSProj file found in the directory&quot;); <br />           else <br />            { <br />                return projFile; <br />            } <br />        } <br /><br />        private static bool ShouldRemove(XName xName) <br />        { <br />            List<string> removalList = new List<string>() <br />                                           { <br />                                               &quot;HostInBrowser&quot;, <br />//                                               &quot;BootstrapperEnabled&quot;, <br />//                                               &quot;TargetZone&quot;, <br />//                                               &quot;GenerateManifests&quot;, <br />//                                               &quot;SignManifests&quot;, <br />//                                               &quot;ManifestKeyFile&quot;, <br />//                                               &quot;ManifestCertificateThumbprint&quot;, <br />//                                                 &quot;StartAction&quot; <br />                                           }; <br />           //Only HostInBrowser option is good enough to generate Windows Executable that runs on desktop. <br />            //The other options when removed does not generate unwanted stuff like .application files etc. <br /><br />            if (removalList.FirstOrDefault(it =&gt; xName.LocalName.EndsWith(it)) == null) <br />                return false; <br />           else <br />            { <br />                return true; <br />            } <br />        } <br />    }<br /><p></p><br /><br />  <p>The code is not tested and is just a proof-of-concept. There would be a bug or two, but it does generate a valid CSProj file that builds successfully. </p></pre><br /></div>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Building desktop executable from XBAP project&amp;url=/2009/06/05/Building-desktop-executable-from-XBAP-project.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2009/06/05/Building-desktop-executable-from-XBAP-project.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2009/06/05/Building-desktop-executable-from-XBAP-project.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

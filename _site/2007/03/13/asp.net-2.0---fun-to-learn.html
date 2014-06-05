@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>asp.net 2.0 - fun to learn</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>asp.net 2.0 - fun to learn</h2>
-<p class="meta">13 Mar 2007</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-I have just started working on ASP.NET 2.0 again after a long long time. Its been almost an year since I did some serious coding and I want to get myself updated with the latest - asp.net 2.0.<br /><br />I decided to use the Core ASP.NET reference book from MS Press and have been going through fundas like the IIS 6.0 Process model, HttpRuntime queue and so on.<br /><br />How to detect the browser programatically in ASP.NET?<br />---------------------------------------------------------<br />You have the Request object with you. You can access the Request object either directly or from the HttpContext object. To detect the browser you are running ....<br /><br />Dim browser as String = HttpContext.Current.Browser.Browser<br /><br />For IE, browser would be "IE" and for firefox, its Firefox.<br /><br />More about the HttpContext....<br /><br />Actually, ProcessRequest method is called on the HttpRuntime object when a request arrives. Just before it serves a page to the request, a "context" is created which could be accessed through the HttpContext object. The HttpRuntime object uses the HttpContext object to locate or create a Web App object that is capable of handling a request it gets. There is an internal object that will be used to do the search - HttpApplicationFactory which maintains a pool of HttpApplication objects to serve incoming http requests. The HttpApplication is the base class that represents a running ASP.NET application. It is this object that determines what kind of a handler is needed - basically it decides what kind of resource is being requested - whether its a web page being asked for or a web server or a server control, etc.<br /><br /><br /><br />Page Class and important members<br />-----------------------------------<br /><br />The following is the list of important members of the Page class.<br /><ol><li>Application - instance of HttpApplicationState</li><li>Cache - instance of Cache class, implements cache for an asp.net application</li><li>Request - instance of HttpRequest</li><li>Response - instance of HttpResponse</li><li>Server - instance of HttpServerUtility, helper method for processing web requests.</li><li>Session - instance of HttpSession.</li><li>Trace - instance of TraceContext, used for tracing.</li><li>User - represents the current user whose request is being processed.<br /></li></ol>There is also a Context object that could be used ( it holds for HttpContext.Current).<br /><br />From my past experience coding ASP.NET web apps, one most important thing that a newbie should always learn is the Page life cycle. By Life cycle in an application programming model, we basically mean what events are fired at what time. The ordering of events become very essential especially when the application grows. Knowing where to put initialization code, where to add controls dynamically, etc will help us code better applications.<br /><br />The ASP.NET Web Page life cycle is given below.<br /><ol><li>PreInit</li><li>Init</li><li>InitComplete</li><li>View State is now restored</li><li>Posted data is processed</li><li>PreLoad event is fired</li><li>Load event is raised</li><li>LoadComplete (in between few events for handling postback is taken care of)</li><li>PreRender</li><li>PreRenderComplete</li><li>SaveStateComplete</li></ol>More information is given here<br />ASP.NET 2.0 Page Life cycle<br />http://www.robincurry.org/blog/content/binary/o_aspNet_Page_LifeCycle.jpg<br /><br />I will post more as I get deep into the subject. I plan to devote an hour a day once the spring break is over. <br /><br />This is what I think I will/should be doing<br />1. Core ASP.NET 2.0<br />2. Data binding with ASP.NET 2.0 and ofcourse ADO.NET<br />3. ATLAS / ASP.NET AJAX.<br /><br />Then may be I can get hands-on with XAML,WPF,WCF,Windows Workflow...Gosh there is a lot to learn....
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2007-03-13">13 Mar 2007</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">asp.net 2.0 - fun to learn</h1>
+
+        <section class="post-content">
+            I have just started working on ASP.NET 2.0 again after a long long time. Its been almost an year since I did some serious coding and I want to get myself updated with the latest - asp.net 2.0.<br /><br />I decided to use the Core ASP.NET reference book from MS Press and have been going through fundas like the IIS 6.0 Process model, HttpRuntime queue and so on.<br /><br />How to detect the browser programatically in ASP.NET?<br />---------------------------------------------------------<br />You have the Request object with you. You can access the Request object either directly or from the HttpContext object. To detect the browser you are running ....<br /><br />Dim browser as String = HttpContext.Current.Browser.Browser<br /><br />For IE, browser would be "IE" and for firefox, its Firefox.<br /><br />More about the HttpContext....<br /><br />Actually, ProcessRequest method is called on the HttpRuntime object when a request arrives. Just before it serves a page to the request, a "context" is created which could be accessed through the HttpContext object. The HttpRuntime object uses the HttpContext object to locate or create a Web App object that is capable of handling a request it gets. There is an internal object that will be used to do the search - HttpApplicationFactory which maintains a pool of HttpApplication objects to serve incoming http requests. The HttpApplication is the base class that represents a running ASP.NET application. It is this object that determines what kind of a handler is needed - basically it decides what kind of resource is being requested - whether its a web page being asked for or a web server or a server control, etc.<br /><br /><br /><br />Page Class and important members<br />-----------------------------------<br /><br />The following is the list of important members of the Page class.<br /><ol><li>Application - instance of HttpApplicationState</li><li>Cache - instance of Cache class, implements cache for an asp.net application</li><li>Request - instance of HttpRequest</li><li>Response - instance of HttpResponse</li><li>Server - instance of HttpServerUtility, helper method for processing web requests.</li><li>Session - instance of HttpSession.</li><li>Trace - instance of TraceContext, used for tracing.</li><li>User - represents the current user whose request is being processed.<br /></li></ol>There is also a Context object that could be used ( it holds for HttpContext.Current).<br /><br />From my past experience coding ASP.NET web apps, one most important thing that a newbie should always learn is the Page life cycle. By Life cycle in an application programming model, we basically mean what events are fired at what time. The ordering of events become very essential especially when the application grows. Knowing where to put initialization code, where to add controls dynamically, etc will help us code better applications.<br /><br />The ASP.NET Web Page life cycle is given below.<br /><ol><li>PreInit</li><li>Init</li><li>InitComplete</li><li>View State is now restored</li><li>Posted data is processed</li><li>PreLoad event is fired</li><li>Load event is raised</li><li>LoadComplete (in between few events for handling postback is taken care of)</li><li>PreRender</li><li>PreRenderComplete</li><li>SaveStateComplete</li></ol>More information is given here<br />ASP.NET 2.0 Page Life cycle<br />http://www.robincurry.org/blog/content/binary/o_aspNet_Page_LifeCycle.jpg<br /><br />I will post more as I get deep into the subject. I plan to devote an hour a day once the spring break is over. <br /><br />This is what I think I will/should be doing<br />1. Core ASP.NET 2.0<br />2. Data binding with ASP.NET 2.0 and ofcourse ADO.NET<br />3. ATLAS / ASP.NET AJAX.<br /><br />Then may be I can get hands-on with XAML,WPF,WCF,Windows Workflow...Gosh there is a lot to learn....
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=asp.net 2.0 - fun to learn&amp;url=/2007/03/13/asp.net-2.0---fun-to-learn.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2007/03/13/asp.net-2.0---fun-to-learn.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2007/03/13/asp.net-2.0---fun-to-learn.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

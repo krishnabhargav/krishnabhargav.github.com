@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Working with Blueprint CSS Framework!</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Working with Blueprint CSS Framework!</h2>
-<p class="meta">14 May 2009</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p align="justify">It has been a long time since I wrote something on my blog. I have been extremely busy as well as lazy to make any updates up here. The last time I talked about detecting prime numbers using python list comprehensions and made a failed attempt to optimize it. I could not find time to work on that again, so I skipped it. Anyway, from then I made significant progress in upgrading my silverlight/wpf/PRISM skills. [More on that sometime later] And then I decided that I would be working on some ASP.NET MVC project which I hope to bring online by the end of June.</p>  <p align="justify">As a part of that, I have been looking at evaulating CSS Frameworks – some think CSS frameworks suck, but used appropriately they do save us a lot of time. Every one who is moderately versed with CSS begins to say that using a framework is not a good idea and they miss the point of CSS. Come on, seriously, I looked at two popular CSS frameworks – Blueprint CSS and 960.gs and they are extremely cool. Before I go into any more details on how to use Blueprint CSS, I would like to point out that 960.gs is pretty good and <a href="http://nettuts.com/videos/screencasts/a-detailed-look-at-the-960-css-framework/">there is a screencast on nettuts.com</a>. If you watch the screencast, it would help you understand the basic concepts which I would not talking about in this post. So please watch the screencast if possible or I assume what ever I write makes sense to you.</p>  <p align="justify"><strong>Shown below is what we would be trying to achieve. It is very simple to do, once you have the basic understanding of blueprint CSS Framework.</strong></p>  <p align="justify"><a href="http://lh6.ggpht.com/_Oy9HuksgrdU/SgyCjxWOH2I/AAAAAAAAA0Q/jeUBaFOIF4c/s1600-h/image%5B3%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_Oy9HuksgrdU/SgyCkDOEOhI/AAAAAAAAA0U/AoBtVZMwPKI/image_thumb%5B1%5D.png?imgmax=800" width="397" height="484" /></a> </p>  <p><strong>DISCLAIMER: Neither I am an author of Blueprint CSS Framework or any of its plug-ins nor am I am any kind of expert in web design. I just know how to survive as a web developer/designer.</strong></p>  <p>My application setup is as follows. I have the blueprint download from their website(<a href="http://blueprintcss.org)">http://blueprintcss.org)</a>. Once your extract the archive that you have downloaded, you can pick the &quot;blueprint&quot; folder and copy into your website folder. Then in the website, within the same folder where you copied the blueprint folder, create a sample.html. </p>  <p>Firstly, add the links to the CSS stylesheets.   <br />&lt;!-- Blueprint CSS --&gt;    <br />&#160;&#160;&#160; &lt;link rel=&quot;stylesheet&quot; href=&quot;blueprint/screen.css&quot; type=&quot;text/css&quot; media=&quot;screen, projection&quot;&gt;    <br />&#160;&#160;&#160; &lt;link rel=&quot;stylesheet&quot; href=&quot;blueprint/print.css&quot; type=&quot;text/css&quot; media=&quot;print&quot; /&gt;    <br />&#160;&#160;&#160; &lt;!--conditional CSS makes the site slightly slower --&gt;    <br />&#160;&#160;&#160; &lt;!--[if IE]&gt;    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;link&#160;&#160; rel=&quot;stylesheet&quot;     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; href=&quot;blueprint/ie.css&quot;     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; type=&quot;text/css&quot; media=&quot;screen, projection&quot;&gt;    <br />&#160;&#160;&#160; &lt;![endif]--&gt;    <br />&lt;!-- End of Blueprint CSS --&gt;    <br />I hope you know that CSS links are added in the &lt;head&gt; section. </p>  <p>CSS frameworks does not give you everything you want and does not prevent you from customizing your html, just like you did when not using the frameworks. The biggest advantage that I see when using the framework is the amount of time you have invest in resetting the browser settings and then time required to test each and every change on your layout. Trust me, it is painful.   <br />Anyway we would stil</p>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2009-05-14">14 May 2009</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Working with Blueprint CSS Framework!</h1>
+
+        <section class="post-content">
+            <p align="justify">It has been a long time since I wrote something on my blog. I have been extremely busy as well as lazy to make any updates up here. The last time I talked about detecting prime numbers using python list comprehensions and made a failed attempt to optimize it. I could not find time to work on that again, so I skipped it. Anyway, from then I made significant progress in upgrading my silverlight/wpf/PRISM skills. [More on that sometime later] And then I decided that I would be working on some ASP.NET MVC project which I hope to bring online by the end of June.</p>  <p align="justify">As a part of that, I have been looking at evaulating CSS Frameworks – some think CSS frameworks suck, but used appropriately they do save us a lot of time. Every one who is moderately versed with CSS begins to say that using a framework is not a good idea and they miss the point of CSS. Come on, seriously, I looked at two popular CSS frameworks – Blueprint CSS and 960.gs and they are extremely cool. Before I go into any more details on how to use Blueprint CSS, I would like to point out that 960.gs is pretty good and <a href="http://nettuts.com/videos/screencasts/a-detailed-look-at-the-960-css-framework/">there is a screencast on nettuts.com</a>. If you watch the screencast, it would help you understand the basic concepts which I would not talking about in this post. So please watch the screencast if possible or I assume what ever I write makes sense to you.</p>  <p align="justify"><strong>Shown below is what we would be trying to achieve. It is very simple to do, once you have the basic understanding of blueprint CSS Framework.</strong></p>  <p align="justify"><a href="http://lh6.ggpht.com/_Oy9HuksgrdU/SgyCjxWOH2I/AAAAAAAAA0Q/jeUBaFOIF4c/s1600-h/image%5B3%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_Oy9HuksgrdU/SgyCkDOEOhI/AAAAAAAAA0U/AoBtVZMwPKI/image_thumb%5B1%5D.png?imgmax=800" width="397" height="484" /></a> </p>  <p><strong>DISCLAIMER: Neither I am an author of Blueprint CSS Framework or any of its plug-ins nor am I am any kind of expert in web design. I just know how to survive as a web developer/designer.</strong></p>  <p>My application setup is as follows. I have the blueprint download from their website(<a href="http://blueprintcss.org)">http://blueprintcss.org)</a>. Once your extract the archive that you have downloaded, you can pick the &quot;blueprint&quot; folder and copy into your website folder. Then in the website, within the same folder where you copied the blueprint folder, create a sample.html. </p>  <p>Firstly, add the links to the CSS stylesheets.   <br />&lt;!-- Blueprint CSS --&gt;    <br />&#160;&#160;&#160; &lt;link rel=&quot;stylesheet&quot; href=&quot;blueprint/screen.css&quot; type=&quot;text/css&quot; media=&quot;screen, projection&quot;&gt;    <br />&#160;&#160;&#160; &lt;link rel=&quot;stylesheet&quot; href=&quot;blueprint/print.css&quot; type=&quot;text/css&quot; media=&quot;print&quot; /&gt;    <br />&#160;&#160;&#160; &lt;!--conditional CSS makes the site slightly slower --&gt;    <br />&#160;&#160;&#160; &lt;!--[if IE]&gt;    <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160; &lt;link&#160;&#160; rel=&quot;stylesheet&quot;     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; href=&quot;blueprint/ie.css&quot;     <br />&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; type=&quot;text/css&quot; media=&quot;screen, projection&quot;&gt;    <br />&#160;&#160;&#160; &lt;![endif]--&gt;    <br />&lt;!-- End of Blueprint CSS --&gt;    <br />I hope you know that CSS links are added in the &lt;head&gt; section. </p>  <p>CSS frameworks does not give you everything you want and does not prevent you from customizing your html, just like you did when not using the frameworks. The biggest advantage that I see when using the framework is the amount of time you have invest in resetting the browser settings and then time required to test each and every change on your layout. Trust me, it is painful.   <br />Anyway we would stil</p>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Working with Blueprint CSS Framework!&amp;url=/2009/05/14/Working-with-Blueprint-CSS-Framework%21.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2009/05/14/Working-with-Blueprint-CSS-Framework%21.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2009/05/14/Working-with-Blueprint-CSS-Framework%21.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

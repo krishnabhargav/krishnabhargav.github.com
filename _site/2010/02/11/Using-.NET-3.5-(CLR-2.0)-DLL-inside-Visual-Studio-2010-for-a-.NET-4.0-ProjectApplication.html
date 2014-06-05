@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Using .NET 3.5 (CLR 2.0) DLL inside Visual Studio 2010 for a .NET 4.0 Project/Application</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Using .NET 3.5 (CLR 2.0) DLL inside Visual Studio 2010 for a .NET 4.0 Project/Application</h2>
-<p class="meta">11 Feb 2010</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p>When you first create a .NET 4.0 project inside VS 2010 and add reference to a .NET 3.5 DLL (say log4net or Rhino.Mocks), the project tends to not build. You can get errors as shown below.</p>  <p><a href="http://lh4.ggpht.com/_Oy9HuksgrdU/S3N4aGcY8iI/AAAAAAAABKo/13NGfYQ2S3c/s1600-h/image%5B3%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_Oy9HuksgrdU/S3N4aRt67MI/AAAAAAAABKs/_y5ynd5233k/image_thumb%5B1%5D.png?imgmax=800" width="644" height="89" /></a> </p>  <p>It might appear to be a CLR version issue – unable to run 2.0 DLL inside a 4.0 App Domain. And i thought that is what it was until now. </p>  <p>You can get over this :) </p>  <p>By default, VS 2010 creates the projects with Target Framework on the properties set to “.NET Framework 4 Client Profile”. You would have to change that to “.NET Framework 4” by going to Project Properties –&gt; Application –&gt;&#160; Target Framework. And every thing begins to compile.</p>  <p>So I guess, one has to be aware of this when migrating old solutions from Visual Studio 2008 to Visual Studio 2010.</p>  <p>Proof that it works :) Notice the .NET Framework 4.0 features as well Log4Net and Rhino.Mocks used in all the same example. (It is a stupid example, but the intention was to show it works).</p>  <p><a href="http://lh6.ggpht.com/_Oy9HuksgrdU/S3N4ak4QpfI/AAAAAAAABKw/BnKnGThCkVw/s1600-h/image%5B9%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_Oy9HuksgrdU/S3N4a-SvWvI/AAAAAAAABK0/EpHt1R8INq4/image_thumb%5B5%5D.png?imgmax=800" width="819" height="592" /></a> </p>  <p></p>  <p>If for some reason, it does not work for you, try to add </p>  <p>&lt;?xml version =&quot;1.0&quot;?&gt;   <br />&lt;configuration&gt;    <br />&#160; &lt;startup useLegacyV2RuntimeActivationPolicy=&quot;true&quot;&gt;    <br />&#160;&#160;&#160;&#160; &lt;supportedRuntime version=&quot;v2.0.5727&quot; /&gt;&#160; <br />&#160;&#160;&#160; &lt;supportedRuntime version=&quot;v4.0.21006&quot;/&gt;    <br />&#160; &lt;/startup&gt;    <br />&lt;/configuration&gt;</p>  <p>to your csc.exe.config/msbuild.exe.config/VCSExpress.exe.config/devenv.exe.config …</p>  <p>I initially thought it has something to do with not enabling Side-By-Side Execution of the&#160; compiler and stuff but it turns out that it is not the case. For your information,<strong>&#160; i have added supported runtime as .NET 2.0 <u>but then commented it to be sure that its ONLY the Target Framework that has to be changed.</u></strong></p>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2010-02-11">11 Feb 2010</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Using .NET 3.5 (CLR 2.0) DLL inside Visual Studio 2010 for a .NET 4.0 Project/Application</h1>
+
+        <section class="post-content">
+            <p>When you first create a .NET 4.0 project inside VS 2010 and add reference to a .NET 3.5 DLL (say log4net or Rhino.Mocks), the project tends to not build. You can get errors as shown below.</p>  <p><a href="http://lh4.ggpht.com/_Oy9HuksgrdU/S3N4aGcY8iI/AAAAAAAABKo/13NGfYQ2S3c/s1600-h/image%5B3%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_Oy9HuksgrdU/S3N4aRt67MI/AAAAAAAABKs/_y5ynd5233k/image_thumb%5B1%5D.png?imgmax=800" width="644" height="89" /></a> </p>  <p>It might appear to be a CLR version issue – unable to run 2.0 DLL inside a 4.0 App Domain. And i thought that is what it was until now. </p>  <p>You can get over this :) </p>  <p>By default, VS 2010 creates the projects with Target Framework on the properties set to “.NET Framework 4 Client Profile”. You would have to change that to “.NET Framework 4” by going to Project Properties –&gt; Application –&gt;&#160; Target Framework. And every thing begins to compile.</p>  <p>So I guess, one has to be aware of this when migrating old solutions from Visual Studio 2008 to Visual Studio 2010.</p>  <p>Proof that it works :) Notice the .NET Framework 4.0 features as well Log4Net and Rhino.Mocks used in all the same example. (It is a stupid example, but the intention was to show it works).</p>  <p><a href="http://lh6.ggpht.com/_Oy9HuksgrdU/S3N4ak4QpfI/AAAAAAAABKw/BnKnGThCkVw/s1600-h/image%5B9%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh6.ggpht.com/_Oy9HuksgrdU/S3N4a-SvWvI/AAAAAAAABK0/EpHt1R8INq4/image_thumb%5B5%5D.png?imgmax=800" width="819" height="592" /></a> </p>  <p></p>  <p>If for some reason, it does not work for you, try to add </p>  <p>&lt;?xml version =&quot;1.0&quot;?&gt;   <br />&lt;configuration&gt;    <br />&#160; &lt;startup useLegacyV2RuntimeActivationPolicy=&quot;true&quot;&gt;    <br />&#160;&#160;&#160;&#160; &lt;supportedRuntime version=&quot;v2.0.5727&quot; /&gt;&#160; <br />&#160;&#160;&#160; &lt;supportedRuntime version=&quot;v4.0.21006&quot;/&gt;    <br />&#160; &lt;/startup&gt;    <br />&lt;/configuration&gt;</p>  <p>to your csc.exe.config/msbuild.exe.config/VCSExpress.exe.config/devenv.exe.config …</p>  <p>I initially thought it has something to do with not enabling Side-By-Side Execution of the&#160; compiler and stuff but it turns out that it is not the case. For your information,<strong>&#160; i have added supported runtime as .NET 2.0 <u>but then commented it to be sure that its ONLY the Target Framework that has to be changed.</u></strong></p>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Using .NET 3.5 (CLR 2.0) DLL inside Visual Studio 2010 for a .NET 4.0 Project/Application&amp;url=/2010/02/11/Using-.NET-3.5-%28CLR-2.0%29-DLL-inside-Visual-Studio-2010-for-a-.NET-4.0-ProjectApplication.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2010/02/11/Using-.NET-3.5-%28CLR-2.0%29-DLL-inside-Visual-Studio-2010-for-a-.NET-4.0-ProjectApplication.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2010/02/11/Using-.NET-3.5-%28CLR-2.0%29-DLL-inside-Visual-Studio-2010-for-a-.NET-4.0-ProjectApplication.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

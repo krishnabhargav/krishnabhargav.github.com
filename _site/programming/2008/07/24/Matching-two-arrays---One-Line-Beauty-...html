@@ -1,50 +1,112 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Matching two arrays - One Line Beauty ..</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Matching two arrays - One Line Beauty ..</h2>
-<p class="meta">24 Jul 2008</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p>Recently I wrote some "useful" code which I would probably release online as an open source; if things do not go as expected. Anyway during that, I had a requirement where I have to match two arrays and return the match %. So let us do it in C# 2.0 or Java for that matter. Look at my code ...<br /></p><div class="wlWriterSmartContent" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:c7f128a8-5b14-4065-a285-fb89cfec9ef8" style="PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; FLOAT: none; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 608px; PADDING-TOP: 0px"><pre  style="color:white;"><span style="color:#0000ff;">public</span><span style="color:#000000;"> </span><span style="color:#0000ff;">double</span><span style="color:#000000;"> match(</span><span style="color:#0000ff;">string</span><span style="color:#000000;">[] array1, </span><span style="color:#0000ff;">string</span><span style="color:#000000;">[] array2)<br />{<br /></span><span style="color:#0000ff;">int</span><span style="color:#000000;"> common </span><span style="color:#000000;">=</span><span style="color:#000000;"> </span><span style="color:#000000;">0</span><span style="color:#000000;">;<br /></span><span style="color:#0000ff;">foreach</span><span style="color:#000000;">(</span><span style="color:#0000ff;">string</span><span style="color:#000000;"> val1 </span><span style="color:#0000ff;">in</span><span style="color:#000000;"> array1)<br /></span><span style="color:#0000ff;">foreach</span><span style="color:#000000;">(</span><span style="color:#0000ff;">string</span><span style="color:#000000;"> val2 </span><span style="color:#0000ff;">in</span><span style="color:#000000;"> array2)<br /></span><span style="color:#0000ff;">if</span><span style="color:#000000;">(val1.equals(val2)) common</span><span style="color:#000000;">++</span><span style="color:#000000;">;<br /></span><span style="color:#0000ff;">double</span><span style="color:#000000;"> avg </span><span style="color:#000000;">=</span><span style="color:#000000;"> (array1.Length </span><span style="color:#000000;">+</span><span style="color:#000000;"> array2.Length)</span><span style="color:#000000;">/</span><span style="color:#000000;">2</span><span style="color:#000000;">;<br /></span><span style="color:#0000ff;">return</span><span style="color:#000000;"> common</span><span style="color:#000000;">/</span><span style="color:#000000;">avg;<br />}</span><br /></pre></div><br />Now let us do it in C# 3.0 Way, using extension methods which are already written for us ..<br /><br /><div class="wlWriterSmartContent" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:6008f72a-87fb-47e5-b906-48c8da995211" style="PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; FLOAT: none; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 607px; PADDING-TOP: 0px"><pre  style="color:white;"><span style="color:#0000ff;">public</span><span style="color:#000000;"> </span><span style="color:#0000ff;">double</span><span style="color:#000000;"> match(</span><span style="color:#0000ff;">string</span><span style="color:#000000;">[] array1,</span><span style="color:#0000ff;">string</span><span style="color:#000000;">[] array2)<br />{<br /></span><span style="color:#0000ff;">int</span><span style="color:#000000;"> common </span><span style="color:#000000;">=</span><span style="color:#000000;"> array1.Where(item</span><span style="color:#000000;">=&gt;</span><span style="color:#000000;">array2.Contains(item)).Count;<br /></span><span style="color:#0000ff;">double</span><span style="color:#000000;"> avg </span><span style="color:#000000;">=</span><span style="color:#000000;"> (array1.Length</span><span style="color:#000000;">+</span><span style="color:#000000;">array2.Length)</span><span style="color:#000000;">/</span><span style="color:#000000;">2</span><span style="color:#000000;">;<br /></span><span style="color:#0000ff;">return</span><span style="color:#000000;"> common</span><span style="color:#000000;">/</span><span style="color:#000000;">avg;<br />}</span><br /></pre></div><br />Isn't that sweet? Well, it definitely is sweet. You could do something like that even in Groovy..<br /><br /><div class="wlWriterSmartContent" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:ab7b4a95-9f5c-4413-a4ca-ac8919da9e0c" style="PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; FLOAT: none; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 606px; PADDING-TOP: 0px"><pre  style="color:white;"><span style="color:#000000;">public match(array1,array2)<br />{<br /></span><span style="color:#0000ff;">def</span><span style="color:#000000;"> common </span><span style="color:#000000;">=</span><span style="color:#000000;"> array1.find(it</span><span style="color:#000000;">-&gt;</span><span style="color:#000000;">array2.contains(it)).size();<br /></span><span style="color:#0000ff;">def</span><span style="color:#000000;"> avg </span><span style="color:#000000;">=</span><span style="color:#000000;"> (array1.length()</span><span style="color:#000000;">+</span><span style="color:#000000;">array2.length())</span><span style="color:#000000;">/</span><span style="color:#000000;">2</span><span style="color:#000000;">;<br /></span><span style="color:#0000ff;">return</span><span style="color:#000000;"> common</span><span style="color:#000000;">/</span><span style="color:#000000;">avg;<br />}</span><br /></pre></div><br />Well, the functions size() might either be length() or count() which I usually am confused and since I always an IDE to code, I usually do not take the pain to remember these simple(but important) details. Anyway, if you want to pick the common elements in 10 arrays, even then the code in C# 3.0 or Groovy is going to be 3-4 lines. So it 400% less code?<br /><br />The point here is that languages are getting sexier with time and it is really fun to write amazingly compact code. For those who haven't tried LINQ, should really take a look at it. By the way, I did a little LINQ to XML and with very little code, it makes using RESTful web services very easy. Hats off! to all the genius who came up with these ideas (of course, Microsoft did not invent closures...)
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2008-07-24">24 Jul 2008</time>
+        	
+        		on
+	        	
+	        	    programming
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Matching two arrays - One Line Beauty ..</h1>
+
+        <section class="post-content">
+            <p>Recently I wrote some "useful" code which I would probably release online as an open source; if things do not go as expected. Anyway during that, I had a requirement where I have to match two arrays and return the match %. So let us do it in C# 2.0 or Java for that matter. Look at my code ...<br /></p><div class="wlWriterSmartContent" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:c7f128a8-5b14-4065-a285-fb89cfec9ef8" style="PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; FLOAT: none; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 608px; PADDING-TOP: 0px"><pre  style="color:white;"><span style="color:#0000ff;">public</span><span style="color:#000000;"> </span><span style="color:#0000ff;">double</span><span style="color:#000000;"> match(</span><span style="color:#0000ff;">string</span><span style="color:#000000;">[] array1, </span><span style="color:#0000ff;">string</span><span style="color:#000000;">[] array2)<br />{<br /></span><span style="color:#0000ff;">int</span><span style="color:#000000;"> common </span><span style="color:#000000;">=</span><span style="color:#000000;"> </span><span style="color:#000000;">0</span><span style="color:#000000;">;<br /></span><span style="color:#0000ff;">foreach</span><span style="color:#000000;">(</span><span style="color:#0000ff;">string</span><span style="color:#000000;"> val1 </span><span style="color:#0000ff;">in</span><span style="color:#000000;"> array1)<br /></span><span style="color:#0000ff;">foreach</span><span style="color:#000000;">(</span><span style="color:#0000ff;">string</span><span style="color:#000000;"> val2 </span><span style="color:#0000ff;">in</span><span style="color:#000000;"> array2)<br /></span><span style="color:#0000ff;">if</span><span style="color:#000000;">(val1.equals(val2)) common</span><span style="color:#000000;">++</span><span style="color:#000000;">;<br /></span><span style="color:#0000ff;">double</span><span style="color:#000000;"> avg </span><span style="color:#000000;">=</span><span style="color:#000000;"> (array1.Length </span><span style="color:#000000;">+</span><span style="color:#000000;"> array2.Length)</span><span style="color:#000000;">/</span><span style="color:#000000;">2</span><span style="color:#000000;">;<br /></span><span style="color:#0000ff;">return</span><span style="color:#000000;"> common</span><span style="color:#000000;">/</span><span style="color:#000000;">avg;<br />}</span><br /></pre></div><br />Now let us do it in C# 3.0 Way, using extension methods which are already written for us ..<br /><br /><div class="wlWriterSmartContent" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:6008f72a-87fb-47e5-b906-48c8da995211" style="PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; FLOAT: none; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 607px; PADDING-TOP: 0px"><pre  style="color:white;"><span style="color:#0000ff;">public</span><span style="color:#000000;"> </span><span style="color:#0000ff;">double</span><span style="color:#000000;"> match(</span><span style="color:#0000ff;">string</span><span style="color:#000000;">[] array1,</span><span style="color:#0000ff;">string</span><span style="color:#000000;">[] array2)<br />{<br /></span><span style="color:#0000ff;">int</span><span style="color:#000000;"> common </span><span style="color:#000000;">=</span><span style="color:#000000;"> array1.Where(item</span><span style="color:#000000;">=&gt;</span><span style="color:#000000;">array2.Contains(item)).Count;<br /></span><span style="color:#0000ff;">double</span><span style="color:#000000;"> avg </span><span style="color:#000000;">=</span><span style="color:#000000;"> (array1.Length</span><span style="color:#000000;">+</span><span style="color:#000000;">array2.Length)</span><span style="color:#000000;">/</span><span style="color:#000000;">2</span><span style="color:#000000;">;<br /></span><span style="color:#0000ff;">return</span><span style="color:#000000;"> common</span><span style="color:#000000;">/</span><span style="color:#000000;">avg;<br />}</span><br /></pre></div><br />Isn't that sweet? Well, it definitely is sweet. You could do something like that even in Groovy..<br /><br /><div class="wlWriterSmartContent" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:ab7b4a95-9f5c-4413-a4ca-ac8919da9e0c" style="PADDING-RIGHT: 0px; DISPLAY: inline; PADDING-LEFT: 0px; FLOAT: none; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 606px; PADDING-TOP: 0px"><pre  style="color:white;"><span style="color:#000000;">public match(array1,array2)<br />{<br /></span><span style="color:#0000ff;">def</span><span style="color:#000000;"> common </span><span style="color:#000000;">=</span><span style="color:#000000;"> array1.find(it</span><span style="color:#000000;">-&gt;</span><span style="color:#000000;">array2.contains(it)).size();<br /></span><span style="color:#0000ff;">def</span><span style="color:#000000;"> avg </span><span style="color:#000000;">=</span><span style="color:#000000;"> (array1.length()</span><span style="color:#000000;">+</span><span style="color:#000000;">array2.length())</span><span style="color:#000000;">/</span><span style="color:#000000;">2</span><span style="color:#000000;">;<br /></span><span style="color:#0000ff;">return</span><span style="color:#000000;"> common</span><span style="color:#000000;">/</span><span style="color:#000000;">avg;<br />}</span><br /></pre></div><br />Well, the functions size() might either be length() or count() which I usually am confused and since I always an IDE to code, I usually do not take the pain to remember these simple(but important) details. Anyway, if you want to pick the common elements in 10 arrays, even then the code in C# 3.0 or Groovy is going to be 3-4 lines. So it 400% less code?<br /><br />The point here is that languages are getting sexier with time and it is really fun to write amazingly compact code. For those who haven't tried LINQ, should really take a look at it. By the way, I did a little LINQ to XML and with very little code, it makes using RESTful web services very easy. Hats off! to all the genius who came up with these ideas (of course, Microsoft did not invent closures...)
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Matching two arrays - One Line Beauty ..&amp;url=/programming/2008/07/24/Matching-two-arrays---One-Line-Beauty-...html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/programming/2008/07/24/Matching-two-arrays---One-Line-Beauty-...html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/programming/2008/07/24/Matching-two-arrays---One-Line-Beauty-...html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Working with JQuery and list boxes</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Working with JQuery and list boxes</h2>
-<p class="meta">12 Nov 2009</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p>Code (read comments): </p>  <pre class="html" name="code">&lt;html&gt; <br />&lt;head&gt; <br />    &lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js&quot;&gt; <br />    &lt;/script&gt; <br />    &lt;script type=&quot;text/javascript&quot;&gt; <br />        /* <br />        when the document is ready (after all the HTML page is loaded, this shall be executed) <br />        we attach the event handlers. <br />        */ <br />        $(document).ready(function(){ attachEventHandlers(); }); <br />        function attachEventHandlers(){ <br />            /* <br />            In this method we attach the function(){} to the change event on all the &lt;select&gt; items. <br />            The code inside the function(){} shall be executed when item selections are changed on the select box. <br />            */ <br />            $(&quot;select&quot;).change(function(){ <br />                //using &quot;this&quot; to access the current listbox. the jQuery wrapper would be $(this) <br />                var selectedItems = $(&quot;:selected&quot;,this); <br />                $(&quot;#itemsCount&quot;).text(selectedItems.length); //set the items selected count. <br />                var toAppendHtml = &quot;&quot;; //lets store the html that we shall put inside the itemsSelected element. <br />                //for each selected item we add a new line with selected item's text and value to the toAppendHtml. <br />                selectedItems.each(function(){ <br />                    toAppendHtml += $(this).text() +&quot; : &quot;+$(this).val()+&quot;&lt;br/&gt;&quot;; <br />                }); <br />                //finally put everything in there as html content to itemsSelected. <br />                $(&quot;#itemsSelected&quot;).html(toAppendHtml); <br />            }); <br />            /* <br />            Alternatively you can use ExternalFunction. The external function should have one parameter &quot;e&quot; called the event object.            <br />            $(&quot;select&quot;).click(ExternalFunction); <br />            */ <br />        } <br />        /* <br />        function ExternalFunction(e) <br />        { <br />        //now within this function, the element which raised the event can be accessed using &quot;this&quot;, or &quot;e.currentTarget&quot;. <br />        //So the statement &quot;this == e.currentTarget&quot; will always be true. <br />            alert($(&quot;:selected&quot;,this).length); <br />        } <br />        */ <br />    &lt;/script&gt; <br />    &lt;style type=&quot;text/css&quot;&gt; <br />        select{ <br />            width: 100px; <br />            height: 200px; <br />        } <br />    &lt;/style&gt; <br />&lt;/head&gt; <br />&lt;body&gt; <br />    &lt;select name=&quot;items&quot; id=&quot;items&quot; multiple=&quot;true&quot;&gt; <br />        &lt;option value=&quot;1&quot;&gt;Item 1&lt;/option&gt; <br />        &lt;option value=&quot;2&quot;&gt;Item 2&lt;/option&gt; <br />        &lt;option value=&quot;3&quot;&gt;Item 3&lt;/option&gt; <br />        &lt;option value=&quot;4&quot;&gt;Item 4&lt;/option&gt; <br />        &lt;option value=&quot;5&quot;&gt;Item 5&lt;/option&gt; <br />        &lt;option value=&quot;6&quot;&gt;Item 6&lt;/option&gt; <br />        &lt;option value=&quot;7&quot;&gt;Item 7&lt;/option&gt;        <br />    &lt;/select&gt; <br />    &lt;p/&gt; <br />    &lt;div&gt;total items selected : &lt;span id=&quot;itemsCount&quot;&gt;0&lt;/span&gt;&lt;/div&gt; <br />    &lt;span&gt;Selected Items are &lt;/span&gt; <br />    &lt;div id=&quot;itemsSelected&quot;/&gt; <br />&lt;/body&gt; <br />&lt;/html&gt;</pre>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2009-11-12">12 Nov 2009</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Working with JQuery and list boxes</h1>
+
+        <section class="post-content">
+            <p>Code (read comments): </p>  <pre class="html" name="code">&lt;html&gt; <br />&lt;head&gt; <br />    &lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js&quot;&gt; <br />    &lt;/script&gt; <br />    &lt;script type=&quot;text/javascript&quot;&gt; <br />        /* <br />        when the document is ready (after all the HTML page is loaded, this shall be executed) <br />        we attach the event handlers. <br />        */ <br />        $(document).ready(function(){ attachEventHandlers(); }); <br />        function attachEventHandlers(){ <br />            /* <br />            In this method we attach the function(){} to the change event on all the &lt;select&gt; items. <br />            The code inside the function(){} shall be executed when item selections are changed on the select box. <br />            */ <br />            $(&quot;select&quot;).change(function(){ <br />                //using &quot;this&quot; to access the current listbox. the jQuery wrapper would be $(this) <br />                var selectedItems = $(&quot;:selected&quot;,this); <br />                $(&quot;#itemsCount&quot;).text(selectedItems.length); //set the items selected count. <br />                var toAppendHtml = &quot;&quot;; //lets store the html that we shall put inside the itemsSelected element. <br />                //for each selected item we add a new line with selected item's text and value to the toAppendHtml. <br />                selectedItems.each(function(){ <br />                    toAppendHtml += $(this).text() +&quot; : &quot;+$(this).val()+&quot;&lt;br/&gt;&quot;; <br />                }); <br />                //finally put everything in there as html content to itemsSelected. <br />                $(&quot;#itemsSelected&quot;).html(toAppendHtml); <br />            }); <br />            /* <br />            Alternatively you can use ExternalFunction. The external function should have one parameter &quot;e&quot; called the event object.            <br />            $(&quot;select&quot;).click(ExternalFunction); <br />            */ <br />        } <br />        /* <br />        function ExternalFunction(e) <br />        { <br />        //now within this function, the element which raised the event can be accessed using &quot;this&quot;, or &quot;e.currentTarget&quot;. <br />        //So the statement &quot;this == e.currentTarget&quot; will always be true. <br />            alert($(&quot;:selected&quot;,this).length); <br />        } <br />        */ <br />    &lt;/script&gt; <br />    &lt;style type=&quot;text/css&quot;&gt; <br />        select{ <br />            width: 100px; <br />            height: 200px; <br />        } <br />    &lt;/style&gt; <br />&lt;/head&gt; <br />&lt;body&gt; <br />    &lt;select name=&quot;items&quot; id=&quot;items&quot; multiple=&quot;true&quot;&gt; <br />        &lt;option value=&quot;1&quot;&gt;Item 1&lt;/option&gt; <br />        &lt;option value=&quot;2&quot;&gt;Item 2&lt;/option&gt; <br />        &lt;option value=&quot;3&quot;&gt;Item 3&lt;/option&gt; <br />        &lt;option value=&quot;4&quot;&gt;Item 4&lt;/option&gt; <br />        &lt;option value=&quot;5&quot;&gt;Item 5&lt;/option&gt; <br />        &lt;option value=&quot;6&quot;&gt;Item 6&lt;/option&gt; <br />        &lt;option value=&quot;7&quot;&gt;Item 7&lt;/option&gt;        <br />    &lt;/select&gt; <br />    &lt;p/&gt; <br />    &lt;div&gt;total items selected : &lt;span id=&quot;itemsCount&quot;&gt;0&lt;/span&gt;&lt;/div&gt; <br />    &lt;span&gt;Selected Items are &lt;/span&gt; <br />    &lt;div id=&quot;itemsSelected&quot;/&gt; <br />&lt;/body&gt; <br />&lt;/html&gt;</pre>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Working with JQuery and list boxes&amp;url=/2009/11/12/Working-with-JQuery-and-list-boxes.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2009/11/12/Working-with-JQuery-and-list-boxes.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2009/11/12/Working-with-JQuery-and-list-boxes.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

@@ -1,31 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>WCF Security – the way I wanted to learn</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>WCF Security – the way I wanted to learn</h2>
-<p class="meta">12 Jul 2010</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p>For intranet applications where the users could be authenticated against Active Directory, using WindowsCredentials, setting up security for a WCF service might not be all that difficult. It might not be difficult even to set up a WCF Service hosted by IIS and make it use the ASP.NET Roles/Providers. But what I wanted was to come up with a series of steps that allows me to secure a WCF service for internet-like applications. While it appears that there would have been 1000s of implementations on the subject where the client application provides a UserName/Password login control and then on the authenticated users would be able to work with the service.</p>  <p>To go back a little, this is what I want </p>  <p>-&#160; I have a client application which has a Login Control and the user enters Username and password. Without proper username.password combination, the service communications going forward should not be allowed. Remember Forms Authentication in ASP.NET ?? Something similar to that. </p>  <p>- I do not want to tie my service strongly to the host – meaning I do not want to make use of the ASP.NET Membership Provider models, though it is relatively easy to do so. So I have a console host program that serves as the WCF Service.</p>  <p>- For every call to an OperationContract, I do not want to read the Message Headers or add extra parameters to see the username and password. I don’t want specific logic within each operation that handles this check.</p>  <p>- I want the operations to be limited to those users with some kind of “Roles”. Basically, i have a set of operations that only users of a Role “X” should be able to perform; whereas there are some other operations for users with other roles.</p>  <p>- I don’t want my communication channel to be open and would want to prevent the users to sniff the traffic to see what is going on.</p>  <p>To summarize these requirements, </p>  <p>- I want a secure communication between client and server.   <br />- I want to restrict access to the service unless the client sends in valid username/password.    <br />- I want to restrict access to operations based on the roles of the calling user.    <br />- I don’t want to deal with Windows Authentication at this moment, since I have plans to host my service on the internet in which case WindowsIdentity is not really preferred.</p>  <p>In this post, I would like to show the way I achieved these goals. Note that I am not qualified enough to make strong statements or give strong explanation on how the security works. The intention of this post would be to help assist developers like me who has little knowledge of WCF Security but do understand how Security works in general. I recommend you read MSDN documentation for the classes and terms I throw here and there.</p>  <p>While, the source code is available for download here : <a href="http://drop.io/yskic3h">http://drop.io/yskic3h</a> , here in this post I simply mention the steps that I used to achieve each of the goals mentioned above.</p>  <h3>1. Secure Communication Channel</h3>  <p>Used wsHttpBinding as the binding of my choice. The wsHttpBinding by default employs Windows security. We would have to change that to make use of Message security using “UserName” as clientCredentialType. All this is configured as a binding configuration.</p>  <pre name="code" class="xml">
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2010-07-12">12 Jul 2010</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">WCF Security – the way I wanted to learn</h1>
+
+        <section class="post-content">
+            <p>For intranet applications where the users could be authenticated against Active Directory, using WindowsCredentials, setting up security for a WCF service might not be all that difficult. It might not be difficult even to set up a WCF Service hosted by IIS and make it use the ASP.NET Roles/Providers. But what I wanted was to come up with a series of steps that allows me to secure a WCF service for internet-like applications. While it appears that there would have been 1000s of implementations on the subject where the client application provides a UserName/Password login control and then on the authenticated users would be able to work with the service.</p>  <p>To go back a little, this is what I want </p>  <p>-&#160; I have a client application which has a Login Control and the user enters Username and password. Without proper username.password combination, the service communications going forward should not be allowed. Remember Forms Authentication in ASP.NET ?? Something similar to that. </p>  <p>- I do not want to tie my service strongly to the host – meaning I do not want to make use of the ASP.NET Membership Provider models, though it is relatively easy to do so. So I have a console host program that serves as the WCF Service.</p>  <p>- For every call to an OperationContract, I do not want to read the Message Headers or add extra parameters to see the username and password. I don’t want specific logic within each operation that handles this check.</p>  <p>- I want the operations to be limited to those users with some kind of “Roles”. Basically, i have a set of operations that only users of a Role “X” should be able to perform; whereas there are some other operations for users with other roles.</p>  <p>- I don’t want my communication channel to be open and would want to prevent the users to sniff the traffic to see what is going on.</p>  <p>To summarize these requirements, </p>  <p>- I want a secure communication between client and server.   <br />- I want to restrict access to the service unless the client sends in valid username/password.    <br />- I want to restrict access to operations based on the roles of the calling user.    <br />- I don’t want to deal with Windows Authentication at this moment, since I have plans to host my service on the internet in which case WindowsIdentity is not really preferred.</p>  <p>In this post, I would like to show the way I achieved these goals. Note that I am not qualified enough to make strong statements or give strong explanation on how the security works. The intention of this post would be to help assist developers like me who has little knowledge of WCF Security but do understand how Security works in general. I recommend you read MSDN documentation for the classes and terms I throw here and there.</p>  <p>While, the source code is available for download here : <a href="http://drop.io/yskic3h">http://drop.io/yskic3h</a> , here in this post I simply mention the steps that I used to achieve each of the goals mentioned above.</p>  <h3>1. Secure Communication Channel</h3>  <p>Used wsHttpBinding as the binding of my choice. The wsHttpBinding by default employs Windows security. We would have to change that to make use of Message security using “UserName” as clientCredentialType. All this is configured as a binding configuration.</p>  <pre name="code" class="xml">
 <br />&lt;wsHttpBinding&gt;
 <br />	&lt;binding name=&quot;secureBinding&quot;&gt;
 <br />		&lt;!-- the security would be applied at Message level --&gt;
@@ -288,25 +308,65 @@
 <br /></p>
 <br />
 <br />Again the code is available for download at : http://drop.io/yskic3h . Sometime, in the future, I would try to upload the code to codeplex or put it in the Windows Live Skydrive.  
-</div>
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=WCF Security – the way I wanted to learn&amp;url=/2010/07/12/WCF-Security-%E2%80%93-the-way-I-wanted-to-learn.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2010/07/12/WCF-Security-%E2%80%93-the-way-I-wanted-to-learn.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2010/07/12/WCF-Security-%E2%80%93-the-way-I-wanted-to-learn.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

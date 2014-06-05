@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Writing some Go! code</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Writing some Go! code</h2>
-<p class="meta">31 Dec 2013</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-This post is my notes when writing some code in Go lang. To start off, I will write a Hello World program in Go language. &nbsp;See below. <br /><pre class="c" name="code">package main<br /><br />import "fmt"<br /><br />func main(){<br /> messageToPrint := "Welcome to Go!"<br /> fmt.Printf(messageToPrint + "\n")<br />}<br /></pre><br />Now to run this, you can do one of the following : <br /><pre class="powershell" name="code">go run HelloWorld.go<br /></pre>OR <br /><br /><pre class="powershell" name="code">go build HelloWorld.go<br /></pre>In the first case, "go run" compiles the program and runs it. It does not create an executable as such. (It could be creating a temporary executable somewhere.) The second command actually builds an executable which you can run.  Go also has a tool called "gofmt" which you can run directly as gofmt or can run as   <br /><pre class="powershell" name="code">go fmt HelloWorld.go </pre>.   The formatting tool formats your source code so that it matches the Go-defined formatting. This is a good thing as each one of us need not invent our own coding conventions.  Gofmt can also be used to perform some code refactoring. In order to perform a rename variable, the following command does the trick.  <br /><pre class="powershell" name="code">gofmt -l -w -r 'messageToPrint -&gt; mesg' ./HelloWorld.go </pre>The above command would rename the messageToPrint variable as mesg. In general, you pass 'pattern -&gt; replaceWith' style of commands when using the -r option.  More information on what gofmt -r can be used for is available in this <a href="http://www2.gli.cas.cz/home/cejchan/go/gofmt-r.pdf">presentation</a> &nbsp;  <br /><div><br /><b>Writing a Web Server in Go!</b><br /><br />The following code snippet shows a Web Server that is written in Go! and also shows how to write anonymous functions in Go!<br /><pre class="c" name="code">package main<br /><br />import (<br /> "fmt"<br /> "net/http"<br />)<br /><br />func main() {<br /> fmt.Printf("Web Server will be started at port 8080\n")<br />        //See below for anonymous function<br /> http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {<br />  fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path)<br /> })<br /> http.ListenAndServe(":8080", nil)<br />}<br /></pre><br />Now a better way (in my opinion) to write the same code as above is shown below.<br /><pre class="c" name="code">package main<br /><br />import (<br /> "fmt"<br /> "net/http"<br />)<br /><br />func main() {<br /> fmt.Printf("Web Server will be started at port 8080\n")<br /> rootHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {<br />  fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path)<br /> })<br /><br /> srv := http.Server{<br />  Handler: rootHandler,<br />  Addr:    ":8080",<br /> }<br /><br /> srv.ListenAndServe()<br />}<br /><br /></pre>In this example, we are actually creating an instance of a Http Server as opposed to the previous example where the http global helper methods were used to start the Http Web Service.<br /><br />I was just curious to see how well this naive web service performs. Using apache bench, when I run 10000 requests at concurrency level of 100-700, the sample (stupid) program can serve around 5000 requests/second on my age old laptop. Just for kicks, the server in Go is atleast 5 times faster for each request as compared to the nodejs http server.<br /><br />Back to Go! ..<br /><br /><ol><li>Package has to be "main" for your main program. Otherwise, it does not work.</li><li>Passing -x flag to your helper commands such as "go run", "go fmt" or "go build" will display the complete output and the commands internally executed.</li><li>The "go build" has all compiler optimizations enabled.</li></ol></div>
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2013-12-31">31 Dec 2013</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Writing some Go! code</h1>
+
+        <section class="post-content">
+            This post is my notes when writing some code in Go lang. To start off, I will write a Hello World program in Go language. &nbsp;See below. <br /><pre class="c" name="code">package main<br /><br />import "fmt"<br /><br />func main(){<br /> messageToPrint := "Welcome to Go!"<br /> fmt.Printf(messageToPrint + "\n")<br />}<br /></pre><br />Now to run this, you can do one of the following : <br /><pre class="powershell" name="code">go run HelloWorld.go<br /></pre>OR <br /><br /><pre class="powershell" name="code">go build HelloWorld.go<br /></pre>In the first case, "go run" compiles the program and runs it. It does not create an executable as such. (It could be creating a temporary executable somewhere.) The second command actually builds an executable which you can run.  Go also has a tool called "gofmt" which you can run directly as gofmt or can run as   <br /><pre class="powershell" name="code">go fmt HelloWorld.go </pre>.   The formatting tool formats your source code so that it matches the Go-defined formatting. This is a good thing as each one of us need not invent our own coding conventions.  Gofmt can also be used to perform some code refactoring. In order to perform a rename variable, the following command does the trick.  <br /><pre class="powershell" name="code">gofmt -l -w -r 'messageToPrint -&gt; mesg' ./HelloWorld.go </pre>The above command would rename the messageToPrint variable as mesg. In general, you pass 'pattern -&gt; replaceWith' style of commands when using the -r option.  More information on what gofmt -r can be used for is available in this <a href="http://www2.gli.cas.cz/home/cejchan/go/gofmt-r.pdf">presentation</a> &nbsp;  <br /><div><br /><b>Writing a Web Server in Go!</b><br /><br />The following code snippet shows a Web Server that is written in Go! and also shows how to write anonymous functions in Go!<br /><pre class="c" name="code">package main<br /><br />import (<br /> "fmt"<br /> "net/http"<br />)<br /><br />func main() {<br /> fmt.Printf("Web Server will be started at port 8080\n")<br />        //See below for anonymous function<br /> http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {<br />  fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path)<br /> })<br /> http.ListenAndServe(":8080", nil)<br />}<br /></pre><br />Now a better way (in my opinion) to write the same code as above is shown below.<br /><pre class="c" name="code">package main<br /><br />import (<br /> "fmt"<br /> "net/http"<br />)<br /><br />func main() {<br /> fmt.Printf("Web Server will be started at port 8080\n")<br /> rootHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {<br />  fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path)<br /> })<br /><br /> srv := http.Server{<br />  Handler: rootHandler,<br />  Addr:    ":8080",<br /> }<br /><br /> srv.ListenAndServe()<br />}<br /><br /></pre>In this example, we are actually creating an instance of a Http Server as opposed to the previous example where the http global helper methods were used to start the Http Web Service.<br /><br />I was just curious to see how well this naive web service performs. Using apache bench, when I run 10000 requests at concurrency level of 100-700, the sample (stupid) program can serve around 5000 requests/second on my age old laptop. Just for kicks, the server in Go is atleast 5 times faster for each request as compared to the nodejs http server.<br /><br />Back to Go! ..<br /><br /><ol><li>Package has to be "main" for your main program. Otherwise, it does not work.</li><li>Passing -x flag to your helper commands such as "go run", "go fmt" or "go build" will display the complete output and the commands internally executed.</li><li>The "go build" has all compiler optimizations enabled.</li></ol></div>
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Writing some Go! code&amp;url=/2013/12/31/Writing-some-Go%21-code.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2013/12/31/Writing-some-Go%21-code.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2013/12/31/Writing-some-Go%21-code.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

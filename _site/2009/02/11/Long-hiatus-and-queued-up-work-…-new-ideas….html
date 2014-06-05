@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Long hiatus and queued up work … new ideas…</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Long hiatus and queued up work … new ideas…</h2>
-<p class="meta">11 Feb 2009</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p align="justify">Well, its been a long time since I blogged something and it was just that I thought I had a legitimate reason for not to blog. I am attending this training at my work which is kick-ass (when it comes to learning) and wierd when it comes to knowledge being graded with quiz and exams. Anyway, I love the learning part and the exams – not much. But it is my full time job and I got to learn what they throw at me, which is fun though. Anyway, that training itself keeps me busy most of the day and most of the week. The time that I am left with, I spend it watching tv (did i mention I am actually following 7 different TV series and I am a huge fan of HOUSE). Anyway, I have once again began thinking about developing a reporting engine using Silverlight and WCF. We use LogiXML internally and it does a pretty good job with its flexible approach when it comes to integrating reports with existing software systems, but personally (this does not represent the opinion of my employer in any way) I feel it is too complex and we use only 10% of what the engine provides. Moreover it is darn-slow since it uses a lot of Datasets and writes whole bunch of XML files. I wish to revamp this, as a challenge to come up with a great Silverlight-based report front-end driven by WCF on the server. Apart from this pet project, I am working with a friend on a super cool application which is still in its infancy but hopefully things would be improved as I graduate from the training camp. </p>  <p align="justify"><strong>Lets talk about the reporting suite</strong></p>  <p align="justify">1. Reports can be created simply by adding a query or a method from a .NET plugin.   <br />2. Drill-Down reports can be developed by simply mapping the reports using a column pulled from the parent report.    <br />3. Reports can be styled using standard silverlight styles.    <br />4. Overall look would initially be fixed and as the application evolves, a designer can be used to restructure the components. Fine-grain design might not be supported yet, since it is complex to implement.    <br />5. Reports can have input-data which should be easy to set up.     <br />6. The reporting engine would support scheduling reports off the shelf.    <br />7. Events would be raised on the server and plugins would be invoked for those events passing appropriate data. For example, BeforeReportLoads event would be fired as the report is being loaded and this would invoke IAsReportLoaded.ReportLoading(ReportInputData) would be called. So we can create a plugin which would be injected into the server and which provides implementation for the interface and in the implemented method, we could save the ReportInputData to a database. This is what we call “saving the user favorites”.    <br />8. The report viewer would support generating graphs/charts on-the-fly and in the future, one would be able to save the chart parameters as a favorite and apply when required.    <br />9. The report grid would be fancy one with support for grouping, sorting, filters and should be one like the Intersft Webgrid.</p>  <p align="justify"><strong>Cut the crap and talk about technical details</strong></p>  <p align="justify">I may be wrong but I think the application should be using PRISM since it supports dynamic loading of XAP files (modules) which makes the application faster to load and better to use. Remember, not all users would use the entire application at once which makes dynamic injection of modules a great catch. PRISM also automatically makes my application to have a great design (I know it is not true but at least it makes me know what is the right way to do some things, if not all). </p>  <p align="justify"><strong>What else?</strong></p>  <p align="justify">I am using FeedDaemon and let me tell you this – it is a great tool for avid blog reader like me and you. <a href="http://www.newsgator.com">http://www.newsgator.com</a> is the place that you should visit and download FeedDaemon and use it, you would not repent. By the way, I figured out how to make datagrid (in WPF) display drill-down data. (drill-down reports using WPF datagrid, I would post more on this later).</p>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2009-02-11">11 Feb 2009</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Long hiatus and queued up work … new ideas…</h1>
+
+        <section class="post-content">
+            <p align="justify">Well, its been a long time since I blogged something and it was just that I thought I had a legitimate reason for not to blog. I am attending this training at my work which is kick-ass (when it comes to learning) and wierd when it comes to knowledge being graded with quiz and exams. Anyway, I love the learning part and the exams – not much. But it is my full time job and I got to learn what they throw at me, which is fun though. Anyway, that training itself keeps me busy most of the day and most of the week. The time that I am left with, I spend it watching tv (did i mention I am actually following 7 different TV series and I am a huge fan of HOUSE). Anyway, I have once again began thinking about developing a reporting engine using Silverlight and WCF. We use LogiXML internally and it does a pretty good job with its flexible approach when it comes to integrating reports with existing software systems, but personally (this does not represent the opinion of my employer in any way) I feel it is too complex and we use only 10% of what the engine provides. Moreover it is darn-slow since it uses a lot of Datasets and writes whole bunch of XML files. I wish to revamp this, as a challenge to come up with a great Silverlight-based report front-end driven by WCF on the server. Apart from this pet project, I am working with a friend on a super cool application which is still in its infancy but hopefully things would be improved as I graduate from the training camp. </p>  <p align="justify"><strong>Lets talk about the reporting suite</strong></p>  <p align="justify">1. Reports can be created simply by adding a query or a method from a .NET plugin.   <br />2. Drill-Down reports can be developed by simply mapping the reports using a column pulled from the parent report.    <br />3. Reports can be styled using standard silverlight styles.    <br />4. Overall look would initially be fixed and as the application evolves, a designer can be used to restructure the components. Fine-grain design might not be supported yet, since it is complex to implement.    <br />5. Reports can have input-data which should be easy to set up.     <br />6. The reporting engine would support scheduling reports off the shelf.    <br />7. Events would be raised on the server and plugins would be invoked for those events passing appropriate data. For example, BeforeReportLoads event would be fired as the report is being loaded and this would invoke IAsReportLoaded.ReportLoading(ReportInputData) would be called. So we can create a plugin which would be injected into the server and which provides implementation for the interface and in the implemented method, we could save the ReportInputData to a database. This is what we call “saving the user favorites”.    <br />8. The report viewer would support generating graphs/charts on-the-fly and in the future, one would be able to save the chart parameters as a favorite and apply when required.    <br />9. The report grid would be fancy one with support for grouping, sorting, filters and should be one like the Intersft Webgrid.</p>  <p align="justify"><strong>Cut the crap and talk about technical details</strong></p>  <p align="justify">I may be wrong but I think the application should be using PRISM since it supports dynamic loading of XAP files (modules) which makes the application faster to load and better to use. Remember, not all users would use the entire application at once which makes dynamic injection of modules a great catch. PRISM also automatically makes my application to have a great design (I know it is not true but at least it makes me know what is the right way to do some things, if not all). </p>  <p align="justify"><strong>What else?</strong></p>  <p align="justify">I am using FeedDaemon and let me tell you this – it is a great tool for avid blog reader like me and you. <a href="http://www.newsgator.com">http://www.newsgator.com</a> is the place that you should visit and download FeedDaemon and use it, you would not repent. By the way, I figured out how to make datagrid (in WPF) display drill-down data. (drill-down reports using WPF datagrid, I would post more on this later).</p>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Long hiatus and queued up work … new ideas…&amp;url=/2009/02/11/Long-hiatus-and-queued-up-work-%E2%80%A6-new-ideas%E2%80%A6.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2009/02/11/Long-hiatus-and-queued-up-work-%E2%80%A6-new-ideas%E2%80%A6.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2009/02/11/Long-hiatus-and-queued-up-work-%E2%80%A6-new-ideas%E2%80%A6.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

@@ -1,50 +1,112 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>More C++ Pointers</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>More C++ Pointers</h2>
-<p class="meta">24 Jul 2008</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p>When you perform pointer arithmetic, you move the pointer to the next or previous element of the array. When you say ptr++ where ptr is an integer pointer, it is equivalent to ptr = ptr + 4 (mathematically) assuming integer is of 4 bytes.</p>  <p>Do not do math on pointers that does not point to array. If one keeps this in mind, then you would probably prevent most of the problems.</p>  <p>The following code snippet is perfectly legal:   <br /><span style="color: #0000ff">     <br />int</span> *ptr = array;    <br />ptr = ptr+2;    <br />ptr--;    <br />ptr++;    <br />    <br />Consider the following declaration:    <br /><span style="color: #0000ff">     <br />int</span> numbers[10];    <br />    <br />In the above declaration, <strong>numbers</strong> is of type <strong>int const*. </strong>This implies that <strong>numbers</strong> even though is a pointer, is a constant pointer and it cannot appear on the left side of an expression(as a pointer).</p>  <p><span style="color: #0000ff">int</span> *numbers;    <br />    <br />In the above shown declaration,<strong>numbers </strong>is of type <strong>int*. </strong>It can still point to an array of itegers and you can actually do a math and can appear on the left side of an expression. So the statement numbers++ in this case is perfectly legal while in the previous case; it is not legal.    <br />    <br />    <div class="wlWriterSmartContent" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:5b61d670-3b30-44b5-a982-637c3f6aaa1a" style="padding-right: 0px; display: inline; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px">Technorati Tags: <a href="http://technorati.com/tags/C++" rel="tag">C++</a>,<a href="http://technorati.com/tags/Dave" rel="tag">Dave</a></div></p>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2008-07-24">24 Jul 2008</time>
+        	
+        		on
+	        	
+	        	    c++
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">More C++ Pointers</h1>
+
+        <section class="post-content">
+            <p>When you perform pointer arithmetic, you move the pointer to the next or previous element of the array. When you say ptr++ where ptr is an integer pointer, it is equivalent to ptr = ptr + 4 (mathematically) assuming integer is of 4 bytes.</p>  <p>Do not do math on pointers that does not point to array. If one keeps this in mind, then you would probably prevent most of the problems.</p>  <p>The following code snippet is perfectly legal:   <br /><span style="color: #0000ff">     <br />int</span> *ptr = array;    <br />ptr = ptr+2;    <br />ptr--;    <br />ptr++;    <br />    <br />Consider the following declaration:    <br /><span style="color: #0000ff">     <br />int</span> numbers[10];    <br />    <br />In the above declaration, <strong>numbers</strong> is of type <strong>int const*. </strong>This implies that <strong>numbers</strong> even though is a pointer, is a constant pointer and it cannot appear on the left side of an expression(as a pointer).</p>  <p><span style="color: #0000ff">int</span> *numbers;    <br />    <br />In the above shown declaration,<strong>numbers </strong>is of type <strong>int*. </strong>It can still point to an array of itegers and you can actually do a math and can appear on the left side of an expression. So the statement numbers++ in this case is perfectly legal while in the previous case; it is not legal.    <br />    <br />    <div class="wlWriterSmartContent" id="scid:0767317B-992E-4b12-91E0-4F059A8CECA8:5b61d670-3b30-44b5-a982-637c3f6aaa1a" style="padding-right: 0px; display: inline; padding-left: 0px; padding-bottom: 0px; margin: 0px; padding-top: 0px">Technorati Tags: <a href="http://technorati.com/tags/C++" rel="tag">C++</a>,<a href="http://technorati.com/tags/Dave" rel="tag">Dave</a></div></p>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=More C++ Pointers&amp;url=/c++/2008/07/24/More-C%2B%2B-Pointers.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/c++/2008/07/24/More-C%2B%2B-Pointers.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/c++/2008/07/24/More-C%2B%2B-Pointers.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Changing IIS Settings programmatically with code in C#</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Changing IIS Settings programmatically with code in C#</h2>
-<p class="meta">13 Nov 2008</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p>The IIS Server maintains a number of Application Pools and each application pool can host one or more web applications. The application pool settings could be altered through IIS Manager (inetmgr). But it would be nice if one could change certain settings from the application pool through C# code. Shown below is the code to change the IdleTimeout for an application pool.   <br /><span style="color: blue">     <br />string </span><span style="color: black">metabasePath =</span><span style="color: maroon">&quot;IIS://localhost/W3SVC/AppPools&quot;</span><span style="color: black">;     <br /></span><span style="color: blue">string</span><span style="color: black">appPoolName =</span><span style="color: maroon">&quot;Classic .NET AppPool&quot;</span><span style="color: black">;     <br />DirectoryEntry apppools =</span><span style="color: blue">new</span><span style="color: black">DirectoryEntry(metabasePath);     <br /></span><span style="color: green">//This throws an exception - AccessViolationException     <br />//DirectoryEntry poolOfInterest =&#160; apppools.Children.Find</span><span style="color: green">(appPoolName);     <br /></span><span style="color: blue">foreach </span><span style="color: black">(DirectoryEntry p </span><span style="color: blue">in</span><span style="color: black">apppools.Children)     <br />{      <br /></span><span style="color: blue">if</span><span style="color: black">(p.Name == appPoolName)     <br />{      <br />&#160;&#160; Console.WriteLine(p.Name);      <br />&#160;&#160; Console.WriteLine(p.InvokeGet(</span><span style="color: maroon">&quot;IdleTimeout&quot;</span><span style="color: black">).ToString());     <br />&#160;&#160; p.InvokeSet(</span><span style="color: maroon">&quot;IdleTimeout&quot;</span><span style="color: black">,</span><span style="color: blue">new object</span><span style="color: black">[] {</span><span style="color: red">2</span><span style="color: black">});     <br />&#160;&#160; Console.WriteLine(p.InvokeGet(</span><span style="color: maroon">&quot;IdleTimeout&quot;</span><span style="color: black">).ToString());     <br />&#160;&#160; p.CommitChanges();      <br />&#160;&#160; </span><span style="color: blue">break</span><span style="color: black">;     <br />}      <br />}</span></p> <a href="http://11011.net/software/vspaste"></a>  <p><strong>Session timeout - Web.config settings are not good enough.</strong>    <br />Web Apps that needs to run for long durations under a user identity would face Session timeout issues eventually. I had a situation where the web application I work on was dying out after a while. The users who logged into the system are logged out after 20+ minutes. I thought this has to do with Session getting expired and so I made a change in the sessionState.timeout property in the web.config. But sounds like it is not good enough. The problem was not fixed and I decided I would debug the problem using Visual Studio. But I noticed the debugger no longer breaks after the session has died off. This stuck to me that the pool to which the debugger is attached to is no longer running and there might be a setting for Application Pool which tells the timeout. Then I found the IdleTimeout setting inside Application Pool defaults. The above is shown the code that you can use to change this value. Boom! works like magic.</p>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2008-11-13">13 Nov 2008</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Changing IIS Settings programmatically with code in C#</h1>
+
+        <section class="post-content">
+            <p>The IIS Server maintains a number of Application Pools and each application pool can host one or more web applications. The application pool settings could be altered through IIS Manager (inetmgr). But it would be nice if one could change certain settings from the application pool through C# code. Shown below is the code to change the IdleTimeout for an application pool.   <br /><span style="color: blue">     <br />string </span><span style="color: black">metabasePath =</span><span style="color: maroon">&quot;IIS://localhost/W3SVC/AppPools&quot;</span><span style="color: black">;     <br /></span><span style="color: blue">string</span><span style="color: black">appPoolName =</span><span style="color: maroon">&quot;Classic .NET AppPool&quot;</span><span style="color: black">;     <br />DirectoryEntry apppools =</span><span style="color: blue">new</span><span style="color: black">DirectoryEntry(metabasePath);     <br /></span><span style="color: green">//This throws an exception - AccessViolationException     <br />//DirectoryEntry poolOfInterest =&#160; apppools.Children.Find</span><span style="color: green">(appPoolName);     <br /></span><span style="color: blue">foreach </span><span style="color: black">(DirectoryEntry p </span><span style="color: blue">in</span><span style="color: black">apppools.Children)     <br />{      <br /></span><span style="color: blue">if</span><span style="color: black">(p.Name == appPoolName)     <br />{      <br />&#160;&#160; Console.WriteLine(p.Name);      <br />&#160;&#160; Console.WriteLine(p.InvokeGet(</span><span style="color: maroon">&quot;IdleTimeout&quot;</span><span style="color: black">).ToString());     <br />&#160;&#160; p.InvokeSet(</span><span style="color: maroon">&quot;IdleTimeout&quot;</span><span style="color: black">,</span><span style="color: blue">new object</span><span style="color: black">[] {</span><span style="color: red">2</span><span style="color: black">});     <br />&#160;&#160; Console.WriteLine(p.InvokeGet(</span><span style="color: maroon">&quot;IdleTimeout&quot;</span><span style="color: black">).ToString());     <br />&#160;&#160; p.CommitChanges();      <br />&#160;&#160; </span><span style="color: blue">break</span><span style="color: black">;     <br />}      <br />}</span></p> <a href="http://11011.net/software/vspaste"></a>  <p><strong>Session timeout - Web.config settings are not good enough.</strong>    <br />Web Apps that needs to run for long durations under a user identity would face Session timeout issues eventually. I had a situation where the web application I work on was dying out after a while. The users who logged into the system are logged out after 20+ minutes. I thought this has to do with Session getting expired and so I made a change in the sessionState.timeout property in the web.config. But sounds like it is not good enough. The problem was not fixed and I decided I would debug the problem using Visual Studio. But I noticed the debugger no longer breaks after the session has died off. This stuck to me that the pool to which the debugger is attached to is no longer running and there might be a setting for Application Pool which tells the timeout. Then I found the IdleTimeout setting inside Application Pool defaults. The above is shown the code that you can use to change this value. Boom! works like magic.</p>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Changing IIS Settings programmatically with code in C#&amp;url=/2008/11/13/Changing-IIS-Settings-programmatically-with-code-in-C%23.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2008/11/13/Changing-IIS-Settings-programmatically-with-code-in-C%23.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2008/11/13/Changing-IIS-Settings-programmatically-with-code-in-C%23.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

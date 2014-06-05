@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Ideal Reporting Engine</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Ideal Reporting Engine</h2>
-<p class="meta">12 Mar 2009</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p align="justify">If you would find it interesting, I work for Imageright (I now am supposed to say ‘a Vertafore company’) and my daily job responsibilities include develop/design reports.<em> </em>The following may not be of interest to you. <em>So what is it that I do when I say design/develop reports?</em></p>  <p align="justify"><em>We design the way that reports should appear (just the structure) and link each report with a data source which might be a .NET collection or a SQL/Oracle database. Our reports are so-called powered by LogiXml reporting engine which has some great advantages and some restrictions which are more evident as our reporting suite expands in size. So I am involved in restructuring these report definitions – the layout is rendered as html and I modify the structure as well as the style using JavaScript (jQuery of course!) and CSS. Right now the way our system is designed requires us manage and control the same things between each and every report which typically would be the same for most of the reports. Our suite has at least 30 reports and almost every report typically has the same requirements. So being a C# developer, I am pretty annoyed every day when I look at the way things has to be done with that tool. Agreed its a great tool and as I think deep about developing my own reporting framework, the complexities that might arise make me appreciate the effort the developers have put into LogiXml framework. It is a great tool if you have nice web designer and a patient report developer. The advantage of Logi is the ease of development of reports and the nightmare only starts once there are loads of reports which require constant maintenance.</em></p>  <h4 align="justify">Ideal reporting engine</h4>  <p align="justify">These are my two cents on how an ideal reporting studio should work. Some of you may not agree or most of you may not but I feel it would suit people like me pretty well.</p>  <p align="justify"><strong>People involved</strong></p>  <p align="justify">For the reports to resurface, the only people I think should be involved are</p>  <p align="justify"><strong>SQL Developer</strong> who understands report requirements and who can write finely tuned SQL to return the data that the report would display</p>  <p align="justify"><strong>Report Designer</strong> who would use our ideal-tool to just link the query that the SQL dev has given. Then he would structure the report as required making use of the “functionalities” that the suite provides. He would then style the report using local styles or style all the reports using a global theme. </p>  <p align="justify">So, if a report has to be changed, the SQL guy would update his query and the tool should automatically update the columns if changed.&#160; The tool would be intuitive enough to understand what columns are returned by the query and auto-populates the columns list which would then be available for the developer for further configuration.</p>  <p align="justify">The report designer should also be able to link a report to any .NET object. </p>  <p align="justify">The report designer should also have the facility to live-preview the report. If the report requires any input parameters, it should auto generate forms with global test data that the developer can pick from. </p>  <p align="justify">He should also be able to set up Unit testing rules on the report data screens and as the report is being designed he should be validate the report using these rules. These rules should be configurable either locally or globally.</p>  <p align="justify">And! most important of all, at each stage of report generation, the reporting engine should provide option to enable live feedback on what is happening which can be either turned on or turned off. </p>  <p align="justify"><strong>Core developers/Automation Engineers </strong>should be able to extend or run automated tasks against the reporting tool or against the files that the tool generates. So the reporting suite should come up with an API which allows them write custom or automate repetitive tasks. Again, the main goal for the suite should be that there should not be any task that appears repetitive – everything should be configurable as global as possible. </p>  <p align="justify"><strong>End User</strong> should constantly know what is happening. Progress bars for me are the most stupid things ever designed. Actually the progress bars has been so misused that they no longer represent what they were supposed to. The progress bars do not actually convey the original progress of the operation instead just tell the user “hey shit head! wait as something weird is going on”. Instead, give them progress bar if they are used to seeing progress bar and at the same time, as they click the progress bar, we should display them constant updates on what is happening. </p>  <p align="justify">Example:    <br />Report generation begins …..     <br />Data being fetched … estimated 20 seconds….    <br />Processing the data … estimated 2 seconds….    <br />Report being sent …. estimated 1 second ….</p>  <p align="justify">The estimations should be made automatically by the reporting tool and it should have a proper learning framework which performs simple math which says – given 10 input parameters for this report, it takes 5 seconds. This estimation should be close enough and need not be highly accurate. This way, the user would at least know how long he has to wait and in case the report is very complex and takes more time process, they would instead perform some operation which saves them time. Once the report is up, based on the settings, the client page (silverlight/flash/applet/web page/desktop app) should grab the attention of the user.</p>  <p align="justify">This kind of feedback also helps report developers understand what sections of the report can be tweaked and whether it is a problem of the query or the engine itself – this is the most common problem that we have – we have no idea whether it is a query issue or the engine issue. Do not keep your developers guessing on what is happening. </p>  <p align="justify"><strong>Client Support</strong></p>  <p align="justify">The reporting suite should be easy to deploy. The set up package should be complete and ask as little feedback as possible from the installing user. All possible installation scenarios should be identified and give the end user a smooth experience. Installing reports should be as easy as connecting to the reporting server from a provided utility and send them the configuration files <strong>or </strong>just place the configuration files in default location. No more packaging your stuff and dealing with installs.</p>  <p align="justify">I would like to document more about this but I will come back on this one later.</p>  <p align="justify">If some of you who read this feels interested, I am looking for developing such a suite using Silverlight/WCF. If you want to join hands – I am always in!</p>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2009-03-12">12 Mar 2009</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Ideal Reporting Engine</h1>
+
+        <section class="post-content">
+            <p align="justify">If you would find it interesting, I work for Imageright (I now am supposed to say ‘a Vertafore company’) and my daily job responsibilities include develop/design reports.<em> </em>The following may not be of interest to you. <em>So what is it that I do when I say design/develop reports?</em></p>  <p align="justify"><em>We design the way that reports should appear (just the structure) and link each report with a data source which might be a .NET collection or a SQL/Oracle database. Our reports are so-called powered by LogiXml reporting engine which has some great advantages and some restrictions which are more evident as our reporting suite expands in size. So I am involved in restructuring these report definitions – the layout is rendered as html and I modify the structure as well as the style using JavaScript (jQuery of course!) and CSS. Right now the way our system is designed requires us manage and control the same things between each and every report which typically would be the same for most of the reports. Our suite has at least 30 reports and almost every report typically has the same requirements. So being a C# developer, I am pretty annoyed every day when I look at the way things has to be done with that tool. Agreed its a great tool and as I think deep about developing my own reporting framework, the complexities that might arise make me appreciate the effort the developers have put into LogiXml framework. It is a great tool if you have nice web designer and a patient report developer. The advantage of Logi is the ease of development of reports and the nightmare only starts once there are loads of reports which require constant maintenance.</em></p>  <h4 align="justify">Ideal reporting engine</h4>  <p align="justify">These are my two cents on how an ideal reporting studio should work. Some of you may not agree or most of you may not but I feel it would suit people like me pretty well.</p>  <p align="justify"><strong>People involved</strong></p>  <p align="justify">For the reports to resurface, the only people I think should be involved are</p>  <p align="justify"><strong>SQL Developer</strong> who understands report requirements and who can write finely tuned SQL to return the data that the report would display</p>  <p align="justify"><strong>Report Designer</strong> who would use our ideal-tool to just link the query that the SQL dev has given. Then he would structure the report as required making use of the “functionalities” that the suite provides. He would then style the report using local styles or style all the reports using a global theme. </p>  <p align="justify">So, if a report has to be changed, the SQL guy would update his query and the tool should automatically update the columns if changed.&#160; The tool would be intuitive enough to understand what columns are returned by the query and auto-populates the columns list which would then be available for the developer for further configuration.</p>  <p align="justify">The report designer should also be able to link a report to any .NET object. </p>  <p align="justify">The report designer should also have the facility to live-preview the report. If the report requires any input parameters, it should auto generate forms with global test data that the developer can pick from. </p>  <p align="justify">He should also be able to set up Unit testing rules on the report data screens and as the report is being designed he should be validate the report using these rules. These rules should be configurable either locally or globally.</p>  <p align="justify">And! most important of all, at each stage of report generation, the reporting engine should provide option to enable live feedback on what is happening which can be either turned on or turned off. </p>  <p align="justify"><strong>Core developers/Automation Engineers </strong>should be able to extend or run automated tasks against the reporting tool or against the files that the tool generates. So the reporting suite should come up with an API which allows them write custom or automate repetitive tasks. Again, the main goal for the suite should be that there should not be any task that appears repetitive – everything should be configurable as global as possible. </p>  <p align="justify"><strong>End User</strong> should constantly know what is happening. Progress bars for me are the most stupid things ever designed. Actually the progress bars has been so misused that they no longer represent what they were supposed to. The progress bars do not actually convey the original progress of the operation instead just tell the user “hey shit head! wait as something weird is going on”. Instead, give them progress bar if they are used to seeing progress bar and at the same time, as they click the progress bar, we should display them constant updates on what is happening. </p>  <p align="justify">Example:    <br />Report generation begins …..     <br />Data being fetched … estimated 20 seconds….    <br />Processing the data … estimated 2 seconds….    <br />Report being sent …. estimated 1 second ….</p>  <p align="justify">The estimations should be made automatically by the reporting tool and it should have a proper learning framework which performs simple math which says – given 10 input parameters for this report, it takes 5 seconds. This estimation should be close enough and need not be highly accurate. This way, the user would at least know how long he has to wait and in case the report is very complex and takes more time process, they would instead perform some operation which saves them time. Once the report is up, based on the settings, the client page (silverlight/flash/applet/web page/desktop app) should grab the attention of the user.</p>  <p align="justify">This kind of feedback also helps report developers understand what sections of the report can be tweaked and whether it is a problem of the query or the engine itself – this is the most common problem that we have – we have no idea whether it is a query issue or the engine issue. Do not keep your developers guessing on what is happening. </p>  <p align="justify"><strong>Client Support</strong></p>  <p align="justify">The reporting suite should be easy to deploy. The set up package should be complete and ask as little feedback as possible from the installing user. All possible installation scenarios should be identified and give the end user a smooth experience. Installing reports should be as easy as connecting to the reporting server from a provided utility and send them the configuration files <strong>or </strong>just place the configuration files in default location. No more packaging your stuff and dealing with installs.</p>  <p align="justify">I would like to document more about this but I will come back on this one later.</p>  <p align="justify">If some of you who read this feels interested, I am looking for developing such a suite using Silverlight/WCF. If you want to join hands – I am always in!</p>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Ideal Reporting Engine&amp;url=/2009/03/12/Ideal-Reporting-Engine.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2009/03/12/Ideal-Reporting-Engine.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2009/03/12/Ideal-Reporting-Engine.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

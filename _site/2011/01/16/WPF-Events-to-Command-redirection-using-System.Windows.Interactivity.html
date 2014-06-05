@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>WPF Events to Command redirection using System.Windows.Interactivity</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>WPF Events to Command redirection using System.Windows.Interactivity</h2>
-<p class="meta">16 Jan 2011</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p><a href="http://krishnabhargav.blogspot.com/2011/01/executing-routedcommand-in-code-behind.html" target="_blank">As mentioned previously</a>, I recently used System.Windows.Interactivity library to make a command respond to an event on WPF controls without using any code-behind. In this post, I would give a brief overview and show some code on how to do it. I will try and keep the post to the point and not write anything about hooking up events with code or anything like that. Usual disclaimer applies – I am not entirely familiar with the internals but I know how to make it work and why it works.</p> <p>So lets start with my simple requirement. I have a text box and as I enter I want to fire a command which processes the text and displays it on a textblock. Of course you can hook up both the controls to the same property in the ViewModel and with .NET 4.0 you can be sure that the getter will fire again when NotifyPropertyChanged is fired. But that is not the point here. </p> <p>My XAML would simply have a textbox and a textblock. On textbox.TextChanged event fired, I would like to execute a command in my view model. The XAML is shown below.</p><pre class="xml" name="code">&lt;UserControl x:Class="Buddi.Training.Advanced.Interactivity.EventToCommandDemo"<br />    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"<br />             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"<br />             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" <br />             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" <br />             xmlns:local="clr-namespace:Buddi.Training.Infra"<br />             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"&gt;<br />    &lt;Grid Background="Beige"&gt;<br />        &lt;Grid.RowDefinitions&gt;<br />            &lt;RowDefinition Height="100"/&gt;<br />            &lt;RowDefinition Height="100"/&gt;<br />        &lt;/Grid.RowDefinitions&gt;<br />        &lt;TextBox Text="{Binding SampleCommandParam,UpdateSourceTrigger=PropertyChanged}" Margin="20"&gt;<br />            &lt;i:Interaction.Triggers&gt;<br />                &lt;i:EventTrigger EventName="TextChanged"&gt;<br />                    &lt;local:EventToCommand Command="{Binding SampleCommand}"<br />                                      CommandParameter="{Binding SampleCommandParam}"/&gt;<br />                &lt;/i:EventTrigger&gt;<br />            &lt;/i:Interaction.Triggers&gt;<br />        &lt;/TextBox&gt;<br />        &lt;TextBlock Text="{Binding Message}" Grid.Row="1" Padding="30" FontFamily="Consolas" FontWeight="14"/&gt;<br />    &lt;/Grid&gt;<br />&lt;/UserControl&gt;<br /></pre><br /><br /><p> You need to see how I am hooking up the event to the command in viewmodel which is the DataContext of the View (UserControl to be precise). Lets disect what we have here - We add an event trigger to the TriggersCollection on the Grid using the Interactivity.Triggers attached properties. An event trigger comes with the System.Windows.Interactivity.dll assembly. So add a reference to that library using the "Add Reference" dialog. The Event Trigger then expects an action that can be anything that derives from the <a href="http://msdn.microsoft.com/en-us/library/ff726548(v=Expression.40).aspx" target="_blank">TriggerAction&lt;FrameworkElement&gt;</a> class. The TriggerAction<T> derived class should implement one method called "InvokeCommand(object parameter)". The implementation simply takes care of executing the command which are passed to the DependencyProperty we defined in the EventToCommand class. Note that TriggerAction<FrameworkElement> is a DependencyObject, thereby it allows you define Dependency Properties to take full advantage of the Binding, Styles, Animations and what not. So the trigger action is simple - (the following is a special implementation where I handle RoutedCommand different than the others, this is just my scenario and is typically bad - you are programming to the implementation which is not a good idea, but the plan here is to show how you can use the base.AssociatedObject).<br /><br /><pre name="code" class="csharp"><br />namespace Buddi.Training.Infra<br />{<br />    public class EventToCommand : TriggerAction&lt;FrameworkElement&gt;<br />    {<br />        public ICommand Command<br />        {<br />            get { return (ICommand)GetValue(CommandProperty); }<br />            set { SetValue(CommandProperty, value); }<br />        }<br /><br />        public static readonly DependencyProperty CommandProperty =<br />            DependencyProperty.Register(&quot;Command&quot;, typeof(ICommand), typeof(EventToCommand), new UIPropertyMetadata(null));<br /><br /><br /><br /><br />        public object CommandParameter<br />        {<br />            get { return (object)GetValue(CommandParameterProperty); }<br />            set { SetValue(CommandParameterProperty, value); }<br />        }<br /><br />        // Using a DependencyProperty as the backing store for CommandParameter.  This enables animation, styling, binding, etc...<br />        public static readonly DependencyProperty CommandParameterProperty =<br />            DependencyProperty.Register(&quot;CommandParameter&quot;, typeof(object), typeof(EventToCommand), new UIPropertyMetadata(null));<br /><br /><br /><br />        protected override void Invoke(object parameter)<br />        {<br />            if (Command == null) return;<br />            if (Command is RoutedCommand)<br />            {<br />                var rc = Command as RoutedCommand;<br />                if (rc.CanExecute(CommandParameter, base.AssociatedObject))<br />                {<br />                    rc.Execute(CommandParameter, base.AssociatedObject);<br />                }<br />            }<br />            else<br />            {<br />                if (Command.CanExecute(CommandParameter))<br />                    Command.Execute(CommandParameter);<br />            }<br />        }<br />    }<br />}<br /></pre><br /><br /><p>That's it! you can now program to the events using the commands that you already have. This lets you keep your code-behind clean and write more testable code than ever. I hope this is useful inspite of it not being the best of the articles. By the way, almost every MVVM framework out there provides an implementation of Event To Command action -eg : Caliburn, Cinch, you name it ... but not always it is possible for us to use a third party framework just for this one reason. In such cases, I thought it is good to know that you can acheive it just by using Microsoft's assembly.</p>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2011-01-16">16 Jan 2011</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">WPF Events to Command redirection using System.Windows.Interactivity</h1>
+
+        <section class="post-content">
+            <p><a href="http://krishnabhargav.blogspot.com/2011/01/executing-routedcommand-in-code-behind.html" target="_blank">As mentioned previously</a>, I recently used System.Windows.Interactivity library to make a command respond to an event on WPF controls without using any code-behind. In this post, I would give a brief overview and show some code on how to do it. I will try and keep the post to the point and not write anything about hooking up events with code or anything like that. Usual disclaimer applies – I am not entirely familiar with the internals but I know how to make it work and why it works.</p> <p>So lets start with my simple requirement. I have a text box and as I enter I want to fire a command which processes the text and displays it on a textblock. Of course you can hook up both the controls to the same property in the ViewModel and with .NET 4.0 you can be sure that the getter will fire again when NotifyPropertyChanged is fired. But that is not the point here. </p> <p>My XAML would simply have a textbox and a textblock. On textbox.TextChanged event fired, I would like to execute a command in my view model. The XAML is shown below.</p><pre class="xml" name="code">&lt;UserControl x:Class="Buddi.Training.Advanced.Interactivity.EventToCommandDemo"<br />    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"<br />             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"<br />             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" <br />             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" <br />             xmlns:local="clr-namespace:Buddi.Training.Infra"<br />             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"&gt;<br />    &lt;Grid Background="Beige"&gt;<br />        &lt;Grid.RowDefinitions&gt;<br />            &lt;RowDefinition Height="100"/&gt;<br />            &lt;RowDefinition Height="100"/&gt;<br />        &lt;/Grid.RowDefinitions&gt;<br />        &lt;TextBox Text="{Binding SampleCommandParam,UpdateSourceTrigger=PropertyChanged}" Margin="20"&gt;<br />            &lt;i:Interaction.Triggers&gt;<br />                &lt;i:EventTrigger EventName="TextChanged"&gt;<br />                    &lt;local:EventToCommand Command="{Binding SampleCommand}"<br />                                      CommandParameter="{Binding SampleCommandParam}"/&gt;<br />                &lt;/i:EventTrigger&gt;<br />            &lt;/i:Interaction.Triggers&gt;<br />        &lt;/TextBox&gt;<br />        &lt;TextBlock Text="{Binding Message}" Grid.Row="1" Padding="30" FontFamily="Consolas" FontWeight="14"/&gt;<br />    &lt;/Grid&gt;<br />&lt;/UserControl&gt;<br /></pre><br /><br /><p> You need to see how I am hooking up the event to the command in viewmodel which is the DataContext of the View (UserControl to be precise). Lets disect what we have here - We add an event trigger to the TriggersCollection on the Grid using the Interactivity.Triggers attached properties. An event trigger comes with the System.Windows.Interactivity.dll assembly. So add a reference to that library using the "Add Reference" dialog. The Event Trigger then expects an action that can be anything that derives from the <a href="http://msdn.microsoft.com/en-us/library/ff726548(v=Expression.40).aspx" target="_blank">TriggerAction&lt;FrameworkElement&gt;</a> class. The TriggerAction<T> derived class should implement one method called "InvokeCommand(object parameter)". The implementation simply takes care of executing the command which are passed to the DependencyProperty we defined in the EventToCommand class. Note that TriggerAction<FrameworkElement> is a DependencyObject, thereby it allows you define Dependency Properties to take full advantage of the Binding, Styles, Animations and what not. So the trigger action is simple - (the following is a special implementation where I handle RoutedCommand different than the others, this is just my scenario and is typically bad - you are programming to the implementation which is not a good idea, but the plan here is to show how you can use the base.AssociatedObject).<br /><br /><pre name="code" class="csharp"><br />namespace Buddi.Training.Infra<br />{<br />    public class EventToCommand : TriggerAction&lt;FrameworkElement&gt;<br />    {<br />        public ICommand Command<br />        {<br />            get { return (ICommand)GetValue(CommandProperty); }<br />            set { SetValue(CommandProperty, value); }<br />        }<br /><br />        public static readonly DependencyProperty CommandProperty =<br />            DependencyProperty.Register(&quot;Command&quot;, typeof(ICommand), typeof(EventToCommand), new UIPropertyMetadata(null));<br /><br /><br /><br /><br />        public object CommandParameter<br />        {<br />            get { return (object)GetValue(CommandParameterProperty); }<br />            set { SetValue(CommandParameterProperty, value); }<br />        }<br /><br />        // Using a DependencyProperty as the backing store for CommandParameter.  This enables animation, styling, binding, etc...<br />        public static readonly DependencyProperty CommandParameterProperty =<br />            DependencyProperty.Register(&quot;CommandParameter&quot;, typeof(object), typeof(EventToCommand), new UIPropertyMetadata(null));<br /><br /><br /><br />        protected override void Invoke(object parameter)<br />        {<br />            if (Command == null) return;<br />            if (Command is RoutedCommand)<br />            {<br />                var rc = Command as RoutedCommand;<br />                if (rc.CanExecute(CommandParameter, base.AssociatedObject))<br />                {<br />                    rc.Execute(CommandParameter, base.AssociatedObject);<br />                }<br />            }<br />            else<br />            {<br />                if (Command.CanExecute(CommandParameter))<br />                    Command.Execute(CommandParameter);<br />            }<br />        }<br />    }<br />}<br /></pre><br /><br /><p>That's it! you can now program to the events using the commands that you already have. This lets you keep your code-behind clean and write more testable code than ever. I hope this is useful inspite of it not being the best of the articles. By the way, almost every MVVM framework out there provides an implementation of Event To Command action -eg : Caliburn, Cinch, you name it ... but not always it is possible for us to use a third party framework just for this one reason. In such cases, I thought it is good to know that you can acheive it just by using Microsoft's assembly.</p>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=WPF Events to Command redirection using System.Windows.Interactivity&amp;url=/2011/01/16/WPF-Events-to-Command-redirection-using-System.Windows.Interactivity.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2011/01/16/WPF-Events-to-Command-redirection-using-System.Windows.Interactivity.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2011/01/16/WPF-Events-to-Command-redirection-using-System.Windows.Interactivity.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

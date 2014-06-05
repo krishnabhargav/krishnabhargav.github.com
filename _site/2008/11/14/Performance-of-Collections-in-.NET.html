@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Performance of Collections in .NET</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Performance of Collections in .NET</h2>
-<p class="meta">14 Nov 2008</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p>With some future prospects of writing a high scale LOB Silverlight application, I thought performance of the application would be crucial. I decided to look into writing optimized code and before that I decided to find out what is the performance impact of the collections that I use most commonly. To be specific, in this post, <strong>I only look at the performance of creating various collections of type int.</strong></p>  <p><strong>Large Collections</strong></p>  <p>I wrote a simple performance test class which returns me collections of various types. Each method create a list of pretty large size.    <br /><em>public static int MAX = 19999999;</em>    <br />The results of the test program is shown below.</p>  <p><a href="http://lh3.ggpht.com/_Oy9HuksgrdU/SR2fqVcMYzI/AAAAAAAAAuI/wbV_Ll7am8c/s1600-h/image%5B8%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="332" alt="image" src="http://lh6.ggpht.com/_Oy9HuksgrdU/SR2fqrWGrUI/AAAAAAAAAuM/KE7HF5hGL1I/image_thumb%5B4%5D.png?imgmax=800" width="666" border="0" /></a> </p>  <table cellspacing="0" cellpadding="2" width="400" border="0"><tbody>     <tr>       <td valign="top" width="101">         <p align="center"><strong>Name</strong></p>       </td>        <td valign="top" width="297">         <p align="center"><strong>Collection Type Explained</strong></p>       </td>     </tr>      <tr>       <td valign="top" width="101">Ar</td>        <td valign="top" width="297">Array (int[] array)</td>     </tr>      <tr>       <td valign="top" width="101">Ar_Enble</td>        <td valign="top" width="297">array.AsEnumerable()</td>     </tr>      <tr>       <td valign="top" width="101">Ar_En_Cast</td>        <td valign="top" width="297">IEnumerable&lt;int&gt; e = array;</td>     </tr>      <tr>       <td valign="top" width="101">List</td>        <td valign="top" width="297">List&lt;int&gt; </td>     </tr>      <tr>       <td valign="top" width="101">IniList</td>        <td valign="top" width="297">List&lt;int&gt; l = new List&lt;int&gt;(MAX);</td>     </tr>      <tr>       <td valign="top" width="101">ArList</td>        <td valign="top" width="297">ArrayList</td>     </tr>      <tr>       <td valign="top" width="101">Range</td>        <td valign="top" width="297">new List&lt;int&gt;(GetArray());</td>     </tr>      <tr>       <td valign="top" width="101">LL</td>        <td valign="top" width="297">LinkedList&lt;int&gt;</td>     </tr>   </tbody></table>  <p>   <br />From the results, it is obvious that an array is the fastest collection that you can use and on an average it is 28 times faster than ArrayList and 3 times faster than the List&lt;T&gt;. </p>  <p>Note that for this discussion, I only am using entries with green color. This is based on the assumption that GetArray() should be faster than first getting the array and then IEnumerable out of the array. Some of the key points I made out of this experiment:</p>  <ul>   <li>The performance of an initialized list (IniList) is 1.3 slower than using plain array.</li>    <li>AsEnumerable() is slightly faster than the cast operation.</li>    <li><strong>Do not use LinkedList</strong>, it is dead slow(50-70 times slower).</li>    <li><strong>Do not use ArrayList, </strong>it is dead slow(28 times slower)<strong>.</strong></li>    <li>AddRange() or List created by passing an entire array is not faster than adding individual items to an capacity-set list, which is at least 4 times faster.</li>    <li>Use arrays when you can guess the size of the list.</li>    <li>Use initialized list, if you are not sure about the size and use TrimExcess() if memory is of your concern.</li> </ul>  <p>I would further like to study the List&lt;T&gt; class in detail since it is one collection that I use the most. In the mean time, if you are further interested in application performance, then look at the link <a title="http://msdn.microsoft.com/en-us/library/ms998574.aspx#scalenetchapt13_topic5" href="http://msdn.microsoft.com/en-us/library/ms998574.aspx#scalenetchapt13_topic5">http://msdn.microsoft.com/en-us/library/ms998574.aspx#scalenetchapt13_topic5</a></p>  <p><strong>Update</strong></p>  <p>I just came across the following points in MSDN.</p>  <p><strong>How to choose between arrays and collections</strong></p>  <p>Arrays are the fastest of all collection types, so unless you need special functionalities like dynamic extension of the collection, sorting, and searching, you should use arrays. If you need a collection type, choose the most appropriate type based on your functionality requirements to avoid performance penalties. </p>  <ul>   <li>Use <strong>ArrayList</strong> to store custom object types and particularly when the data changes frequently and you perform frequent insert and delete operations. Avoid using <strong>ArrayList</strong> for storing strings. </li>    <li>Use a <strong>StringCollection</strong> to store strings. </li>    <li>Use a <strong>Hashtable</strong> to store a large number of records and to store data that may or may not change frequently. Use <strong>Hashtable</strong> for frequently queried data such as product catalogs where a product ID is the key. </li>    <li>Use a <strong>HybridDictionary</strong> to store frequently queried data when you expect the number of records to be low most of the time with occasional increases in size. </li>    <li>Use a <strong>ListDictionary</strong> to store small amounts of data (fewer than 10 items). </li>    <li>Use a <strong>NameValueCollection</strong> to store strings of key-value pairs in a presorted order. Use this type for data that changes frequently where you need to insert and delete items regularly and where you need to cache items for fast retrieval. </li>    <li>Use a <strong>Queue</strong> when you need to access data sequentially (first in is first out) based on priority. </li>    <li>Use a <strong>Stack</strong> in scenarios where you need to process items in a last&#8211;in, first-out manner. </li>    <li>Use a <strong>SortedList</strong> for fast object retrieval using an index or key. However, avoid using a <strong>SortedList</strong> for large data changes because the cost of inserting the large amount of data is high. For large data changes, use an <strong>ArrayList</strong> and then sort it by calling the <strong>Sort</strong> method.</li> </ul>  <p>The link : <a title="http://msdn.microsoft.com/en-us/library/ms998530.aspx" href="http://msdn.microsoft.com/en-us/library/ms998530.aspx">http://msdn.microsoft.com/en-us/library/ms998530.aspx</a></p>  <p><strong>Why do I find Hashtable slow?</strong></p>  <p>I re-conducted my experiment using <strong>Hashtable</strong> as a list (key and value) would be the same! It is dead slow, I repeat very-very slow - 1000 times slower than using an array and 80 times slower than the slowest list (un-initialized, added items witout using AddRange). But the guidelines states that Hashtable should be used to store large number of records. Is it really?</p>  <p><strong>Relatively HashSet&lt;int&gt; was much faster. It was atleast 10 times faster to say the least.</strong> Note that you cannot use HashSet&lt;int&gt; instead of List&lt;int&gt; (since List&lt;int&gt; is obviously faster) because HashSet does not allow duplicate elements and is designed for high performance set operations. May not be a great test that one should really trust, but I feel simple collections are what used most of the times, so next time I would retest using objects instead of data types. My test results.</p>  <p><a href="http://lh3.ggpht.com/_Oy9HuksgrdU/SR2ppmJrOrI/AAAAAAAAAus/j0G4fOddO3U/s1600-h/image%5B27%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="139" alt="image" src="http://lh4.ggpht.com/_Oy9HuksgrdU/SR2pU6XfG3I/AAAAAAAAAuw/ZtoOx7SQqZc/image_thumb%5B15%5D.png?imgmax=800" width="442" border="0" /></a>     <br />Ht - Hashtable and HS - HashSet&lt;int&gt;</p>  <p>From now on, I make it a point to use initialized List&lt;int&gt; since its performance is close to int[] and yet it is dynamic in nature. I hope not to use HashSet unless I have extremely complicated Set operations. I would use HashSet if (time taken to create HashSet + time taken to perform set operations) is less than (time taken to create a List + time taken to perform set operations using LINQ).</p>  <p>Performance is an interesting topic and the more you dig into it, the more knowledgeable you become about a system.</p>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2008-11-14">14 Nov 2008</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Performance of Collections in .NET</h1>
+
+        <section class="post-content">
+            <p>With some future prospects of writing a high scale LOB Silverlight application, I thought performance of the application would be crucial. I decided to look into writing optimized code and before that I decided to find out what is the performance impact of the collections that I use most commonly. To be specific, in this post, <strong>I only look at the performance of creating various collections of type int.</strong></p>  <p><strong>Large Collections</strong></p>  <p>I wrote a simple performance test class which returns me collections of various types. Each method create a list of pretty large size.    <br /><em>public static int MAX = 19999999;</em>    <br />The results of the test program is shown below.</p>  <p><a href="http://lh3.ggpht.com/_Oy9HuksgrdU/SR2fqVcMYzI/AAAAAAAAAuI/wbV_Ll7am8c/s1600-h/image%5B8%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="332" alt="image" src="http://lh6.ggpht.com/_Oy9HuksgrdU/SR2fqrWGrUI/AAAAAAAAAuM/KE7HF5hGL1I/image_thumb%5B4%5D.png?imgmax=800" width="666" border="0" /></a> </p>  <table cellspacing="0" cellpadding="2" width="400" border="0"><tbody>     <tr>       <td valign="top" width="101">         <p align="center"><strong>Name</strong></p>       </td>        <td valign="top" width="297">         <p align="center"><strong>Collection Type Explained</strong></p>       </td>     </tr>      <tr>       <td valign="top" width="101">Ar</td>        <td valign="top" width="297">Array (int[] array)</td>     </tr>      <tr>       <td valign="top" width="101">Ar_Enble</td>        <td valign="top" width="297">array.AsEnumerable()</td>     </tr>      <tr>       <td valign="top" width="101">Ar_En_Cast</td>        <td valign="top" width="297">IEnumerable&lt;int&gt; e = array;</td>     </tr>      <tr>       <td valign="top" width="101">List</td>        <td valign="top" width="297">List&lt;int&gt; </td>     </tr>      <tr>       <td valign="top" width="101">IniList</td>        <td valign="top" width="297">List&lt;int&gt; l = new List&lt;int&gt;(MAX);</td>     </tr>      <tr>       <td valign="top" width="101">ArList</td>        <td valign="top" width="297">ArrayList</td>     </tr>      <tr>       <td valign="top" width="101">Range</td>        <td valign="top" width="297">new List&lt;int&gt;(GetArray());</td>     </tr>      <tr>       <td valign="top" width="101">LL</td>        <td valign="top" width="297">LinkedList&lt;int&gt;</td>     </tr>   </tbody></table>  <p>   <br />From the results, it is obvious that an array is the fastest collection that you can use and on an average it is 28 times faster than ArrayList and 3 times faster than the List&lt;T&gt;. </p>  <p>Note that for this discussion, I only am using entries with green color. This is based on the assumption that GetArray() should be faster than first getting the array and then IEnumerable out of the array. Some of the key points I made out of this experiment:</p>  <ul>   <li>The performance of an initialized list (IniList) is 1.3 slower than using plain array.</li>    <li>AsEnumerable() is slightly faster than the cast operation.</li>    <li><strong>Do not use LinkedList</strong>, it is dead slow(50-70 times slower).</li>    <li><strong>Do not use ArrayList, </strong>it is dead slow(28 times slower)<strong>.</strong></li>    <li>AddRange() or List created by passing an entire array is not faster than adding individual items to an capacity-set list, which is at least 4 times faster.</li>    <li>Use arrays when you can guess the size of the list.</li>    <li>Use initialized list, if you are not sure about the size and use TrimExcess() if memory is of your concern.</li> </ul>  <p>I would further like to study the List&lt;T&gt; class in detail since it is one collection that I use the most. In the mean time, if you are further interested in application performance, then look at the link <a title="http://msdn.microsoft.com/en-us/library/ms998574.aspx#scalenetchapt13_topic5" href="http://msdn.microsoft.com/en-us/library/ms998574.aspx#scalenetchapt13_topic5">http://msdn.microsoft.com/en-us/library/ms998574.aspx#scalenetchapt13_topic5</a></p>  <p><strong>Update</strong></p>  <p>I just came across the following points in MSDN.</p>  <p><strong>How to choose between arrays and collections</strong></p>  <p>Arrays are the fastest of all collection types, so unless you need special functionalities like dynamic extension of the collection, sorting, and searching, you should use arrays. If you need a collection type, choose the most appropriate type based on your functionality requirements to avoid performance penalties. </p>  <ul>   <li>Use <strong>ArrayList</strong> to store custom object types and particularly when the data changes frequently and you perform frequent insert and delete operations. Avoid using <strong>ArrayList</strong> for storing strings. </li>    <li>Use a <strong>StringCollection</strong> to store strings. </li>    <li>Use a <strong>Hashtable</strong> to store a large number of records and to store data that may or may not change frequently. Use <strong>Hashtable</strong> for frequently queried data such as product catalogs where a product ID is the key. </li>    <li>Use a <strong>HybridDictionary</strong> to store frequently queried data when you expect the number of records to be low most of the time with occasional increases in size. </li>    <li>Use a <strong>ListDictionary</strong> to store small amounts of data (fewer than 10 items). </li>    <li>Use a <strong>NameValueCollection</strong> to store strings of key-value pairs in a presorted order. Use this type for data that changes frequently where you need to insert and delete items regularly and where you need to cache items for fast retrieval. </li>    <li>Use a <strong>Queue</strong> when you need to access data sequentially (first in is first out) based on priority. </li>    <li>Use a <strong>Stack</strong> in scenarios where you need to process items in a last&#8211;in, first-out manner. </li>    <li>Use a <strong>SortedList</strong> for fast object retrieval using an index or key. However, avoid using a <strong>SortedList</strong> for large data changes because the cost of inserting the large amount of data is high. For large data changes, use an <strong>ArrayList</strong> and then sort it by calling the <strong>Sort</strong> method.</li> </ul>  <p>The link : <a title="http://msdn.microsoft.com/en-us/library/ms998530.aspx" href="http://msdn.microsoft.com/en-us/library/ms998530.aspx">http://msdn.microsoft.com/en-us/library/ms998530.aspx</a></p>  <p><strong>Why do I find Hashtable slow?</strong></p>  <p>I re-conducted my experiment using <strong>Hashtable</strong> as a list (key and value) would be the same! It is dead slow, I repeat very-very slow - 1000 times slower than using an array and 80 times slower than the slowest list (un-initialized, added items witout using AddRange). But the guidelines states that Hashtable should be used to store large number of records. Is it really?</p>  <p><strong>Relatively HashSet&lt;int&gt; was much faster. It was atleast 10 times faster to say the least.</strong> Note that you cannot use HashSet&lt;int&gt; instead of List&lt;int&gt; (since List&lt;int&gt; is obviously faster) because HashSet does not allow duplicate elements and is designed for high performance set operations. May not be a great test that one should really trust, but I feel simple collections are what used most of the times, so next time I would retest using objects instead of data types. My test results.</p>  <p><a href="http://lh3.ggpht.com/_Oy9HuksgrdU/SR2ppmJrOrI/AAAAAAAAAus/j0G4fOddO3U/s1600-h/image%5B27%5D.png"><img style="border-right: 0px; border-top: 0px; border-left: 0px; border-bottom: 0px" height="139" alt="image" src="http://lh4.ggpht.com/_Oy9HuksgrdU/SR2pU6XfG3I/AAAAAAAAAuw/ZtoOx7SQqZc/image_thumb%5B15%5D.png?imgmax=800" width="442" border="0" /></a>     <br />Ht - Hashtable and HS - HashSet&lt;int&gt;</p>  <p>From now on, I make it a point to use initialized List&lt;int&gt; since its performance is close to int[] and yet it is dynamic in nature. I hope not to use HashSet unless I have extremely complicated Set operations. I would use HashSet if (time taken to create HashSet + time taken to perform set operations) is less than (time taken to create a List + time taken to perform set operations using LINQ).</p>  <p>Performance is an interesting topic and the more you dig into it, the more knowledgeable you become about a system.</p>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Performance of Collections in .NET&amp;url=/2008/11/14/Performance-of-Collections-in-.NET.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2008/11/14/Performance-of-Collections-in-.NET.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2008/11/14/Performance-of-Collections-in-.NET.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

@@ -1,50 +1,118 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Asynchronous Programming in .NET (C#)</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Asynchronous Programming in .NET (C#)</h2>
-<p class="meta">10 Feb 2008</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-Asynchronous Programming is supported by several areas in the CLR like Sockets, Remoting, Web Services, File IO, etc. In order to fully take advantage of these features, I think, one should know how to make asynchronous method calls, in the first place.<br />Asynchronous Calls -&gt; You invoke the method and do not wait for it to complete. Instead you go ahead executing the subsequent calls. This is advantageous for situations where the subsequent code has got nothing to do with this method call. For example, you have obtained some data which you wish to write to a socket. In this situation you might not have to wait until the data is written. In this case, you can write the data asynchronously. Refer to this <a href="http://msdn.microsoft.com/msdnmag/issues/07/03/ConcurrentAffairs/" target="_blank">article</a> for more detailed explanation of APM (Asynchronous Programming Model)<br />In order to make asynchronous calls, follow the steps...<br /><br />1. Create the method you wish to call asynchronously.<br /><pre><span>public</span> <span>static</span> <span>void</span> HelloWorld(<span>string</span> message)<br />{<br />Console.WriteLine("<span>Welcome to my blog : </span>"+message);<br />}</pre>2. Write a delegate with the same signature as that of your method. Note delegates are declared outside a class or a struct, but not within.<br /><br /><pre><span>public</span> <span>delegate</span> <span>void</span> AsyncHelloWorld(<span>string</span> message);</pre>3. Within Main() or wherever you wish to make this call, create an instance of this delegate passing the method you wish to be invoked.<br /><br /><pre>AsyncHelloWorld acm = <span>new</span> AsyncHelloWorld(HelloWorld);</pre>4. Invoke the method using BeginInvoke() which returns an instance of <a href="http://www.ondotnet.com/pub/a/dotnet/2003/02/24/asyncdelegates.html" target="_blank">IAsyncResult</a>. The first parameter is the parameter that is to be passed to the method HelloWorld. If there are more than one parameters that the method takes, then pass them in the same order. So we should say the BeginInvoke() takes a variable set of parameters and except the last two, the rest of the parameters are passed to the method. The last two parameters are the AsyncCallBack (you pass a method that is to be invoked on completion of execution of this method) and AsyncState. More about the arguments is <a href="http://msdn2.microsoft.com/en-us/library/aa719597(VS.71).aspx" target="_blank">here</a>.<br /><pre>IAsyncResult res = acm.BeginInvoke("<span>Krishna</span>",<span>null</span>,<span>null</span>);</pre>5. This call does not block unlike other method calls and instead proceeds further with execution. Now you might at sometime require to wait until this method is actually executed. In that case you make use of EndInvoke() method which takes in argument as the IAsyncResult object returned by the BeginInvoke().<br /><pre>acm.EndInvoke(res); <span>//wait until the method is completed</span></pre>6. On completion of execution, this method returns.<br /><br />The complete code is shown below and is written in <a href="http://www.sliver.com/dotnet/SnippetCompiler/" target="_blank">Snippet compiler</a><br /><pre><span>using</span> System;<br /><span>using</span> System.Collections.Generic;<br /><span>//should import the following namespaces...Important!</span><br /><span>using</span> System.Runtime.InteropServices;<br /><span>using</span> System.Threading;<br /><br /><span>public</span> <span>delegate</span> <span>void</span> AsyncHelloWorld(<span>string</span> message);<br /><span>public</span> <span>class</span> MyClass<br />{<br /><span>public</span> <span>static</span> <span>void</span> HelloWorld(<span>string</span> message)<br />{<br /> Console.WriteLine("<span>Welcome to my blog : </span>"+message);<br />}<br /><br /><br /><span>public</span> <span>static</span> <span>void</span> Main()<br />{<br /> Console.WriteLine("<span>Method to be called</span>");<br /> AsyncHelloWorld acm = <span>new</span> AsyncHelloWorld(HelloWorld);<br /> IAsyncResult res = acm.BeginInvoke("<span>Krishna</span>",<span>null</span>,<span>null</span>);<br /> <span>//HelloWorld("Krishna");</span><br /> Console.WriteLine("<span>Method has returned</span>");<br /> acm.EndInvoke(res);<br />}<br />}</pre><br /><br /><a href="http://cs.uga.edu/~krishna/screencasts/APM.htm" target="_blank">Asycnhronous Programming Screencast </a>....<br />[Developed with DeBugMode Wink]
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2008-02-10">10 Feb 2008</time>
+        	
+        		on
+	        	
+	        	    .net
+	        	
+	        	    3.5
+	        	
+	        	    c#
+	        	
+	        	    screencasts
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Asynchronous Programming in .NET (C#)</h1>
+
+        <section class="post-content">
+            Asynchronous Programming is supported by several areas in the CLR like Sockets, Remoting, Web Services, File IO, etc. In order to fully take advantage of these features, I think, one should know how to make asynchronous method calls, in the first place.<br />Asynchronous Calls -&gt; You invoke the method and do not wait for it to complete. Instead you go ahead executing the subsequent calls. This is advantageous for situations where the subsequent code has got nothing to do with this method call. For example, you have obtained some data which you wish to write to a socket. In this situation you might not have to wait until the data is written. In this case, you can write the data asynchronously. Refer to this <a href="http://msdn.microsoft.com/msdnmag/issues/07/03/ConcurrentAffairs/" target="_blank">article</a> for more detailed explanation of APM (Asynchronous Programming Model)<br />In order to make asynchronous calls, follow the steps...<br /><br />1. Create the method you wish to call asynchronously.<br /><pre><span>public</span> <span>static</span> <span>void</span> HelloWorld(<span>string</span> message)<br />{<br />Console.WriteLine("<span>Welcome to my blog : </span>"+message);<br />}</pre>2. Write a delegate with the same signature as that of your method. Note delegates are declared outside a class or a struct, but not within.<br /><br /><pre><span>public</span> <span>delegate</span> <span>void</span> AsyncHelloWorld(<span>string</span> message);</pre>3. Within Main() or wherever you wish to make this call, create an instance of this delegate passing the method you wish to be invoked.<br /><br /><pre>AsyncHelloWorld acm = <span>new</span> AsyncHelloWorld(HelloWorld);</pre>4. Invoke the method using BeginInvoke() which returns an instance of <a href="http://www.ondotnet.com/pub/a/dotnet/2003/02/24/asyncdelegates.html" target="_blank">IAsyncResult</a>. The first parameter is the parameter that is to be passed to the method HelloWorld. If there are more than one parameters that the method takes, then pass them in the same order. So we should say the BeginInvoke() takes a variable set of parameters and except the last two, the rest of the parameters are passed to the method. The last two parameters are the AsyncCallBack (you pass a method that is to be invoked on completion of execution of this method) and AsyncState. More about the arguments is <a href="http://msdn2.microsoft.com/en-us/library/aa719597(VS.71).aspx" target="_blank">here</a>.<br /><pre>IAsyncResult res = acm.BeginInvoke("<span>Krishna</span>",<span>null</span>,<span>null</span>);</pre>5. This call does not block unlike other method calls and instead proceeds further with execution. Now you might at sometime require to wait until this method is actually executed. In that case you make use of EndInvoke() method which takes in argument as the IAsyncResult object returned by the BeginInvoke().<br /><pre>acm.EndInvoke(res); <span>//wait until the method is completed</span></pre>6. On completion of execution, this method returns.<br /><br />The complete code is shown below and is written in <a href="http://www.sliver.com/dotnet/SnippetCompiler/" target="_blank">Snippet compiler</a><br /><pre><span>using</span> System;<br /><span>using</span> System.Collections.Generic;<br /><span>//should import the following namespaces...Important!</span><br /><span>using</span> System.Runtime.InteropServices;<br /><span>using</span> System.Threading;<br /><br /><span>public</span> <span>delegate</span> <span>void</span> AsyncHelloWorld(<span>string</span> message);<br /><span>public</span> <span>class</span> MyClass<br />{<br /><span>public</span> <span>static</span> <span>void</span> HelloWorld(<span>string</span> message)<br />{<br /> Console.WriteLine("<span>Welcome to my blog : </span>"+message);<br />}<br /><br /><br /><span>public</span> <span>static</span> <span>void</span> Main()<br />{<br /> Console.WriteLine("<span>Method to be called</span>");<br /> AsyncHelloWorld acm = <span>new</span> AsyncHelloWorld(HelloWorld);<br /> IAsyncResult res = acm.BeginInvoke("<span>Krishna</span>",<span>null</span>,<span>null</span>);<br /> <span>//HelloWorld("Krishna");</span><br /> Console.WriteLine("<span>Method has returned</span>");<br /> acm.EndInvoke(res);<br />}<br />}</pre><br /><br /><a href="http://cs.uga.edu/~krishna/screencasts/APM.htm" target="_blank">Asycnhronous Programming Screencast </a>....<br />[Developed with DeBugMode Wink]
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Asynchronous Programming in .NET (C#)&amp;url=/.net/3.5/c%23/screencasts/2008/02/10/Asynchronous-Programming-in-.NET-%28C%23%29.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/.net/3.5/c%23/screencasts/2008/02/10/Asynchronous-Programming-in-.NET-%28C%23%29.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/.net/3.5/c%23/screencasts/2008/02/10/Asynchronous-Programming-in-.NET-%28C%23%29.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

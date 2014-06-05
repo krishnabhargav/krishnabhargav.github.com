@@ -1,50 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>GridViewColumn CellTemplate does not work?</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>GridViewColumn CellTemplate does not work?</h2>
-<p class="meta">06 Jun 2009</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p>Well, today I came across this <a href="http://social.msdn.microsoft.com/Forums/en-US/wpf/thread/cfb7da87-391a-4dae-af8b-bd6312e12881">interesting question on WPF</a> regarding setting the DataTemplate of a GridViewColumn not working properly. Everything looks fine in the code (assuming his DataTemplate generating method was fine) which got me interested to figure out what the issue is. </p>  <p>And then I made up this sample application whose XAML is shown below.</p>  <pre class="xml" name="code">&lt;Window x:Class=&quot;Window1&quot; <br />  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot; <br />  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot; <br />  Title=&quot;Window1&quot; Height=&quot;300&quot; Width=&quot;300&quot; Loaded=&quot;Window_Loaded&quot;&gt; <br />&lt;StackPanel&gt; <br />&lt;ListView Name=&quot;lv&quot; ItemsSource=&quot;{Binding Items}&quot;&gt; <br />&lt;ListView.View&gt; <br />&lt;GridView&gt;&lt;/GridView&gt; <br />&lt;/ListView.View&gt; <br />&lt;/ListView&gt;<br />&lt;/StackPanel&gt; <br />&lt;/Window&gt;</pre><br /><br /><p>The code-behind is simple. It sets the DataContext to itself and then fetches sample data using GetData() call. Then the GridView for the ListView is obtained and a new gridviewcolumn is added programatically. The CellTemplate is set on the GridViewColumn using SampleTemplate() method. The SampleTemplate() method constructs a DataTemplate programatically using the FrameworkElementFactory class and returns the same. </p><br /><br /><p></p><br /><br /><pre class="vb" name="code"> <br />Private Sub Window_Loaded(ByVal sender As System.Object, _<br />                              ByVal e As System.Windows.RoutedEventArgs)<br />        Me.DataContext = Me 'set the datacontext<br />        Items = GetData()<br />        Dim gv As GridView = CType(lv.View, GridView)<br />        Dim gvc As New GridViewColumn<br />        gvc.Header = &quot;Test&quot;<br />        'Display member binding<br />        gvc.DisplayMemberBinding = New Binding(&quot;.&quot;)<br />        gvc.CellTemplate = SampleTemplate()<br />        gv.Columns.Add(gvc)<br />    End Sub<br /><br />    Private Function SampleTemplate() As DataTemplate<br />        Dim dt As New DataTemplate<br />        dt.DataType = GetType(String)<br />        Dim fef As New FrameworkElementFactory(GetType(TextBox))<br />        Dim bd As New Binding(&quot;.&quot;)<br />        fef.SetBinding(TextBox.TextProperty, bd)<br />        dt.VisualTree = fef<br />        Return dt<br />    End Function<br /><br />    Public Property Items() As IEnumerable(Of String)<br />        Get<br />            Return GetValue(ItemsProperty)<br />        End Get<br /><br />        Set(ByVal value As IEnumerable(Of String))<br />            SetValue(ItemsProperty, value)<br />        End Set<br />    End Property<br /><br />    Public Shared ReadOnly ItemsProperty As DependencyProperty = _<br />                           DependencyProperty.Register(&quot;Items&quot;, _<br />                           GetType(IEnumerable(Of String)), GetType(Window1), _<br />                           New FrameworkPropertyMetadata(Nothing))<br /><br />    Function GetData() As IEnumerable(Of String)<br />        Dim x As New ObservableCollection(Of String)<br />        x.Add(&quot;Item 1&quot;)<br />        x.Add(&quot;Item 2&quot;)<br />        x.Add(&quot;Item 3&quot;)<br />        Return x<br />    End Function</pre><br /><br /><p></p><br /><br /><p>And when I run the application all I see is …</p><br /><br /><p><a href="http://lh4.ggpht.com/_Oy9HuksgrdU/SineHTrdfpI/AAAAAAAAA6E/UsyBBRERj1M/s1600-h/image%5B7%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_Oy9HuksgrdU/SineJP2xy0I/AAAAAAAAA6I/D3e-NkgT70o/image_thumb%5B3%5D.png?imgmax=800" width="244" height="244" /></a> </p><br /><br /><p>Ok the binding works and I see my data but somehow the celltemplate is not being reflected. So, I was able to reproduce the issue the question presented.</p><br /><br /><p>So I dig around and looked in the <a href="http://msdn.microsoft.com/en-us/library/system.windows.controls.gridviewcolumn.celltemplate.aspx">documentation for CellTemplate</a> where I found the following.</p><br /><br /><p><a href="http://lh3.ggpht.com/_Oy9HuksgrdU/SineJErRMfI/AAAAAAAAA6M/d-8zFrReFIc/s1600-h/image%5B4%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_Oy9HuksgrdU/SineJradgbI/AAAAAAAAA6Q/su90EFwS2gI/image_thumb%5B2%5D.png?imgmax=800" width="573" height="124" /></a> </p><br /><br /><p>So it basically means that if DisplayMemberBinding is used, then CellTemplate would be ignored and so on with the CellTemplateSelector. So I comment the line that sets DisplayMemberBinding and run again.</p><br /><br /><p><a href="http://lh6.ggpht.com/_Oy9HuksgrdU/SineJy1JX_I/AAAAAAAAA6U/d0_0VWZB74E/s1600-h/image%5B11%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_Oy9HuksgrdU/SineKSuNr1I/AAAAAAAAA6Y/8OVHo2RlAF4/image_thumb%5B5%5D.png?imgmax=800" width="466" height="484" /></a> </p><br /><br /><p></p><br /><br /><p></p><br /><br /><p>Yes! its working as expected.</p><br /><br /><p>So whats the moral of the story? Actually there are three morals:</p><br /><br /><p>1. First of all, when using CellTemplate, do not set DisplayMemberBinding.<br />  <br />2. Refer to the documentation, especially the remarks and code samples section for a method or property. MSDN folks did an amazing job (ofcourse the WPF guys as well).<br /><br />  <br />3. MSDN WPF Forums is amazing and overall Microsoft.NET folks rocks big time.</p>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2009-06-06">06 Jun 2009</time>
+        	
+        		on
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">GridViewColumn CellTemplate does not work?</h1>
+
+        <section class="post-content">
+            <p>Well, today I came across this <a href="http://social.msdn.microsoft.com/Forums/en-US/wpf/thread/cfb7da87-391a-4dae-af8b-bd6312e12881">interesting question on WPF</a> regarding setting the DataTemplate of a GridViewColumn not working properly. Everything looks fine in the code (assuming his DataTemplate generating method was fine) which got me interested to figure out what the issue is. </p>  <p>And then I made up this sample application whose XAML is shown below.</p>  <pre class="xml" name="code">&lt;Window x:Class=&quot;Window1&quot; <br />  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot; <br />  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot; <br />  Title=&quot;Window1&quot; Height=&quot;300&quot; Width=&quot;300&quot; Loaded=&quot;Window_Loaded&quot;&gt; <br />&lt;StackPanel&gt; <br />&lt;ListView Name=&quot;lv&quot; ItemsSource=&quot;{Binding Items}&quot;&gt; <br />&lt;ListView.View&gt; <br />&lt;GridView&gt;&lt;/GridView&gt; <br />&lt;/ListView.View&gt; <br />&lt;/ListView&gt;<br />&lt;/StackPanel&gt; <br />&lt;/Window&gt;</pre><br /><br /><p>The code-behind is simple. It sets the DataContext to itself and then fetches sample data using GetData() call. Then the GridView for the ListView is obtained and a new gridviewcolumn is added programatically. The CellTemplate is set on the GridViewColumn using SampleTemplate() method. The SampleTemplate() method constructs a DataTemplate programatically using the FrameworkElementFactory class and returns the same. </p><br /><br /><p></p><br /><br /><pre class="vb" name="code"> <br />Private Sub Window_Loaded(ByVal sender As System.Object, _<br />                              ByVal e As System.Windows.RoutedEventArgs)<br />        Me.DataContext = Me 'set the datacontext<br />        Items = GetData()<br />        Dim gv As GridView = CType(lv.View, GridView)<br />        Dim gvc As New GridViewColumn<br />        gvc.Header = &quot;Test&quot;<br />        'Display member binding<br />        gvc.DisplayMemberBinding = New Binding(&quot;.&quot;)<br />        gvc.CellTemplate = SampleTemplate()<br />        gv.Columns.Add(gvc)<br />    End Sub<br /><br />    Private Function SampleTemplate() As DataTemplate<br />        Dim dt As New DataTemplate<br />        dt.DataType = GetType(String)<br />        Dim fef As New FrameworkElementFactory(GetType(TextBox))<br />        Dim bd As New Binding(&quot;.&quot;)<br />        fef.SetBinding(TextBox.TextProperty, bd)<br />        dt.VisualTree = fef<br />        Return dt<br />    End Function<br /><br />    Public Property Items() As IEnumerable(Of String)<br />        Get<br />            Return GetValue(ItemsProperty)<br />        End Get<br /><br />        Set(ByVal value As IEnumerable(Of String))<br />            SetValue(ItemsProperty, value)<br />        End Set<br />    End Property<br /><br />    Public Shared ReadOnly ItemsProperty As DependencyProperty = _<br />                           DependencyProperty.Register(&quot;Items&quot;, _<br />                           GetType(IEnumerable(Of String)), GetType(Window1), _<br />                           New FrameworkPropertyMetadata(Nothing))<br /><br />    Function GetData() As IEnumerable(Of String)<br />        Dim x As New ObservableCollection(Of String)<br />        x.Add(&quot;Item 1&quot;)<br />        x.Add(&quot;Item 2&quot;)<br />        x.Add(&quot;Item 3&quot;)<br />        Return x<br />    End Function</pre><br /><br /><p></p><br /><br /><p>And when I run the application all I see is …</p><br /><br /><p><a href="http://lh4.ggpht.com/_Oy9HuksgrdU/SineHTrdfpI/AAAAAAAAA6E/UsyBBRERj1M/s1600-h/image%5B7%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_Oy9HuksgrdU/SineJP2xy0I/AAAAAAAAA6I/D3e-NkgT70o/image_thumb%5B3%5D.png?imgmax=800" width="244" height="244" /></a> </p><br /><br /><p>Ok the binding works and I see my data but somehow the celltemplate is not being reflected. So, I was able to reproduce the issue the question presented.</p><br /><br /><p>So I dig around and looked in the <a href="http://msdn.microsoft.com/en-us/library/system.windows.controls.gridviewcolumn.celltemplate.aspx">documentation for CellTemplate</a> where I found the following.</p><br /><br /><p><a href="http://lh3.ggpht.com/_Oy9HuksgrdU/SineJErRMfI/AAAAAAAAA6M/d-8zFrReFIc/s1600-h/image%5B4%5D.png"><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" border="0" alt="image" src="http://lh5.ggpht.com/_Oy9HuksgrdU/SineJradgbI/AAAAAAAAA6Q/su90EFwS2gI/image_thumb%5B2%5D.png?imgmax=800" width="573" height="124" /></a> </p><br /><br /><p>So it basically means that if DisplayMemberBinding is used, then CellTemplate would be ignored and so on with the CellTemplateSelector. So I comment the line that sets DisplayMemberBinding and run again.</p><br /><br /><p><a href="http://lh6.ggpht.com/_Oy9HuksgrdU/SineJy1JX_I/AAAAAAAAA6U/d0_0VWZB74E/s1600-h/image%5B11%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh4.ggpht.com/_Oy9HuksgrdU/SineKSuNr1I/AAAAAAAAA6Y/8OVHo2RlAF4/image_thumb%5B5%5D.png?imgmax=800" width="466" height="484" /></a> </p><br /><br /><p></p><br /><br /><p></p><br /><br /><p>Yes! its working as expected.</p><br /><br /><p>So whats the moral of the story? Actually there are three morals:</p><br /><br /><p>1. First of all, when using CellTemplate, do not set DisplayMemberBinding.<br />  <br />2. Refer to the documentation, especially the remarks and code samples section for a method or property. MSDN folks did an amazing job (ofcourse the WPF guys as well).<br /><br />  <br />3. MSDN WPF Forums is amazing and overall Microsoft.NET folks rocks big time.</p>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=GridViewColumn CellTemplate does not work?&amp;url=/2009/06/06/GridViewColumn-CellTemplate-does-not-work%3F.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/2009/06/06/GridViewColumn-CellTemplate-does-not-work%3F.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/2009/06/06/GridViewColumn-CellTemplate-does-not-work%3F.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

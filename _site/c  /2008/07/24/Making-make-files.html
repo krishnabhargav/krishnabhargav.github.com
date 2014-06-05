@@ -1,50 +1,112 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Making make files</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Making make files</h2>
-<p class="meta">24 Jul 2008</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-<p align="justify">So final class in the CSCI 1730 and Dave has covered <strong>make</strong> files for the undergraduate students. Alas, during my undergraduate studies we did not work much with Linux at school. Frankly, none of the lab instructors in my school were knowledgeable about Windows itself, leave aside make and stuff. They used to treat the school lab systems as their secret treasure and none of us were allowed to even check our mail. That sucks, I know, that really does. (I completed my Bachelor of Engineering in Information Technology, though I consider myself more of a computer science student than an IT personnel). Anyway, I will write down what I learnt more about make files.</p> <p align="justify"><strong>Sample Makefile</strong></p> <p align="justify">Note that make files should have the name "Makefile". Invoking make reads this file for rules to be executed.</p> <p align="justify">Calling just make, invokes the first rule and if you want any other rule to be executed you specify it "make ruleX".</p> <p align="justify">batch: a b c</p> <p align="justify">a: a1 a2</p> <blockquote> <p align="justify">touch a</p></blockquote> <p align="justify">b: b1 b2</p> <blockquote> <p align="justify">touch b</p> <p align="justify">.....</p> <p align="justify">.....</p></blockquote> <p align="justify">Here batch is the target for which a,b and c are dependencies. So the <strong>batch</strong> is only executed when the modification time of <strong>batch</strong> is different from that of a b or c. Again since a is dependent on a1 and a2, it has to be run only when a1 and a2 has different modification time. A rule with no dependencies always executes it with no considerations.</p> <p align="justify"><strong>Make file to compile a C++ program</strong></p> <p align="justify">Suppose we have a main.cc which depends on List.h and List.cc and we wish to compile main.cc to get a main.out</p> <p align="justify">build: clean compile</p> <p align="justify">clean:</p> <blockquote> <p align="justify">rm -rf main.out</p></blockquote> <p align="justify">compile: main.cc List.h List.cc</p> <blockquote> <p align="justify">g++ main.cc List.h List.cc -o main.out</p></blockquote> <p align="justify">So do you always need to write a makefile? Well, the answer is no. For example, if you have a C++ program called "testmyprogram.cpp" and then you just type "make testmyprogram" then based on the extension .cpp it invokes the following command.</p> <p align="justify"><strong>g++ testmyprogram.cpp -o testmyprogram</strong></p> <p align="justify">Well, this is kind of nice, especially when you do not want to make a file just for testing a program and best of all, when you are lazy like me. But it does not work for java programs, at least not on my terminal machine.</p> <p align="justify"><strong>make -f AnotherMakefile</strong></p> <p align="justify">The above command takes in AnotherMakefile instead of Makefile.</p> <p align="justify"><strong>Using "variables" in makefiles</strong></p> <p align="justify">Well, look at the following makefile</p> <p align="justify">TARGETS=foo.o bar.o driver.o<br>CFLAGS=-g<br>CC=g++</p> <p align="justify">driver: $(TARGETS)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(CC) $(TARGETS) -o driver</p> <p align="justify">CFLAGS is an implicit flags variable which you do not need to mention when the rules are defined.</p> <p align="justify"><strong>Where things can go wrong in Makefile</strong></p> <p align="justify">look the following code.</p> <p align="justify"> <div style="padding-right: 0px; padding-left: 0px; float: none; padding-bottom: 0px; margin: 0px; width: 561px; padding-top: 0px; display: inline" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:9b157b92-51c5-4c45-8e51-780dd52b6e0f" class="wlWriterSmartContent"><pre style="background-color:White;"><div><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><span style="color: #000000; ">#include</span><span style="color: #000000; ">&lt;</span><span style="color: #000000; ">stdio.h</span><span style="color: #000000; ">&gt;</span><span style="color: #000000; "><br /></span><span style="color: #0000FF; ">class</span><span style="color: #000000; "> Example<br />{<br /></span><span style="color: #0000FF; ">public</span><span style="color: #000000; ">:<br /></span><span style="color: #0000FF; ">int</span><span style="color: #000000; "> f1;<br /></span><span style="color: #0000FF; ">int</span><span style="color: #000000; "> f2;<br /></span><span style="color: #0000FF; ">int</span><span style="color: #000000; "> f3;<br />};</span></div></pre></div></p><br /><p align="justify">The foo.cc looks like this</p><br /><p align="justify"><br /><div style="padding-right: 0px; padding-left: 0px; float: none; padding-bottom: 0px; margin: 0px; padding-top: 0px; display: inline" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:7f2df5d3-686e-414c-bfc5-6fbbe02ee421" class="wlWriterSmartContent"><pre style="background-color:White;"><div><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><span style="color: #000000; ">#include </span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">foo.h</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; "><br /><br /></span><span style="color: #0000FF; ">void</span><span style="color: #000000; "> func(Example </span><span style="color: #000000; ">&amp;</span><span style="color: #000000; ">x);<br /><br />main()<br />{<br />     Example obj;<br />     obj.f3 </span><span style="color: #000000; ">=</span><span style="color: #000000; "> </span><span style="color: #000000; ">7</span><span style="color: #000000; ">;<br />     printf(</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">f3 :%d\n</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">,obj.f3);<br />     func(obj);<br />     printf(</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">f3: %d\n</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">,obj.f3);<br />}</span></div></pre></div></p><br /><p align="justify"><br>The bar.cc looks like this</p><br /><p align="justify"><br /><div style="padding-right: 0px; padding-left: 0px; float: none; padding-bottom: 0px; margin: 0px; padding-top: 0px; display: inline" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:c912c209-ebad-4f77-977c-ebe539a8ba47" class="wlWriterSmartContent"><pre style="background-color:White;"><div><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><span style="color: #000000; ">#include</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">foo.h</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; "><br /><br /></span><span style="color: #0000FF; ">void</span><span style="color: #000000; "> func(Example </span><span style="color: #000000; ">*</span><span style="color: #000000; ">e)<br />{<br />   e.f3 </span><span style="color: #000000; ">=</span><span style="color: #000000; "> </span><span style="color: #000000; ">10</span><span style="color: #000000; ">;<br />}</span></div></pre></div></p><br /><p align="justify"><br>Your makefile to build this is pretty simple, as shown.<br></p><br /><div align="justify"><br /><div style="padding-right: 0px; padding-left: 0px; float: none; padding-bottom: 0px; margin: 0px; padding-top: 0px; display: inline" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:452b7cec-ddea-4cc2-b805-6e422b756129" class="wlWriterSmartContent"><pre style="background-color:White;"><div><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><span style="color: #000000; ">prog: foo.o bar.o<br />        g</span><span style="color: #000000; ">++</span><span style="color: #000000; "> </span><span style="color: #000000; ">-</span><span style="color: #000000; ">o prog foo.o bar.o<br /><br />foo.o: foo.cc foo.h<br />        g</span><span style="color: #000000; ">++</span><span style="color: #000000; "> </span><span style="color: #000000; ">-</span><span style="color: #000000; ">g </span><span style="color: #000000; ">-</span><span style="color: #000000; ">c foo.c<br /><br />bar.o: bar.cc foo.h<br />       g</span><span style="color: #000000; ">++</span><span style="color: #000000; "> </span><span style="color: #000000; ">-</span><span style="color: #000000; ">g </span><span style="color: #000000; ">-</span><span style="color: #000000; ">c bar.c</span></div></pre></div><br>So running make and running the program output is pretty easy and you get to see the output as 7 and 10. Now when you remove the dependency on foo.h from the bar.o rule, comment out the field "int f2" from the foo.h. So when you run the make again, since foo.o depends on foo.h, it runs whereas the rule bar.o does not run and there for the bar.o still knows that Example has three fields(int f1,int f2 and int f3) whereas the foo.o believes Example has two fields only. So when you change f3 to 10 in bar.cc, it does so in the "third" field whereas f3 is the second field in f2.</div><br /><div align="justify">&nbsp;</div><br /><div align="justify">So it is always good to remember that weird things happen when your Makefile is not correct. (In the above case, you saw something like a pointer bug).</div><br /><div align="justify">&nbsp;</div><br /><div align="justify"><strong>Working with makedepend</strong></div><br /><div align="justify">&nbsp;</div><br /><div align="justify">Running the command "makedepend foo.cc bar.cc", it generates a Makefile with list of all depenedencies. <strong>makedepend</strong> is useful but not optimal. It goes through each of the project file specified, identifies the #includes and then further checks these includes to find out further dependencies. It looks like great tool to generate the dependencies. GooD!</div><br /><div align="justify">&nbsp;</div><br /><div align="justify">I guess that is it for now, I hope to write about Jboost in the next post, hopefully.</div>  
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2008-07-24">24 Jul 2008</time>
+        	
+        		on
+	        	
+	        	    c++
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Making make files</h1>
+
+        <section class="post-content">
+            <p align="justify">So final class in the CSCI 1730 and Dave has covered <strong>make</strong> files for the undergraduate students. Alas, during my undergraduate studies we did not work much with Linux at school. Frankly, none of the lab instructors in my school were knowledgeable about Windows itself, leave aside make and stuff. They used to treat the school lab systems as their secret treasure and none of us were allowed to even check our mail. That sucks, I know, that really does. (I completed my Bachelor of Engineering in Information Technology, though I consider myself more of a computer science student than an IT personnel). Anyway, I will write down what I learnt more about make files.</p> <p align="justify"><strong>Sample Makefile</strong></p> <p align="justify">Note that make files should have the name "Makefile". Invoking make reads this file for rules to be executed.</p> <p align="justify">Calling just make, invokes the first rule and if you want any other rule to be executed you specify it "make ruleX".</p> <p align="justify">batch: a b c</p> <p align="justify">a: a1 a2</p> <blockquote> <p align="justify">touch a</p></blockquote> <p align="justify">b: b1 b2</p> <blockquote> <p align="justify">touch b</p> <p align="justify">.....</p> <p align="justify">.....</p></blockquote> <p align="justify">Here batch is the target for which a,b and c are dependencies. So the <strong>batch</strong> is only executed when the modification time of <strong>batch</strong> is different from that of a b or c. Again since a is dependent on a1 and a2, it has to be run only when a1 and a2 has different modification time. A rule with no dependencies always executes it with no considerations.</p> <p align="justify"><strong>Make file to compile a C++ program</strong></p> <p align="justify">Suppose we have a main.cc which depends on List.h and List.cc and we wish to compile main.cc to get a main.out</p> <p align="justify">build: clean compile</p> <p align="justify">clean:</p> <blockquote> <p align="justify">rm -rf main.out</p></blockquote> <p align="justify">compile: main.cc List.h List.cc</p> <blockquote> <p align="justify">g++ main.cc List.h List.cc -o main.out</p></blockquote> <p align="justify">So do you always need to write a makefile? Well, the answer is no. For example, if you have a C++ program called "testmyprogram.cpp" and then you just type "make testmyprogram" then based on the extension .cpp it invokes the following command.</p> <p align="justify"><strong>g++ testmyprogram.cpp -o testmyprogram</strong></p> <p align="justify">Well, this is kind of nice, especially when you do not want to make a file just for testing a program and best of all, when you are lazy like me. But it does not work for java programs, at least not on my terminal machine.</p> <p align="justify"><strong>make -f AnotherMakefile</strong></p> <p align="justify">The above command takes in AnotherMakefile instead of Makefile.</p> <p align="justify"><strong>Using "variables" in makefiles</strong></p> <p align="justify">Well, look at the following makefile</p> <p align="justify">TARGETS=foo.o bar.o driver.o<br>CFLAGS=-g<br>CC=g++</p> <p align="justify">driver: $(TARGETS)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $(CC) $(TARGETS) -o driver</p> <p align="justify">CFLAGS is an implicit flags variable which you do not need to mention when the rules are defined.</p> <p align="justify"><strong>Where things can go wrong in Makefile</strong></p> <p align="justify">look the following code.</p> <p align="justify"> <div style="padding-right: 0px; padding-left: 0px; float: none; padding-bottom: 0px; margin: 0px; width: 561px; padding-top: 0px; display: inline" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:9b157b92-51c5-4c45-8e51-780dd52b6e0f" class="wlWriterSmartContent"><pre style="background-color:White;"><div><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><span style="color: #000000; ">#include</span><span style="color: #000000; ">&lt;</span><span style="color: #000000; ">stdio.h</span><span style="color: #000000; ">&gt;</span><span style="color: #000000; "><br /></span><span style="color: #0000FF; ">class</span><span style="color: #000000; "> Example<br />{<br /></span><span style="color: #0000FF; ">public</span><span style="color: #000000; ">:<br /></span><span style="color: #0000FF; ">int</span><span style="color: #000000; "> f1;<br /></span><span style="color: #0000FF; ">int</span><span style="color: #000000; "> f2;<br /></span><span style="color: #0000FF; ">int</span><span style="color: #000000; "> f3;<br />};</span></div></pre></div></p><br /><p align="justify">The foo.cc looks like this</p><br /><p align="justify"><br /><div style="padding-right: 0px; padding-left: 0px; float: none; padding-bottom: 0px; margin: 0px; padding-top: 0px; display: inline" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:7f2df5d3-686e-414c-bfc5-6fbbe02ee421" class="wlWriterSmartContent"><pre style="background-color:White;"><div><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><span style="color: #000000; ">#include </span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">foo.h</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; "><br /><br /></span><span style="color: #0000FF; ">void</span><span style="color: #000000; "> func(Example </span><span style="color: #000000; ">&amp;</span><span style="color: #000000; ">x);<br /><br />main()<br />{<br />     Example obj;<br />     obj.f3 </span><span style="color: #000000; ">=</span><span style="color: #000000; "> </span><span style="color: #000000; ">7</span><span style="color: #000000; ">;<br />     printf(</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">f3 :%d\n</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">,obj.f3);<br />     func(obj);<br />     printf(</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">f3: %d\n</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">,obj.f3);<br />}</span></div></pre></div></p><br /><p align="justify"><br>The bar.cc looks like this</p><br /><p align="justify"><br /><div style="padding-right: 0px; padding-left: 0px; float: none; padding-bottom: 0px; margin: 0px; padding-top: 0px; display: inline" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:c912c209-ebad-4f77-977c-ebe539a8ba47" class="wlWriterSmartContent"><pre style="background-color:White;"><div><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><span style="color: #000000; ">#include</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; ">foo.h</span><span style="color: #000000; ">&quot;</span><span style="color: #000000; "><br /><br /></span><span style="color: #0000FF; ">void</span><span style="color: #000000; "> func(Example </span><span style="color: #000000; ">*</span><span style="color: #000000; ">e)<br />{<br />   e.f3 </span><span style="color: #000000; ">=</span><span style="color: #000000; "> </span><span style="color: #000000; ">10</span><span style="color: #000000; ">;<br />}</span></div></pre></div></p><br /><p align="justify"><br>Your makefile to build this is pretty simple, as shown.<br></p><br /><div align="justify"><br /><div style="padding-right: 0px; padding-left: 0px; float: none; padding-bottom: 0px; margin: 0px; padding-top: 0px; display: inline" id="scid:57F11A72-B0E5-49c7-9094-E3A15BD5B5E6:452b7cec-ddea-4cc2-b805-6e422b756129" class="wlWriterSmartContent"><pre style="background-color:White;"><div><!--<br /><br />Code highlighting produced by Actipro CodeHighlighter (freeware)<br />http://www.CodeHighlighter.com/<br /><br />--><span style="color: #000000; ">prog: foo.o bar.o<br />        g</span><span style="color: #000000; ">++</span><span style="color: #000000; "> </span><span style="color: #000000; ">-</span><span style="color: #000000; ">o prog foo.o bar.o<br /><br />foo.o: foo.cc foo.h<br />        g</span><span style="color: #000000; ">++</span><span style="color: #000000; "> </span><span style="color: #000000; ">-</span><span style="color: #000000; ">g </span><span style="color: #000000; ">-</span><span style="color: #000000; ">c foo.c<br /><br />bar.o: bar.cc foo.h<br />       g</span><span style="color: #000000; ">++</span><span style="color: #000000; "> </span><span style="color: #000000; ">-</span><span style="color: #000000; ">g </span><span style="color: #000000; ">-</span><span style="color: #000000; ">c bar.c</span></div></pre></div><br>So running make and running the program output is pretty easy and you get to see the output as 7 and 10. Now when you remove the dependency on foo.h from the bar.o rule, comment out the field "int f2" from the foo.h. So when you run the make again, since foo.o depends on foo.h, it runs whereas the rule bar.o does not run and there for the bar.o still knows that Example has three fields(int f1,int f2 and int f3) whereas the foo.o believes Example has two fields only. So when you change f3 to 10 in bar.cc, it does so in the "third" field whereas f3 is the second field in f2.</div><br /><div align="justify">&nbsp;</div><br /><div align="justify">So it is always good to remember that weird things happen when your Makefile is not correct. (In the above case, you saw something like a pointer bug).</div><br /><div align="justify">&nbsp;</div><br /><div align="justify"><strong>Working with makedepend</strong></div><br /><div align="justify">&nbsp;</div><br /><div align="justify">Running the command "makedepend foo.cc bar.cc", it generates a Makefile with list of all depenedencies. <strong>makedepend</strong> is useful but not optimal. It goes through each of the project file specified, identifies the #includes and then further checks these includes to find out further dependencies. It looks like great tool to generate the dependencies. GooD!</div><br /><div align="justify">&nbsp;</div><br /><div align="justify">I guess that is it for now, I hope to write about Jboost in the next post, hopefully.</div>  
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Making make files&amp;url=/c++/2008/07/24/Making-make-files.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/c++/2008/07/24/Making-make-files.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/c++/2008/07/24/Making-make-files.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>

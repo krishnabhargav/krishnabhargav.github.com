@@ -1,50 +1,112 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Configuring SWT Browser Widget Preferences!</title>
-        <meta name="viewport" content="width=device-width">
+<head>   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <!-- syntax highlighting CSS -->
-        <link rel="stylesheet" href="/css/syntax.css">
+    <title>Vedhava Sodhi - Musings of a Software Engineer v2.0</title>
+    <meta name="description" content="" />
 
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="/css/main.css">
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    </head>
-    <body>
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+    <!-- This is for syntax highlight -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
+    <!-- Customisation  -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
 
-        <div class="site">
-          <div class="header">
-            <h1 class="title"><a href="/">Your New Jekyll Site</a></h1>
-            <a class="extra" href="/">home</a>
-          </div>
+</head>
+<body class="home-template">
 
-          <h2>Configuring SWT Browser Widget Preferences!</h2>
-<p class="meta">28 Jan 2008</p>
+    
+    <main class="content" role="main">
 
-<div class="post">
-This technique I discovered works on Linux, ie. when SWT Browser uses Mozilla as its underlying browser. It uses JavaXPCOM to connect with Mozilla and does great job doing so. But then the Browser class do not have any options to configure the preferences of the browser. But you can still configure the preferences of the browser!!<br />Mozilla preferences are stored in a .mozilla directory for each user, in their home directory. Thanks to Dr. Li, that I could find this out. Now if you run a program that uses SWT Browser, you can see a a folder "Eclipse" inside this .mozilla directory.<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://1.bp.blogspot.com/_Oy9HuksgrdU/Rux-YFtmgiI/AAAAAAAAABU/JRoxoT4uJOY/s1600-h/q2.jpg"><img style="margin: 0px auto 10px; display: block; text-align: center; cursor: pointer;" src="http://1.bp.blogspot.com/_Oy9HuksgrdU/Rux-YFtmgiI/AAAAAAAAABU/JRoxoT4uJOY/s320/q2.jpg" alt="" id="BLOGGER_PHOTO_ID_5110598629474075170" border="0" /></a>[Note I am talking about running a Java Program which has SWT Browser, from ECLIPSE, thus the folder name is eclipse. If you run from console,  you might have a different foldername(I guess as that of the program name)]<br />It is in the /home/<user>/.mozilla/eclipse directory that the SWT Browser used Mozilla preferences are stored. It is stored in the <span style="font-weight: bold;">prefs.js </span>javascript file. You can specify a user prefernces by using user_pref() function. For example, you want a network boosted SWT Browser widget, then may be you can add the following line to prefs.js<br />user_pref("networking.http.pipelining",true);<br />Close Eclipse and start again. Now when you launch the program, the browser would use this preference.<br />Another way is to use "about:config" within your program do the configuration!<br />For this you can just write a configure() function and use it when you want. The function can be something like<br />Class ConfigurationWindow<br />{<br />public void configure()<br />{<br />    Display display = new Display();<br />    Shell shell = new Shell(display);<br /><br />    Browser browser = new Browser(shell,SWT.CENTER);<br /><br />    shell.setLayout(new GridLayout());<br /><br />    browser.setUrl("about:config");<br /><br />    shell.open();<br /><br />    while(!shell.isDisposed())<br />    if(!display.readAndDispatch()) display.sleep();<br /><br />    shell.dispose();<br />    display.dispose();<br />    browser.dispose();<br />}<br />}<br /><br />Now you can create new instance of ConfigurationWindow and call configure() which shows the user preferences window, just like the one you get when you type about:config in Mozilla Firefox.<br />This way one can configure preferences for Swt Browser Widget!
-</div>
+    <article class="post">
+        <header class="post-header">
+            <a id="blog-logo" href="/">
+                
+                    <span class="blog-title">Vedhava Sodhi</span>
+                 
+            </a>
+        </header>
+        
+        <span class="post-meta">
+        	<time datetime="2008-01-28">28 Jan 2008</time>
+        	
+        		on
+	        	
+	        	    java
+	        	
+	        
+       	</span>
+
+        <h1 class="post-title">Configuring SWT Browser Widget Preferences!</h1>
+
+        <section class="post-content">
+            This technique I discovered works on Linux, ie. when SWT Browser uses Mozilla as its underlying browser. It uses JavaXPCOM to connect with Mozilla and does great job doing so. But then the Browser class do not have any options to configure the preferences of the browser. But you can still configure the preferences of the browser!!<br />Mozilla preferences are stored in a .mozilla directory for each user, in their home directory. Thanks to Dr. Li, that I could find this out. Now if you run a program that uses SWT Browser, you can see a a folder "Eclipse" inside this .mozilla directory.<br /><br /><a onblur="try {parent.deselectBloggerImageGracefully();} catch(e) {}" href="http://1.bp.blogspot.com/_Oy9HuksgrdU/Rux-YFtmgiI/AAAAAAAAABU/JRoxoT4uJOY/s1600-h/q2.jpg"><img style="margin: 0px auto 10px; display: block; text-align: center; cursor: pointer;" src="http://1.bp.blogspot.com/_Oy9HuksgrdU/Rux-YFtmgiI/AAAAAAAAABU/JRoxoT4uJOY/s320/q2.jpg" alt="" id="BLOGGER_PHOTO_ID_5110598629474075170" border="0" /></a>[Note I am talking about running a Java Program which has SWT Browser, from ECLIPSE, thus the folder name is eclipse. If you run from console,  you might have a different foldername(I guess as that of the program name)]<br />It is in the /home/<user>/.mozilla/eclipse directory that the SWT Browser used Mozilla preferences are stored. It is stored in the <span style="font-weight: bold;">prefs.js </span>javascript file. You can specify a user prefernces by using user_pref() function. For example, you want a network boosted SWT Browser widget, then may be you can add the following line to prefs.js<br />user_pref("networking.http.pipelining",true);<br />Close Eclipse and start again. Now when you launch the program, the browser would use this preference.<br />Another way is to use "about:config" within your program do the configuration!<br />For this you can just write a configure() function and use it when you want. The function can be something like<br />Class ConfigurationWindow<br />{<br />public void configure()<br />{<br />    Display display = new Display();<br />    Shell shell = new Shell(display);<br /><br />    Browser browser = new Browser(shell,SWT.CENTER);<br /><br />    shell.setLayout(new GridLayout());<br /><br />    browser.setUrl("about:config");<br /><br />    shell.open();<br /><br />    while(!shell.isDisposed())<br />    if(!display.readAndDispatch()) display.sleep();<br /><br />    shell.dispose();<br />    display.dispose();<br />    browser.dispose();<br />}<br />}<br /><br />Now you can create new instance of ConfigurationWindow and call configure() which shows the user preferences window, just like the one you get when you type about:config in Mozilla Firefox.<br />This way one can configure preferences for Swt Browser Widget!
+        </section>
+
+        
+
+        <footer class="post-footer">
+        	<!-- If we want to display author's name and bio -->
+            
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Configuring SWT Browser Widget Preferences!&amp;url=/java/2008/01/28/Configuring-SWT-Browser-Widget-Preferences%21.html"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=/java/2008/01/28/Configuring-SWT-Browser-Widget-Preferences%21.html"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=/java/2008/01/28/Configuring-SWT-Browser-Widget-Preferences%21.html"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            
+        	
+        </footer>
+
+    </article>
+
+</main>
 
 
-          <div class="footer">
-            <div class="contact">
-              <p>
-                Your Name<br />
-                What You Are<br />
-                you@example.com
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-                <a href="https://github.com/yourusername">github.com/yourusername</a><br />
-                <a href="https://twitter.com/yourusername">twitter.com/yourusername</a><br />
-              </p>
-            </div>
-          </div>
+    <footer class="site-footer">
+        <a class="subscribe icon-feed" href="/rss.xml"><span class="tooltip">Subscribe!</span></a>
+        <div class="inner">
+             <section class="copyright">All content copyright <a href="/">Vedhava Sodhi</a> &copy;  &bull; All rights reserved.</section>
+             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
         </div>
+    </footer>
 
-    </body>
+    
+    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Google Analytics Tracking code -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>   
+</body>
 </html>
