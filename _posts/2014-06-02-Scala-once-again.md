@@ -11,10 +11,14 @@ The intention here is to list a bunch of things that I know about scala that are
 
 - Type Alias helps improve readability 
 For example, if you have a function which returns another function of type "Int => Boolean" as shown below.
+
 	def scalaFunc(input : Int => Boolean) : Int => Boolean = {...}
+
 You can change it to:
+
 	type IntToBool = Int=>Boolean
 	def scalaFunc(input: IntToBool) : IntToBool = { ... }
+
 Effective Scala entry on ["type alias"](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Type%20aliases)
 
 - Traits are "interfaces on crack"
