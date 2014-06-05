@@ -31,11 +31,7 @@ type IntToBool = Int => Boolean
 def scalaFunc(input: IntToBool) : IntToBool = { ... }
 {% endhighlight %}
 
-Effective Scala entry on ["type alias"](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Type%20aliases)
-
-There is also something called [abstract types](http://docs.scala-lang.org/tutorials/tour/abstract-types.html)
-
-For a stackoverflow discussion (lengthy-one) on [abstract types vs generics](http://stackoverflow.com/a/1154727)
+Effective Scala entry on ["type alias"](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Type%20aliases). And type alias is also used in something called [abstract types](http://docs.scala-lang.org/tutorials/tour/abstract-types.html). For a stackoverflow discussion (lengthy-one) on [abstract types vs generics](http://stackoverflow.com/a/1154727)
 
 #### Traits are "interfaces on crack"
 
