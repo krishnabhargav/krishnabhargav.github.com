@@ -7,8 +7,6 @@ comments: false
 categories: Scala
 ---
 
-# Scala, once again
-
 In 2009, when Scala was just getting popular, I tried to build a data-pipeline system based on Scala. At the time, the intention was to build an ETL system where data flow is defined as spring configuration files. The project went very well for a few weeks and then I moved on to better (?) things. But at the time, I really liked Scala.
 
 Later, a month or two ago, I tried my hand at Scala only to dislike it. There is a lot of functionality baked into the Language - implicits, fuction blocks, convention methods such as apply(), etc. I did not enjoy looking at it & add to that there has been "Scala Sucks" articles that I came across. At this time, I did not really like Scala
