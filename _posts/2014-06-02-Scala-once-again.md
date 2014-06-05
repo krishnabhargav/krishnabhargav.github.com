@@ -9,7 +9,8 @@ For the past week or so, I have been closely following **Functional Programming 
 ## A brain dump of some things that left an impression
 The intention here is to list a bunch of things that I know about scala that are different from regular language such as C#. This is to see how much of the content has made through into my head.
 
-- Type Alias helps improve readability 
+#### Type Alias helps improve readability 
+
 For example, if you have a function which returns another function of type "Int => Boolean" as shown below.
 
 	def scalaFunc(input : Int => Boolean) : Int => Boolean = {...}
@@ -21,4 +22,4 @@ You can change it to:
 
 Effective Scala entry on ["type alias"](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Type%20aliases)
 
-- Traits are "interfaces on crack"
+#### Traits are "interfaces on crack"
