@@ -39,7 +39,9 @@ For a stackoverflow discussion (lengthy-one) on [abstract types vs generics](htt
 
 #### Traits are "interfaces on crack"
 
-Traits in scala are what most people in the community say "what interfaces should have been". Traits, like abstract classes, allows you to define default implementation for methods.
+Traits in scala are what most people in the community say "what interfaces should have been". Traits, like abstract classes, allows you to define default implementation for methods. But traits allows you to "mixin".
+
+In the example below ([borrowed](http://docs.scala-lang.org/tutorials/tour/mixin-class-composition.html)), shows an example which uses - abstract type usage, traits, mixin class composition with traits. 
 
 {% highlight scala linenos %}
 
@@ -71,7 +73,10 @@ object Main extends App {
   //var foreached = strIter2 with RichIterator[Char] 
 
   //create a class that does the mixins
-  class StringWithForEach(str: String) extends StringIterator(str) with RichIterator
+  class StringWithForEach(str: String) 
+  		extends StringIterator(str) 
+		with RichIterator
+		
   //any instance will have foreach
   var foreached = new StringWithForEach("Vangapandu")
   foreached foreach println
