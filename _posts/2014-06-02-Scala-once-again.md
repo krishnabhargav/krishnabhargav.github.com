@@ -1,3 +1,6 @@
+---
+title: Scala, Once Again
+---
 # Scala, once again
 
 In 2009, when Scala was just getting popular, I tried to build a data-pipeline system based on Scala. At the time, the intention was to build an ETL system where data flow is defined as spring configuration files. The project went very well for a few weeks and then I moved on to better (?) things. But at the time, I really liked Scala.
