@@ -21,13 +21,13 @@ The intention here is to list a bunch of things that I know about scala that are
 
 For example, if you have a function which returns another function of type "Int => Boolean" as shown below.
 
-{% highlight scala linenos %}
+{% highlight scala %}
 def scalaFunc(input : Int => Boolean) : Int => Boolean = {...}
 {% endhighlight %}
 You can change it to:
 
-{% highlight ruby linenos %}
-type IntToBool = Int=>Boolean
+{% highlight scala %}
+type IntToBool = Int => Boolean
 def scalaFunc(input: IntToBool) : IntToBool = { ... }
 {% endhighlight %}
 
