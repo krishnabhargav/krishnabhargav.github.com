@@ -33,4 +33,48 @@ def scalaFunc(input: IntToBool) : IntToBool = { ... }
 
 Effective Scala entry on ["type alias"](http://twitter.github.io/effectivescala/#Types%20and%20Generics-Type%20aliases)
 
+There is also something called [abstract types](http://docs.scala-lang.org/tutorials/tour/abstract-types.html)
+
+For a stackoverflow discussion (lengthy-one) on [abstract types vs generics](http://stackoverflow.com/a/1154727)
+
 #### Traits are "interfaces on crack"
+
+Traits in scala are what most people in the community say "what interfaces should have been". Traits, like abstract classes, allows you to define default implementation for methods.
+
+{% highlight scala linenos %}
+
+//Interface 
+trait AbsIterator {
+  type T //abstract type 
+  def hasNext: Boolean
+  def next: T
+}
+
+class StringIterator(s: String) extends AbsIterator {
+  type T = Char
+  private var i = 0
+  def hasNext = i < s.length()
+  def next = { val ch = s charAt i; i += 1; ch }
+}
+
+trait RichIterator extends AbsIterator {
+  def foreach(f: T => Unit) { while (hasNext) f(next) }
+}
+
+object Main extends App {
+  //mixin
+  var strIter = new StringIterator("Krishna") with RichIterator
+  strIter foreach println
+
+  var strIter2 = new StringIterator("Vangapandu")
+  //invalid declaration below.
+  //var foreached = strIter2 with RichIterator[Char] 
+
+  //create a class that does the mixins
+  class StringWithForEach(str: String) extends StringIterator(str) with RichIterator
+  //any instance will have foreach
+  var foreached = new StringWithForEach("Vangapandu")
+  foreached foreach println
+}
+
+{% endhighlight %}
