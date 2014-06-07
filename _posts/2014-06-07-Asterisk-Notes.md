@@ -27,8 +27,8 @@ There is no other means of getting better at architecting software than reading 
 	- Channel Drivers
 		- channel api provides telephony protocol abstraction
 		- a driver is required to translate between Asterisk protocol and the specific telephony protocol
-		- @interface *ast_channel_tech* 
-			- @method *requester* : factory method to create *ast_channel* (abstract channel layer). 
+		- @interface **ast_channel_tech** 
+			- @method **requester** : factory method to create **ast_channel** (abstract channel layer). 
 		- ast_channel defers technology specific handling to the driver it holds reference to.
 	- Dialplan applications
 		- /etc/asterisk/extensions.conf
@@ -64,6 +64,6 @@ There is no other means of getting better at architecting software than reading 
 - The description also gives two scenario which explains the code flow (voicemail and bridged connections).
 - Asterisk doesnt scale well but community is working on Scalable Communications Framework to address scalability concerns.
 
-In short, it was a good read. I cannot claim that I now no about Asterisk very well but I can say that I got a good idea on the architecture of Asterisk and I could find some common architecture paradigms such as Main application working as only bootstrapper, proper responsibility assignment such as component within main hooks up the interfaces, codec translators not knowning about anything else but format conversion, loading modules at runtime from a directory (I made a similar decision for its simplicity), etc.
+In short, it was a good read. I can say that this chapter gave me a good idea on the architecture of Asterisk. I could find some common design/architecture paradigms such as Main application working as only bootstrapper, proper responsibility assignment such as component within main hooks up the interfaces, codec translators not knowning about anything else but format conversion, loading modules at runtime from a directory (I made a similar decision for its simplicity), etc.
 
 I am looking forward to reading the other chapters and making similar notes. I hope the rest of the book is as awesome read as this chapter on Asterisk. Excellently written by [Russel Bryant](http://blog.russellbryant.net).
