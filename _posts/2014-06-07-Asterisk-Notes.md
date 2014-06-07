@@ -27,7 +27,7 @@ There is no other means of getting better at architecting software than reading 
 	- Channel Drivers
 		- channel api provides telephony protocol abstraction
 		- a driver is required to translate between Asterisk protocol and the specific telephony protocol
-		- @interface **ast_channel_tech** 
+		- @interface **`ast_channel_tech** 
 			- @method **requester** : factory method to create **ast_channel** (abstract channel layer). 
 		- ast_channel defers technology specific handling to the driver it holds reference to.
 	- Dialplan applications
