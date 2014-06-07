@@ -1,6 +1,6 @@
 ---           
 layout: post
-title: Scala, once again
+title: Notes from Architecture of Open Source Applications - Asterisk
 date: 2014-06-07 14:46:29 UTC
 updated: 2014-06-07 14:46:29 UTC
 comments: false
