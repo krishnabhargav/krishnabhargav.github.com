@@ -10,7 +10,7 @@ readmore: true
 
 In this post, I capture some notes from reading the Scalable Web Architecture & Distributed Systems article on the [Architecture Of Open Source Applications - Volume 2](http://aosabook.org/en/distsys.html). The goal of this particular chapter was to cover the key issues to consider when designing large websites, as well as some of the building blocks used for this purpose.
 
-Important points
+####Important points
 - Taking the time to plan ahead when building a web service will help in the long run.
 - Key principles that influence the design of large scale websites
 	- Availability (solved by redundancy, rapid recovery from failures)
