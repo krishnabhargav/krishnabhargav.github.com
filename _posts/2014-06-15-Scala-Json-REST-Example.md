@@ -16,7 +16,7 @@ Please note that the JSON support is done by specifically using the json4s libra
 First things first, if you wish to run this, then you will have to get your own Google API key. The instructions are pretty clear at [Google's documentation site](https://developers.google.com/places/documentation/#Authentication). Once you have an API, you are good to go.
 
 To get started, create a folder for your project. Then place a "build.sbt" whose contents looks as shown below.
-{% gist 6b16db792061b0505abf %}
+GISTTT 6b16db792061b0505abf %}
 
 Some important points, that helps a newbie in Scala:
 - The build tool SBT doesnt have a "sbt new my-new-project" but any folder which has atleast one source file can act as a project in Scala
@@ -44,7 +44,7 @@ So what are the steps, in general? The usual steps in any programming environmen
 
 For an asynchronous way to do thins, the step 4 should be read as "once the response is available, then". So the above 7 steps are shown below. Newbie should also pay attention to some example use case on how to work with Futures (Line #21, #32) , how pattern matching in scala is so powerful (see if the if statement mixed with case at line #24)
 
-{% gist fc17f4f7c54e938dd5d4 %}
+GISTTT fc17f4f7c54e938dd5d4 %}
 
 In order to work with JSON, either you can leave JSON as is and look for specific properties that you are interested or you can "deserialize" JSON to strongly typed objects. I prefer deserializing JSON and working with real objects. This is so much easier than having to deal with RAW JSON all the time. So the steps to convert JSON to objects are:
 1. Get some sample JSON output representative enough for the schema.
@@ -55,11 +55,11 @@ First things first, JSON is usually mapped to "case classes" of Scala. And to fu
 
 So get the sample output from the Google Places API and use json2caseclass to create case classes. We will be using json4s to work with JSON deserialization for Scala. And that would not just work directly with the output returned from the json2caseclass because if it does not find a value in the JSON for the case class member, it will be really unhappy. The fix for that is to make the property optional and how do you make that in Scala? The standard way of making anything option in Scala is to use Option[T]. So the corrected case classes are also listed.
 
-{% gist 7cd67a7ed94d100fb325 %}
+GISTTT 7cd67a7ed94d100fb325 %}
 
 When you bring it all together, you will get
 
-{% gist 762b7f6456bd4c91414b %}
+GISTTT 762b7f6456bd4c91414b %}
 
 And the output is
 
