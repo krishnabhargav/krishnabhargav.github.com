@@ -26,7 +26,8 @@ Some important points, that helps a newbie in Scala:
 	- Then while you are in the project folder, run "sbt eclipse"
 	- Note that anytime you change the build.sbt, you should run "sbt eclipse" again and refresh the project in Eclipse
 
-Our goal here is to make a call to the Google Places service to find some locations around a specific location & that matches a keyword. I am only going to list here the parameters that I know are needed for this call to work. For other details, refer to the Places API documentation. The parameters required are:
+Our goal here is to make a call to the Google Places service to find some locations around a specific location & that matches a keyword. I am only going to list here the parameters that I know are needed for this call to work. For other details, refer to the Places API documentation.
+
 - key : the api key
 - location : lat,long
 - radius : search radius in meters
@@ -34,6 +35,7 @@ Our goal here is to make a call to the Google Places service to find some locati
 - keyword : whatever you want, I will use starbucks in my example
 
 So what are the steps, in general? The usual steps in any programming environment to make service calls are as follows:
+
 1. Prepare a request object
 2. Set the required parameters
 3. Make the request using the proper HTTP method
@@ -47,6 +49,7 @@ For an asynchronous way to do thins, the step 4 should be read as "once the resp
 {% gist krishnabhargav/fc17f4f7c54e938dd5d4 %}
 
 In order to work with JSON, either you can leave JSON as is and look for specific properties that you are interested or you can "deserialize" JSON to strongly typed objects. I prefer deserializing JSON and working with real objects. This is so much easier than having to deal with RAW JSON all the time. So the steps to convert JSON to objects are:
+
 1. Get some sample JSON output representative enough for the schema.
 2. Understand the schema and write classes that matches the schema.
 3. Use deserialization framework to deserialize JSON to objects.
