@@ -16,7 +16,7 @@ Please note that the JSON support is done by specifically using the json4s libra
 First things first, if you wish to run this, then you will have to get your own Google API key. The instructions are pretty clear at [Google's documentation site](https://developers.google.com/places/documentation/#Authentication). Once you have an API, you are good to go.
 
 To get started, create a folder for your project. Then place a "build.sbt" whose contents looks as shown below.
-GISTTT 6b16db792061b0505abf %}
+{% gist krishnabhargav/6b16db792061b0505abf %}
 
 Some important points, that helps a newbie in Scala:
 - The build tool SBT doesnt have a "sbt new my-new-project" but any folder which has atleast one source file can act as a project in Scala
