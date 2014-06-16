@@ -44,7 +44,7 @@ So what are the steps, in general? The usual steps in any programming environmen
 
 For an asynchronous way to do thins, the step 4 should be read as "once the response is available, then". So the above 7 steps are shown below. Newbie should also pay attention to some example use case on how to work with Futures (Line #21, #32) , how pattern matching in scala is so powerful (see if the if statement mixed with case at line #24)
 
-GISTTT fc17f4f7c54e938dd5d4 %}
+{% gist krishnabhargav/fc17f4f7c54e938dd5d4 %}
 
 In order to work with JSON, either you can leave JSON as is and look for specific properties that you are interested or you can "deserialize" JSON to strongly typed objects. I prefer deserializing JSON and working with real objects. This is so much easier than having to deal with RAW JSON all the time. So the steps to convert JSON to objects are:
 1. Get some sample JSON output representative enough for the schema.
@@ -55,11 +55,11 @@ First things first, JSON is usually mapped to "case classes" of Scala. And to fu
 
 So get the sample output from the Google Places API and use json2caseclass to create case classes. We will be using json4s to work with JSON deserialization for Scala. And that would not just work directly with the output returned from the json2caseclass because if it does not find a value in the JSON for the case class member, it will be really unhappy. The fix for that is to make the property optional and how do you make that in Scala? The standard way of making anything option in Scala is to use Option[T]. So the corrected case classes are also listed.
 
-GISTTT 7cd67a7ed94d100fb325 %}
+{% gist krishnabhargav/7cd67a7ed94d100fb325 %}
 
 When you bring it all together, you will get
 
-GISTTT 762b7f6456bd4c91414b %}
+{% gist krishnabhargav/762b7f6456bd4c91414b %}
 
 And the output is
 
