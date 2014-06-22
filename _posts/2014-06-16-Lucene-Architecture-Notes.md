@@ -18,6 +18,7 @@ To get started, the following is a simple scala program that indexes a document 
 First complaint : the API is a mouthful. I used to see API like this a few years back. Yes, it is all extensible and built around abstractions which enables you to extend the aPi elegantly but I always prefer that over all the abstractions should like a simple straight-forward API that we can use. So i tried with lib-lucene-sugar and it did not work. There is infact an [old issue opened in September 2013]() that isn't addressed yet. May be later, I will try and fix the problem and update the repository.
 
 The main components of the above program are:
+
 - IndexWriter - used to create index and add documents to the index
 - Directory - represents a location where index or data is stored
 - Analyzer - it is responsible to extracting tokens out of text
