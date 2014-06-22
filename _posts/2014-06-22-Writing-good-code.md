@@ -1,8 +1,8 @@
 ---           
 layout: post
 title: Simple Code!
-date: 2014-06-22
-updated: 2014-06-22
+date: 2014-06-22 8:00 PM
+updated: 2014-06-22 8:00 PM
 comments: false
 categories: rants, essays
 readmore: true

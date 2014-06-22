@@ -1,8 +1,8 @@
 ---           
 layout: post
 title: Reading Notes - Google File System
-date: 2014-06-22
-updated: 2014-06-22
+date: 2014-06-22 9:00 AM
+updated: 2014-06-22 9:00 AM
 comments: false
 categories: Architecture notes, Publication Notes
 readmore: true
