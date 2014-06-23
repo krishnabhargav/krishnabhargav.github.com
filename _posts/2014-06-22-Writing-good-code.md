@@ -139,7 +139,7 @@ Well, my friend, that argument is not valid either. Firstly, it is great that DI
 			_slicer.With(_powerToolFactory.NewTool())
 				   .With(_slicerFactory.NewTool()).Slice();
 		}
-{%endhighlight}
+{%endhighlight %}
 
 Now you can pass the appropriate factory. It can still meet our previous requirements and solves your previous argument about new tool per invocation.
 
