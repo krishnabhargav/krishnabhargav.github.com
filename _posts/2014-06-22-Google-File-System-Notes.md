@@ -213,10 +213,76 @@ System is designed to minimize the master's involvement in all operations.
 #### System Interactions: Snapshot
 - Snapshot operation makes a copy of a file or directory tree almost instantaneously while minimizing any interruptions of ongoing mutations
 - Standard copy-on-write technique is used to implement snapshots. 
+- Snapshot request will make the master revoke any leases so that further interactions with the chunk should be via the master and in the meantime, the master makes a new copy of the chunk.
+- The first time client wants to write to C, master sees the ref count to be greater than one and creates a C' - it asks chunkservers to create C'.
 
+#### Master Operations : Namespace management and locking
+- Since many master operations takes time, multiple operations are allowed in parallel.
+- Locks are used over regions of namespaces to ensure proper serialization.
+- GFS namespace is a lookup table mapping full pathnames to metadata.
+- [Prefix compression](http://www.stoimen.com/blog/2012/02/06/computer-algorithms-data-compression-with-prefix-encoding/) is used to store this efficiently. 
+- Each node has an associated read/write lock.
+- Master acquires a set of locks (d1, d1/d2, d1/d2/d3...) before it runs.
+- File creation doesn't require write lock the directory because there is no directory structure => allows concurrent mutations in the same directory
+- A read lock on the name is sufficient to protect a file from deletion
+- Locks are acquired in a consistent total order to avoid deadlocks
 
+#### Master Operations : Replica Placement
+- Replica placement policy serves two purposes : 
+	- Maximize data reliability and availability
+	- Maximize bandwidth utilization
+- Replicas should be placed not only on different machines but also on different racks.
 
+#### Master Operations : Creation, Re-Replication and Rebalancing
+- Factors considered for chunk placement
+	- Spread chunks across racks
+	- Place new replicas on chunkservers with below-avg disk utilization
+	- Limit the number of recent creations on each chunkserver as create is usually followed by heavy write traffic
+- Master re-replicates a chunk as soon as the number of available replicas falls below a user-specified goal.
+- Priority of re-replication depends on how far is a chunk from the desired replication goal & to those chunks of live files.
+- A priority of a chunk will be boosted if it was observed to be blocking client progress
+- Master rebalances replicas periodically by examining the current replica distribution and moves replicas for better disk space and load balancing.
 
+#### Master Operations : Garbage Collection
+- Space of a deleted file is not reclaimed immediately but is done through Garbage Collection at both file and chunk level
+- Deleted files are renamed to a hidden name which includes the deletion timestamp are accessible by that name until they are removed during periodic scan
+- Undelete can be done by renaming it back
+- When hidden file is removed from the namespace, its in-memory metadata is also erased
+- Orphaned chunks are identified during the regular scan & metadata for these chunks are also erased
+- During the heartbeat message, the master can reply back to the chunkserver with all the chunks that are no longer present at master - the chunkserver is free to delete its replicas of such chunks
+- All references to chunks are in file to chunk mappings - so GC here is simple.
+- Storage reclamation is expedited if a deleted file is explicitly deleted again.
+- Different replication and reclaimation policies can be applied to different parts of namespace
+
+#### Master Operation : Stale Replication Detection
+- Master maintains a chunk version number to distinguish between up-to-date and stale replicas
+- When master grants a new lease on the chunk, the version number is increased and informs to update the replicas.
+- Master and replicas record version number in persistent state
+- Stale replica are detected when the chunkserver starts
+- If master sees higher version number, it assumes failure and takes the higher version copy to be up-to-date.
+- Chunk version number is included in the response to the client request for chunk information
+
+#### Fault Tolerance & Diagnosis
+- Failures are the norm
+- GFS is made highly available by
+	- Fast Recovery within seconds (clients can retry after the initial hiccup)
+	- Chunk replication
+	- Master Replication & shadow masters
+- Data Integrity
+	- chunkserver uses checksums (32-bit checksum for every 64 KB blocks)
+	- chunk server verifies the checksum of data in the request range before returning any data to the requester
+	- error will be returned in case the checksum does not match - requestor will read from other replicas while master will clone the chunk from other replicas
+	- Once cloned, the master instructs the mismatch reported chunkserver to delete the replica
+	- Checksumming is done with little effect on read performance by
+		- multiple blocks are read - so comparatively little extra information is read
+		- reads are aligned along block boundaries
+		- Checksum looks are not I/O and can be done in parallel to I/O operations.
+	- Checksum computation is heavily optimized for appends
+	- During idle periods, chunkservers can scan and verify contents of inactive chunks - to detect corruption in chunks that are rarely read.
+
+The rest of the paper is about measurements for reads, writes and record-appends; some metrics that indicates the workloads on master and chunkservers in real world clusters. Then it talks about the problems with faced with Disks and Linux Files.
+
+Anyway, it is a good read, albeit a long one. Again, the feeling that I get when reading papers such as this and Amazon Dynamo is - all the concepts here they applied - master/slave, replication, availability, use of logs, versioning, checksums, distribution/replication, lease management, etc are fundamental concepts of Distributed Systems. So the beauty of these systems lies not in the great invention but on how such large systems are built using basic blocks of Distributed systems. 
 
 
 
