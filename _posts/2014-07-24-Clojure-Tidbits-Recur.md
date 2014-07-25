@@ -20,9 +20,12 @@ The following Scala function is a very simple implementation for a factorial met
 Calling the function with large numbers will definitely result in a stackoverflow exception. So how can we support recursion without having to worry about stack overflow? That's where compiler optimizations for tail calls comes into play. Some compilers can detect tail calls & generate instructions such that stack space for the current call can be reclaimed and 
 
 In the line 2, you can see that the last action in the method is not really calling the method itself but the action is 
+
 1. call the method recursively with the number decremented by 1
 2. multiply the result to the current number
+
 OR 
+
 1. return the number itself
 
 Since the last action really is multiplying the number with the result of the recursive call, the call is not a tail call. So this demands that the current stack space be present so that the final computation can be performed. So the Tail call Optimization cannot be performed in this case (since there is no tail call).
