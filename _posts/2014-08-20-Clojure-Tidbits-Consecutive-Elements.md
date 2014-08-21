@@ -1,6 +1,6 @@
 ---           
 layout: post
-title: Clojure Tidbits : Consecutive elements in a sequence?
+title: Clojure Tidbits - Consecutive elements in a sequence?
 date: 2014-08-20 8:00 PM
 updated: 2014-08-20 8:00 PM
 comments: false
