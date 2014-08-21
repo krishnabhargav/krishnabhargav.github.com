@@ -8,6 +8,8 @@ categories: clojure
 readmore: true
 ---
 
+I have recently come across an interesting question that need to be solved using functional programming techniques. So I thought, I shall give it a shot in clojure.
+
 #### Question
 How do you determine if all the elements in a given sequence are all consecutive elements?
 
