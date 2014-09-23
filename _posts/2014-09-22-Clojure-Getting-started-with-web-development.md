@@ -25,12 +25,14 @@ Oh, we will use (Cursive)[https://cursiveclojure.com] as our IDE - which is tota
 We will create a leiningen application called groupie.
 
 {%highlight clojure %}
-lein new groupie
+lein new webapp
 {%endhighlight %}
 
 Once the project is created, (import the project into Cursive)[https://cursiveclojure.com/userguide/leiningen.html]. If you look at the project.clj; you will find it to be a very simple clojure application. So lets add dependencies to project.clj for Ring, Http-kit and compojure. You can visit the links to get the latest version numbers. After this, my project.clj looks like
 
 {% gist krishnabhargav/7919baa593b38f0bc8f8/3bae796c5138f31fd4253b02072cc6c638679673 %}
+
+(Ignore the project name "groupie" in the defproject. It should be webapp, the name I gave in the lein new command).
 
 As you modify project.clj, you can refresh it within the IDE by View->Tool Windows->Leiningen and then "refresh" icon or you can associate a keymap to the specific action. This, I believe, is equivalent to run "lein deps" from the command line.
 
@@ -81,3 +83,4 @@ The index html would be updated as shown below. You will have to require the pro
 
 The final repository is added to my github at this [version](https://github.com/krishnabhargav/webapp/tree/252027989acd3c1ba20dba4ec8792661df7a3420).  
 
+There are a few more nuances about making REPL work in Cursive - both on the server and on the client.
