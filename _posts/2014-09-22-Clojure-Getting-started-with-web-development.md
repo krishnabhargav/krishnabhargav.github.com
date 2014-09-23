@@ -14,9 +14,11 @@ Web Development in Clojure is more about using several libraries - so basically 
 
 So what do we need on the server? On the server-side, for a basic web application, we will need a server to serve static/dynamic content based on the URI for the specific resource. In clojure, web servers are usually "ring-compliant" => which basically means they respect and work with Ring specification. So in all, we will use the following:
 
-- (Ring-based server backend & middleware)[https://github.com/ring-clojure/ring]
-- (Http-Kit)[http://http-kit.org] as the server library
-- (Compojure)[https://github.com/weavejester/compojure] for routing
+- [Ring-based server backend & middleware](https://github.com/ring-clojure/ring)
+- [Http-Kit](http://http-kit.org) as the server library
+- [Compojure](https://github.com/weavejester/compojure) for routing
+- [Clojurescript](https://github.com/clojure/clojurescript) instead of javascript on the client.
+- [Figwheel](https://github.com/bhauman/lein-figwheel) that allows interactive clojure development
 
 Oh, we will use (Cursive)[https://cursiveclojure.com] as our IDE - which is totally awesome.So lets get started. 
 
@@ -77,5 +79,5 @@ The index html would be updated as shown below. You will have to require the pro
 
 {%gist krishnabhargav/66a66ed0d7663b4d874f/a5c6088fe31eef6a576e2f7ed3f7564a1d8d61e1 %}
 
-
+The final repository is added to my github at this [version](https://github.com/krishnabhargav/webapp/tree/252027989acd3c1ba20dba4ec8792661df7a3420).  
 
