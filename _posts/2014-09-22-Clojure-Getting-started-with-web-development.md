@@ -20,7 +20,7 @@ So what do we need on the server? On the server-side, for a basic web applicatio
 - [Clojurescript](https://github.com/clojure/clojurescript) instead of javascript on the client.
 - [Figwheel](https://github.com/bhauman/lein-figwheel) that allows interactive clojure development
 
-Oh, we will use (Cursive)[https://cursiveclojure.com] as our IDE - which is totally awesome.So lets get started. 
+Oh, we will use [Cursive](https://cursiveclojure.com) as our IDE - which is totally awesome.So lets get started. 
 
 We will create a leiningen application called groupie.
 
@@ -28,7 +28,7 @@ We will create a leiningen application called groupie.
 lein new webapp
 {%endhighlight %}
 
-Once the project is created, (import the project into Cursive)[https://cursiveclojure.com/userguide/leiningen.html]. If you look at the project.clj; you will find it to be a very simple clojure application. So lets add dependencies to project.clj for Ring, Http-kit and compojure. You can visit the links to get the latest version numbers. After this, my project.clj looks like
+Once the project is created, [import the project into Cursive](https://cursiveclojure.com/userguide/leiningen.html). If you look at the project.clj; you will find it to be a very simple clojure application. So lets add dependencies to project.clj for Ring, Http-kit and compojure. You can visit the links to get the latest version numbers. After this, my project.clj looks like
 
 {% gist krishnabhargav/7919baa593b38f0bc8f8/3bae796c5138f31fd4253b02072cc6c638679673 %}
 
@@ -83,4 +83,4 @@ The index html would be updated as shown below. You will have to require the pro
 
 The final repository is added to my github at this [version](https://github.com/krishnabhargav/webapp/tree/252027989acd3c1ba20dba4ec8792661df7a3420).  
 
-There are a few more nuances about making REPL work in Cursive - both on the server and on the client.
+There are a few more nuances about making REPL work in Cursive - both on the server and on the client. Hopefully, I will write about it in the future when I have a fully working solution that is easy to setup and that works both on command line and from cursive.
