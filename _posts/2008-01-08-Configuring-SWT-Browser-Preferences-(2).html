@@ -1,0 +1,10 @@
+---           
+layout: post
+title: Configuring SWT Browser Preferences (2)
+date: 2008-01-08 15:14:52 UTC
+updated: 2008-01-08 15:14:52 UTC
+comments: false
+categories: Code Snippets Programming SWT Browser
+---
+
+In one of my previous posts, I blogged about the way one could set <a href="http://krishnabhargav.blogspot.com/2007/09/configuring-swt-browser-widget.html">SWT Browser Widget Preferences</a> and there has been a comment on my blog!!! (well apart from the comments that my friend Suri makes)<br />The comment has rightly pointed out to a way that one could programatically set the preferences of SWT Browser widget. The way it could be done is shown in the following code snippet.<br /><div><br />Browser browser = MozBrowserUtil.openMozillaBrowser("about:blank");<br />nsIServiceManager servMgr = Mozilla.getInstance().getServiceManager();<br />nsIPrefBranch prefs = ( nsIPrefBranch )servMgr.<br />             getServiceByContractID("@mozilla.org/preferences-service;1",<br />             nsIPrefBranch.NS_IPREFBRANCH_IID);<br /><br />prefs.setIntPref("network.proxy.type", 1);<br />prefs.setCharPref("network.proxy.http", host);<br />prefs.setIntPref("network.proxy.http_port", port);<br /><br />browser.setUrl(url);<br /></div><br /><br />Again, I thank the anonymous commentor for bringing this to my notice. I appreciate all your comments and would be better if you leave me atleast an email or a URL to your page/blog so that I can get back to you.

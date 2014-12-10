@@ -1,0 +1,10 @@
+---           
+layout: post
+title: Send Keys in Java or automate repetitive tasks programmatically.
+date: 2008-01-28 02:38:16 UTC
+updated: 2008-01-28 02:38:16 UTC
+comments: false
+categories: Java
+---
+
+If you have ever programmed in VB, you will definitely know what SendKeys are. You can use send keys function in vb to send in keystrokes to other applications, to be specific to that application which has focus. You can do similar work in Java.<br /><br />You have send keys like functionality in java.awt.Robot class. You can instantiate a Robot class and then use methods like keyPress(KeyEvent.ENTER), keyRelease, mouseMove, mouseClick, etc.<br /><br />This is very useful. Like I mentioned in the previous posts, I am running certain tests using Browser Widget. And I am not always infront of the system. And I do get a lot of dialog pop-ups which require a user to manually click OK. I mentioned about <span style="font-weight: bold;">wmctrl  </span>in the previous posts but I did not get to send keys from <span style="font-weight: bold;">wmctrl</span>, so here is what I did.<br /><br />I used <span style="font-weight: bold;">wmctrl </span>to get a list of open windows and specifying -x option to <span style="font-weight: bold;">wmctrl</span> would give you even the WM_CLASS and based on this, I use -a option to bring the particular window on top. Then once when the window is on top, I use Robot class to send keys.<br /><br />There are other good tools like Expect scripts, Devilspie which can automate tasks but I did not have enough time to learn them from scratch. EXPECT is more prominent out there but Devilspie too looked promising.

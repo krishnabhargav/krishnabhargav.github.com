@@ -1,0 +1,10 @@
+---           
+layout: post
+title: Running Moles using NUnit Console from Visual Studio
+date: 2010-04-15 13:07:16 UTC
+updated: 2010-04-15 13:07:16 UTC
+comments: false
+categories: 
+---
+
+<p>Create an external tool in Visual Studio as shown below</p>  <p><a href="http://lh3.ggpht.com/_Oy9HuksgrdU/S8cPghQVkZI/AAAAAAAABLE/GRguELA8sS0/s1600-h/image%5B3%5D.png"><img style="border-bottom: 0px; border-left: 0px; display: inline; border-top: 0px; border-right: 0px" title="image" border="0" alt="image" src="http://lh3.ggpht.com/_Oy9HuksgrdU/S8cPhJO31tI/AAAAAAAABLI/_40bTSW4fIE/image_thumb%5B1%5D.png?imgmax=800" width="475" height="462" /></a> </p>  <p>Command : C:\Program Files (x86)\Microsoft Moles\bin\moles.runner.exe </p>  <p>Arguments: $(BinDir)/$(TargetName).dll /runner:&quot;c:\Development Tools\NUnit 2.5.2\bin\net-2.0\nunit-console.exe&quot; /x86</p>  <p>Initialize Directory : $(ProjectDir)</p>  <p>Now you can use Moles from within Visual Studio. :)</p>  

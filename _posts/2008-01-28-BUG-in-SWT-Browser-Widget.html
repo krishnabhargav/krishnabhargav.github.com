@@ -1,0 +1,10 @@
+---           
+layout: post
+title: BUG in SWT Browser Widget
+date: 2008-01-28 02:38:16 UTC
+updated: 2008-01-28 02:38:16 UTC
+comments: false
+categories: Java
+---
+
+I have just discovered a bug in SWT Browser Widget which is used by Eclipse for its internal browser. Just type in http://www.friendster.com/ anyway inside eclipse (some editor inside eclipse). Hold CTRL and click on that link to open Eclipse internal browser. As the page is about to finish loading, Eclipse closes!!<br />The version I am using is SWT 3.3, the latest, so called stable release.<br />No idea as of now why this is happening. I guess there is some component inside friendster.com homepage that SWT Browser widget does not like much, and infact it is a VM error!<br />By the way I am running Fedora Core 7.

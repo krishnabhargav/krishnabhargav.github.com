@@ -1,0 +1,10 @@
+---           
+layout: post
+title: Pain with DHCP
+date: 2006-02-08 05:53:45 UTC
+updated: 2006-02-08 05:53:45 UTC
+comments: false
+categories: 
+---
+
+having searched online for all possible ways to know if the DHCP is enabled on a system, i could finally get hold some WMI way to do so. Thanks to aspfree, i did not go through it yet but woud do so very soon. Anyway heres the code:<br /><br />Try<br />Dim searcher As New ManagementObjectSearcher( _<br />"root\CIMV2", _<br />"SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = True")<br />Dim dt As DataTable = globals.getNetworkInfoStructure<br />For Each queryObj As ManagementObject In searcher.Get()<br />Dim IPAddress As String = ""<br />If queryObj("IPAddress") Is Nothing Then<br />IPAddress = queryObj("IPAddress")<br />Else<br />Dim arrIPAddress As String()<br />arrIPAddress = queryObj("IPAddress")<br />For Each arrValue As String In arrIPAddress<br />IPAddress &= arrValue<br />Next<br />End If<br />globals.addNetworkInfo(dt, queryObj("Caption"), queryObj("Description"), queryObj("DHCPEnabled"), queryObj("DHCPServer"), queryObj("DNSDomain"), queryObj("DNSHostName"), IPAddress)<br /><br />Next<br />Me.DataGrid1.DataSource = dt<br /><br />Catch err As ManagementException<br />MessageBox.Show("An error occurred while querying for WMI data: " &amp; err.Message)<br />End Try<br /><br />This is ofcourse only a part of the code and i shall update it very soon, once i modify it as per my need.<br />Anyway heres another new thing i learnt in .NET SDK.<br />You have this mgmtclassgen tool which you should run from visual studio commmadn prompt and generate a vb or C# or any other .net class which functions exactly like the WMI object, just that you need not use any managementobjectsearcher. More information on it later. Meanwhile just google out for "mgmtclassgen" and you ll get the information needed.<br />Thats it for now.
