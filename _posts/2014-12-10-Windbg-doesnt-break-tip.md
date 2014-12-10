@@ -1,6 +1,6 @@
 ---           
 layout: post
-title: Windbg Tip - Cannot "break" in Windbg when attached to live process
+title: Windbg Tip - Cannot break in Windbg when attached to live process
 date: 2014-12-10 8:00 AM
 updated: 2014-12-10 8:00 AM
 comments: false
