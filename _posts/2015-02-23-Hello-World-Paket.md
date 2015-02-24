@@ -15,9 +15,6 @@ In this post, I will present how I managed to make paket work for me. The purpos
 1. As a first step, you need to get hold of paket.bootstrapper.exe which simply put is that application which gets the latest version of paket.exe. You can get this from the [github release page](https://github.com/fsprojects/Paket/releases/)
 2. Make sure the paket.bootstrapper.exe is accessible from the command line. In my case, I created a folder for my project called "hello-paket" and downloaded the paket.bootstrapper.exe in that folder.
 3. Create a basic C# project using Xamarin Studio or Visual Studio. I used Xamarin Studio to create a new Console Project. The console output so far is shown below (inspect the output for ls; to be clear)
-
-{%gist krishnabhargav/688e7a2d399edffedde6 %}
-
 4. Now run "mono paket.bootstrapper.exe" if you are using Mono or just "paket.bootstrapper.exe" if you are on Windows using .NET. This gets the latest paket.exe and saves it locally.
 5. Paket needs a paket.dependencies file which contains list of dependencies. In this example project, I want to add xunit as a dependency.
 6. In order to add a dependency, you will need a paket.dependencies file to be present. Paket documentation states that you can have one created for you by "mono paket.exe init" or "paket init". It does not work for me on Mono/OSX but its not a big deal. Just create an empty file called "paket.dependencies" using the command "touch paket.dependencies"
@@ -26,6 +23,7 @@ In this post, I will present how I managed to make paket work for me. The purpos
 9. If you look at the csproj file in text editor; you will notice the csproj be modified to include the xunit as a dependency. So you can start using XUnit classes in the newly created project. Note: I haven't checked within Visual Studio but Xamarin Studio will not show these references in the references view.
 10. You can remove a dependency using the same above command but instead of add, it must be remove - "mono paket.exe remove nuget xunit --interactive"
 
+command prompt log for the above is seen below ... 
 {%gist krishnabhargav/688e7a2d399edffedde6 %}
 
 That is pretty much it. Refer to the documentation for paket on how it can further help manage dependencies. I like paket and I think it really makes dependency management very simple - but I just thought the "hello world" kind of tutorial was lacking and I hope this simple steps above can guide you through and remove any confusion that you may have (I was initially confused on how exactly to use it).
