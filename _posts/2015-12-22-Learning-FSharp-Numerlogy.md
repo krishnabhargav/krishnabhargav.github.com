@@ -104,11 +104,13 @@ Lets start creating some numerology functions. We will group all the functions i
 
 The first function we will create is going to be called "destiny number". Before we go ahead with implementation of the destinyNumber function; lets talk a little about how names are converted to numbers; how numbers are reduced in general; so we have some requirements in mind.
 
+```
 Each character (a-z) has a numerical value between 1-9 associated with it. For example, A will be 1, B will be 2, ... I will be 9 and J will be again 1 ... and so on. We can do this as shown below. Once each character gets a numerical value; the numerical value of the name would be to sum these values and then again reduce the final number to a single digit. For example, if you get a sum as 23; you will reduce it to 5 as 23 -> 2 + 3 = 5. A simple way to do that would be to do a 23 % 9; you get the remainder as 5. 
 
 But to make things slightly complex; not all numbers are to be reduced to single digits. For example, there are some compound numbers such as 11, 13, 14, 16, 19 and 22 which should be left as is. These are called Karmic Numbers. For example, if we use the above formula to compute the destiny number for "Krishna Bhargava Vangapandu"; the sum would be 16 which should not just be reduced to 7. To make matters further complicated; when you are combining two "numbers"; you will always reduce to single digit before you combine them. 
 
 Now back to F#; we need a way to represent "number" which can either be single digit OR a karmic number. And as mentioned earlier; try to model everything you see as a type and then the structure flows naturally. In OO world; we would have modeled a root class - Number. Then derive two types out of Number - SingleNumber and KarmicNumber. In the functional world; for this case; you should think of "OR" types or "SUM" types or "discriminated unions" since we are talking of a type which can be one type or the other. 
+```
 
 ```
 type Number = 
