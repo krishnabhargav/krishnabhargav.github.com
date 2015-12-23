@@ -8,7 +8,7 @@ categories: fsharp
 readmore: true
 ---
 
-Disclaimer: Lets just say I have mixed feelings about believing in Numerology. Lets agree to treat it as Magic and focus on the FSharp part. I pick this particular subject as good use case to apply a lot of what F# brings to the table. If it makes you feel better; treat this post as running some mathematical models on names and dates. Anyway, I will not talk about the Magic part as I am not the right person. Please treat this as just some fun requirements to demonstrate F# types, functions and general functional programming.
+Disclaimer: Lets agree to treat Numerology as Magic and focus on the FSharp part. I pick this particular subject as good use case to apply a lot of what F# brings to the table. Please treat this as just some fun requirements to demonstrate F# types, functions and general functional programming.
 
 We need to model the inputs to our library. So lets start with a Person. A Person has a name and date of birth. So lets start with a type person.
 
@@ -28,7 +28,7 @@ DateOfBirth has day, month and year.
 
 `type DateOfBirth = int * int * int`
 
-Now these are valid types; but we lose the context of each value in the tuple. So DateOfBirth = firstname * middlename * lastname or something else? To remove these questions; I thnk Records are better to model such data types.
+Now these are valid types; but we lose the context of each value in the tuple. So was it `DateOfBirth = firstname * middlename * lastname` or something else? To remove these questions; I thnk records is a better tool to model such data types.
 
 ```
 type Person = {
@@ -52,13 +52,23 @@ So here is an example where we delcared F# records in a top-down fashion using t
 
 So a person can now be constructed as :
 
-`let person = { name = { firstName="Krishna"; middleName="Bhargava"; lastName="Vangapandu"}; dob = { day = 14; month = 1; year = 1985 } }`
+```
+let person = { 
+	name = { firstName="Krishna"; middleName="Bhargava"; lastName="Vangapandu"}; 
+	dob = { day = 14; month = 1; year = 1985 } 
+}
+```
 
 Now this is a little too cumbersome; so I want to make some factory methods that helps me build names and dobs so I can do something like:
 
-`let person = { name = Name.build "Krishna Bhargava Vangapandu"; dob = DateOfBirth.build (14,1,1985) }` 
+``
+let person = { 
+	name = Name.build "Krishna Bhargava Vangapandu"; 
+	dob = DateOfBirth.build (14,1,1985) 
+}
+``` 
 
-Now we can create what are called type extensions in F# for Name type as:
+We can do this by creating type extensions in F# for the `Name` type as:
 
 ```
 type Name with
@@ -73,20 +83,26 @@ type Name with
 	            { firstName = x.[0]; middleName = ""; lastName = "" }
 ```
 
-Similarly; we will create an extension type for DateOfBirth as:
+Similarly; we will create an extension type for `DateOfBirth` as:
+
 ```
 type DateOfBirth with
     static member build (m, d, y) = 
-        { day = d
+    	{ day = d
           month = m
           year = y }
 ```
 
-Now we have a Person and some helper functions to create persons. 
+Now we have a `Person` and some helper functions to create person records. Note that as with most types in F#; records are immutable and you cannot change values of the record in-place. You can however create a new record with data from a previous record. For example:
 
-Lets start creating some numerology functions. We will group all the functions into a separate module called Numbers. 
+```
+let krishna = "Krishna Bhargava Vangapandu" |> Name.build
+let archana = { krishna with firstName = "Archana"; middleName=""}
+```
 
-The first function we will create is going to be called "destiny number". Before we go ahead with implementation of the destinyNumber function; lets talk a little about how names are converted to numbers; how numbers are reduced in general. 
+Lets start creating some numerology functions. We will group all the functions into a separate module called `Numbers`. 
+
+The first function we will create is going to be called "destiny number". Before we go ahead with implementation of the destinyNumber function; lets talk a little about how names are converted to numbers; how numbers are reduced in general; so we have some requirements in mind.
 
 Each character (a-z) has a numerical value between 1-9 associated with it. For example, A will be 1, B will be 2, ... I will be 9 and J will be again 1 ... and so on. We can do this as shown below. Once each character gets a numerical value; the numerical value of the name would be to sum these values and then again reduce the final number to a single digit. For example, if you get a sum as 23; you will reduce it to 5 as 23 -> 2 + 3 = 5. A simple way to do that would be to do a 23 % 9; you get the remainder as 5. 
 
@@ -100,7 +116,7 @@ type Number =
 	| Karmic of int
 ```
 
-Side note: We cannot place compile time constraints on `Single of int` such that only values between 1-9 are permitted. We can however create an enum in F# to represent the fixed domain of values for Single. There are, however, dependent types in some languages which permit such compile-time constraints.
+*Side note*: We cannot place compile time constraints on `Single of int` such that only values between 1-9 are permitted. We can however create an enum in F# to represent the fixed domain of values for Single. There are, however, dependent types in some languages which permit such compile-time constraints.
 
 Now that we have a type; the next natural (to me, highly opinionated) is to add type extensions for Number with some utility functions. For example; we need to convert an integer into Number; convert a Number back into integer; etc. To think of Number having a proper functional library is a good exercise. For example, consider you have Single 10; you would need a functor on it such you can multiply 10 with 2 and get back Single 20. Such functions can be part of this type extensions module. First lets look at the implementation to see what we need in the Numbers type extension.
 
