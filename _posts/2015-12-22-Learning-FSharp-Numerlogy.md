@@ -209,3 +209,7 @@ static member diff = Number.combine (-)
 Now we have a nice function `combine` that takes a function and two numbers; combines them using the function specified. We can then generate utility functions for sum and diff passing in the (+) and (-) as functions. Notice the usage of + and - operators as functions - which is what they really are.
 
 With this, I would like to conclude the post. Hopefully, it showed my thought process around type-driven development and how your types can be expressed in F# and worked with. I am sure there are better explanations and corrections than what I managed to come up with. Feel free to send in PR for any corrections you want to suggest.
+
+The code is also available [here on github](https://github.com/krishnabhargav/numbermagic)
+
+
