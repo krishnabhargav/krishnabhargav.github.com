@@ -1,66 +1,79 @@
 <!DOCTYPE html>
 <html>
-<head>   
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{{ page.title }}</title>
+        <meta name="viewport" content="width=device-width">
 
-    <title>{{ site.name }} - {{ site.description }}</title>
-    <meta name="description" content="{{ site.meta_description}}" />
+        <!-- syntax highlighting CSS -->
+        <link rel="stylesheet" href="/css/syntax.css">
 
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="MobileOptimized" content="320" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/main.css">
 
-    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
-    <!-- This is for syntax highlight -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css">
-    <!-- Customisation  -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
+        <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
 
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        <script type="text/javascript"
+                src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
 
-	  ga('create', 'UA-51728659-1', 'krishnabhargav.github.io');
-	  ga('send', 'pageview');
+        <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ site.url }}/feed.xml">
+        <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
 
-	</script>
-</head>
-<body class="home-template">
+        <div class="container">
+          <div class="site">
+            <div class="header">
+              <h1 class="title"><a href="/">{{ site.name }}</a></h1>
+              <a class="extra" href="/">home</a>
+              <a class="extra" href="http://lasp-lang.org">lasp</a>
+              <a class="extra" href="/research.html">research</a>
+              <a class="extra" href="/courses.html">courses</a>
+              <a class="extra" href="/publications.html">publications</a>
+              <a class="extra" href="/videos.html">videos</a>
+              <a class="extra" href="http://github.com/cmeiklejohn">code</a>
+              <a class="extra" href="/ChristopherMeiklejohn_CV_2015.pdf">curriculum vitae</a>
+            </div>
 
-    
-    {{ content }}
+                {{ content }}
 
-    <footer class="site-footer">
-        <a class="subscribe icon-feed" href="{{ site.baseurl }}rss.xml"><span class="tooltip">Subscribe!</span></a>
-        <div class="inner">
-             <section class="copyright">All content copyright <a href="{{ site.baseurl }}">{{ site.name }}</a> &copy; {{date format="YYYY"}} &bull; All rights reserved.</section>
-             <section class="poweredby">Made with Jekyll using <a href="http://github.com/rosario/kasper">Kasper theme</a></section>
-        </div>
-    </footer>
+            <div class="footer">
+              <div class="contact">
+                <img src="/me.jpg" alt="My Photo!" class="photo" />
+                <div class="bio">
+                  <p>
+                    Christopher Meiklejohn is a Erasmus Mundus doctoral
+                    student at <a
+                     href="https://www.uclouvain.be/index.html">Université
+                     catholique de Louvain</a> and <a href="https://tecnico.ulisboa.pt/en/">Instituto Superior Técnico</a>.<br/>
+                    <br/>
+                    <a href="mailto:christopher.meiklejohn@gmail.com">christopher.meiklejohn@gmail.com</a><br />
+                    <a href="mailto:christopher.meiklejohn@uclouvain.be">christopher.meiklejohn@uclouvain.be</a><br />
+                    <br/>
+                    <a href="http://emjd-dc.eu/Christopher-Meiklejohn/">emjd-dc.eu/Christopher-Meiklejohn</a><br />
+                    <a href="http://github.com/cmeiklejohn/">github.com/cmeiklejohn</a><br />
+                    <a href="http://twitter.com/cmeik/">twitter.com/cmeik</a><br />
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- /container -->
 
-    
-    <script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
-    <script type="text/javascript" src="/assets/js/index.js"></script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    <!-- Google Analytics Tracking code -->
-    <script type="text/javascript">
+          ga('create', 'UA-13258404-3', 'auto');
+          ga('send', 'pageview');
 
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-
-    </script>   
-</body>
+        </script>
+    </body>
 </html>

@@ -1,6 +1,5 @@
-name: Musings of a Software Engineer v2.0
-description: Krishna Bhargava
-markdown: redcarpet
-pygments: true
-logo: false
-paginate: 15
+name: Christopher Meiklejohn
+description: Christopher Meiklejohn
+url: http://christophermeiklejohn.com
+highlighter: rouge
+exclude: [vendor]
