@@ -1,6 +1,6 @@
-name: Krishna Vangapandu
-description: Musings of a software engineer
-url: http://truebuddi.com
-highlighter: rouge
-exclude: [vendor]
-
+name: Musings of a Software Engineer v2.0
+description: Krishna Bhargava
+markdown: redcarpet
+pygments: true
+logo: false
+paginate: 15
