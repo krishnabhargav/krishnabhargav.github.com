@@ -6,7 +6,7 @@ updated: 2015-12-22 8:00 AM
 comments: false
 categories: fsharp
 readmore: true
-group: functional-programming
+group: fp
 ---
 
 Disclaimer: Lets agree to treat Numerology as Magic and focus on the FSharp part. I pick this particular subject as good use case to apply a lot of what F# brings to the table. Please treat this as just some fun requirements to demonstrate F# types, functions and general functional programming.
@@ -62,7 +62,7 @@ let person = {
 
 Now this is a little too cumbersome; so I want to make some factory methods that helps me build names and dobs so I can do something like:
 
-``
+```
 let person = { 
 	name = Name.build "Krishna Bhargava Vangapandu"; 
 	dob = DateOfBirth.build (14,1,1985) 
