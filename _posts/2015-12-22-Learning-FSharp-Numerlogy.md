@@ -6,6 +6,7 @@ updated: 2015-12-22 8:00 AM
 comments: false
 categories: fsharp
 readmore: true
+group: functional-programming
 ---
 
 Disclaimer: Lets agree to treat Numerology as Magic and focus on the FSharp part. I pick this particular subject as good use case to apply a lot of what F# brings to the table. Please treat this as just some fun requirements to demonstrate F# types, functions and general functional programming.

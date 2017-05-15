@@ -5,6 +5,7 @@ date: 2014-06-12
 updated: 2014-06-12
 comments: false
 categories: architecture notes, reading notes
+group: readings
 readmore: true
 ---
 

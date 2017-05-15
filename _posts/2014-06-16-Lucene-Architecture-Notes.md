@@ -5,6 +5,7 @@ date: 2014-06-16
 updated: 2014-06-16
 comments: false
 categories: architecture notes, lucene
+group: readings
 readmore: true
 ---
 
