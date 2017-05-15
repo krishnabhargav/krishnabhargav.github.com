@@ -5,6 +5,7 @@ date: 2014-11-12 8:00 AM
 updated: 2014-11-12 8:00 AM
 comments: false
 categories: scala, websockets
+group: fp
 readmore: true
 ---
 

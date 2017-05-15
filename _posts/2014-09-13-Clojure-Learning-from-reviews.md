@@ -5,6 +5,7 @@ date: 2014-09-13 8:00 AM
 updated: 2014-09-13 8:00 AM
 comments: false
 categories: clojure
+group: fp
 readmore: true
 ---
 
